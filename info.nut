@@ -3,7 +3,7 @@ class TestGame extends GSInfo {
 	function GetAuthor()		{ return "Zuu"; }
 	function GetName()			{ return "Game Tutorial"; }
 	function GetDescription() 	{ return "Select this as game script and start a new game"; }
-	function GetVersion()		{ return 1; }
+	function GetVersion()		{ return 2; }
 	function GetDate()			{ return "2011-12-05"; }
 	function CreateInstance()	{ return "TestGame"; }
 	function GetShortName()		{ return "TUT_"; }
