@@ -1,0 +1,161 @@
+
+This document describes a detailed plan for the chapters in the tutorial
+Use TABS for indentation
+
+File syntax:
+0. Abc  <---- Chapter
+
+	Requirement: <--- A list of requirement that this chapter has on the scenario
+	- a
+	- b
+	
+	0.1   <--- When loading a save, the tutorial restarts on last x.y step.
+		Some text that will be displayed to user
+
+		<something that the GameScript will do>
+
+1. Def  <---- Chapter
+
+	1.1
+		To display a variable in a text string, curly parentheses are used: {TOWN A}.
+
+		<wait for user to click on pause button>
+
+	1.2
+		Next major step in this chapter
+
+
+
+
+---------
+
+0. Intro
+
+	Hello and welcome to this ingame OpenTTD tutorial! .... about how to follow the tutorial ....
+
+1. Airplanes
+
+	Requirement:
+	- Two towns about 70-100 tiles apart
+	- Easy terrain for placing two small airports next to the towns
+
+	1.1 First Airport
+
+    	In this first part we are going to connect two towns using aircraft. We will start by building an airport in {Town A}.
+
+		<Move viewport to Town A>
+
+		We will try to place an airport near this town. Please follow the highlighted buttons in the toolbars. 
+
+		<Highlight [air construction] -> [airport] -> [small airport]>
+
+		To get many passengers we want to cover as much of the town with the coverage radius. The small airport has a radius of 4 tiles. To visualize the coverage radius you can enable this in the GUI. Click the highlighted button.
+
+		<Highlight coverage radius button>
+
+		<Highlight the button to select small aiport again>
+
+		Move your cursor so that the white squares end up on a flat area with no buildings or roads. Trees will be removed automatically. Make sure that the blue squares around your white rectangle covers as much of the town as you can. Click on the ground to build the airport.
+
+		<game waits until human company have one airport in Town A>
+
+
+	1.2 Second Airport
+	
+		In order to transport passengers they need somewhere to go. So we will continue with the next airport. This airport will be built far away from the first as passengers generally pay more to go further away. We also look for a town with about the same size as the first one so that there is a balance in the demand to go in either direction. The second airport will be placed in {town B}.
+
+		<move view to Town B (perhaps using a panning move and not just a jump)>
+		
+		To build the airport in {Town B} follow the same steps as when we built the airport in {Town A}. 
+
+		<highlight the buttons again in order>
+
+		<game waits until human company have one airport in Town B>
+
+
+	1.3 Aircraft
+
+		<jump view to Town B>
+
+		Now we are ready to buy an aircraft. Click on the hangar building on the airport.
+
+		<place a None-owned sign on the hangar in Town B saying "hangar">
+
+		<wait until a hangar window is open>
+
+		In OpenTTD we first buy the aircraft and then assign orders to it. Click on the button to buy an aircraft.
+
+		<highlight buy aircraft button>
+		<wait until buy button is clicked>
+
+		Select an aircraft and click to buy it. You might want to go for Coleman Count, which has highest capacity.
+
+		<wait until aircraft is bought>
+
+		Next we will assign orders to the aircraft so that it knows what to do. Click on the highlighted button to open the orders window.
+
+		<highlight orders button on aircraft window>
+
+		<read or enforce Quick Orders setting>
+		
+		IF NOT QuickOrders
+			<highlight GoTo button>
+		END IF
+
+		Click on the airport in Town B.
+
+		<wait for order list of aircraft 1 to contain a GoTo order for Town B>
+
+		To get back to Town A, you can use the station list window which shows a list of all your stations.
+
+		<highlight toolbar button for station list>
+		<wait for button-click>
+
+		Click on {Station A} in the list.
+
+		<wait for user> 
+
+		Now click on the airport in the main view port to give the aircraft order to go here.
+
+		<wait for user to assign order>
+
+		Now we are done assigning orders to the aircraft. The next step is to start it. Click once on the horizontal button in the aircraft window to start it.
+
+		<highlight button>
+		<wait for click>
+
+
+	1.4 - Sum up
+
+		You have now completed your first transport route in OpenTTD. Before rounding up we will take a look at how the transportation works. To see the amount of passengers and mail that is waiting at a station, click on anywhere on the airport except on the hangar.
+
+		<wait for station window to open in Town A or B>
+
+		In this window you can see at the top which cargoes that wait to be picked up by an aircraft. Below the line you can see which cargoes that the station accepts. That is what cargoes can be delivered from another airport to this one. If you click on the ratings button, you will see how good rating your transport service has at this station.
+
+		<wait for user to click on Next>
+
+		Knowing how many people are waiting on your airports is important to know when you can buy another airport. Another important figure is to see if your aircraft is making profit and how many people is using the aircraft. 
+
+		<wait for user to cluck on Next>
+		
+		<highlight aircraft details button>
+
+		Click on the details button in your aircraft window
+
+		<wait for user to click the details button>
+
+		In the details window you can see several different data about your aircraft. What is the maximum speed? How much profit has it made this year? How many passengers are there in the aircraft?
+
+		<wait for user to click on Next>
+
+		You have now completed the first chapter of this tutorial. Take a look on the aircraft in operation and perhaps add another aircraft. When you feel ready to continue with this guide, click on next.
+		
+		<wait on user to click on next>
+
+
+2. Ships
+
+3. RoadVehicles
+
+4. Trains
