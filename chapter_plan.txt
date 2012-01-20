@@ -57,6 +57,8 @@ File syntax:
 
 		Move your cursor so that the white squares end up on a flat area with no buildings or roads. Trees will be removed automatically. Make sure that the blue squares around your white rectangle covers as much of the town as you can. Click on the ground to build the airport.
 
+At the bottom of the "airport selection" window, you will notice two lines. One starts with "accepts" and the other starts with "supplies". After the semicolons cargo types will be shown in the currently available in the blue area both for pick up ("supplies") and delivery ("accepts"). It's important to put your station there where it is actually able to process cargo.
+
 		<game waits until human company have one airport in Town A>
 
 
@@ -156,6 +158,307 @@ File syntax:
 
 2. Ships
 
-3. RoadVehicles
+	Requirements:
+	- Two oil rigs
+	- An oil refinery
 
-4. Trains
+	2.1 - Ship dock construction
+	
+		In this part we are going to move oil from an oil rig to an oil refinery using a ship. First you will need to build a dock next to the oil refinery.
+	
+		<move viewport to the oil refinery>
+	
+		First you need to open the waterway construction window.
+	
+		<highlight waterways construction button in the main toolbar, wait until the user clicks it>
+	
+		Good, now you need to select the ship dock and place it near the oil refinery in such a way the catchment area overlaps the oil refinery and half of the ship dock is on water.
+	
+		<highlight the ship dock and wait until the player has selected it and placed one near the oil refinery>
+	
+		Well done. The oil refinery can receive oil from ships now.
+	
+
+	2.2 - Ship depot construction
+	
+		Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate depot for ships. So we are going to build one now.
+	
+		<highlight the ship depot>
+	
+		Now, place it on the water near the ship dock, but don't block the ship dock.
+	
+		<wait until the player has placed a ship depot>
+	
+
+	2.3 - Buying a ship and giving it orders
+		
+		Select the depot and buy a ship capable of transporting oil.
+	
+		<wait until the player has bought a ship>
+	
+		Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery.
+	
+		<move the few port to the oil rig>
+	
+		Oh no! The oil rig hasn't got a ship dock next to it. No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station. Give the ship orders for the oil rig and the ship dock next to the oil refinery.
+	
+		<wait until the player has given the ship the orders>
+	
+
+	2.4 - The first order flag
+	
+		Now, let the ship leave the the depot. It'll go its merry way.
+	
+		<wait until the ship has left the oil rig for the second time>
+	
+		Good, lets see how much oil the ship is transporting. Take a look at the ships details window to find that out.
+	
+		<Wait until the ship's details window is opened>
+		
+		Well, it is transporting oil, but not much. Lets make our ship wait for a full load. In order to do that we need to edit the ship's orders a bit. So, lets open the ship's order window.
+
+		<wait until the ships order window is opened>
+	
+		Now, click on the order for the oil rig.
+	
+		<wait until the order for the oil rig is selected>
+	
+		Good, now look at the two rows of buttons at the bottom of the window. The top row is for order flags, the bottom row is for deleting or adding orders.
+	
+		<highlight the buttons at the bottom of the window>
+	
+		Click on "full load any cargo"
+	
+		<wait until the "full load" button is pressed>
+	
+		<Highlight the order for the oil rig again>
+	
+		Notice the change in the order. When the ship next attends the oil rig it will wait for a full load of oil before departing. It will take some time for the ship to load, so we will just continue.
+
+
+
+	2.5 - canals
+	
+		Well our first ship will handle itself just fine now, however there is a second oil rig somewhere else. However there is a slight problem; we cannot reach it as there as no sea route between our oil refinery and the oil rig.
+		
+		There are two ways to create a route to that oil rig. The first is to simply lower the land to create a path the second is to create a canal. We are going to create a canal, terraforming will come later.
+		
+		Start by selecting the canal.
+		
+		<highlight the canal tool>
+		
+		Now, start laying down canal tiles between the two highlighted tiles.
+		
+		<wait until the player connected both tiles with canal tiles>
+		
+		Now, select the build lock tool.
+		
+		<highlight the build lock tool and wait until the user selects it>
+		
+		Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
+		
+		<wait until the user has placed a lock at either end of the canal>
+		
+		Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait foor a full load too.
+		
+		<wait until the user has built a new ship and has given it orders for the new oil rig and oil refinery>
+		
+
+		
+	2.6 - end of this chapter
+	
+		Finally! We're done with ships. There are some more oil rigs around the map, why don't you try and connect them to the oil refinery. Alternatively you could just move on to the next chapter by clicking next.
+		
+		<wait for the player to click next>
+		
+		
+		
+3. Road Vehicles (Trucks)
+
+	Requirements:
+	- a goods-producing industry (the serviced oil refinery from the ship chapter would work well)
+	- a town that accepts goods close by (approx. population > 650)
+ 
+	3.1 - Introduction
+		Next, we're going to explain a little about industry chains. Some industries, such as oil rigs, will produce no matter what. Others, such as Oil Refineries, must first be serviced to produce anything.
+ 
+		<Scroll to serviced Oil Rig>
+		
+		To understand chains, let's pull up the "Industry Chain" window for an oil rig. First click on the Oil Rig.
+		
+		<wait for Oil Rig window to come up>
+		
+		Now click on the "Industry Chain" button.
+ 
+		<Highlight the "Industry Chain" button and wait for the user to click it>
+		 
+		From this we can see that Oil can be transported from an Oil Rig to an Oil Refinery. Now click on the Oil Refinery box.
+		 
+		<wait for the industry chain to come up for an Oil Refinery>
+		 
+		From this we can see that Oil Refineries produce Goods which can be transported to towns. That is the goal for this section: to transport goods from an Oil Refinery to a town. We are going to go from this Oil Refinery...
+		 
+		<scroll viewport to Oil Refinery>
+		 
+		...to this town.
+		 
+		<scroll viewport to town>
+ 
+	3.2 - Building Stations
+ 
+		To transport goods we will need to build two stations - one to pick up goods near the refinery and one to drop them off in town. Let's build the one in town first. Select the road toolbar.
+		 
+		<highlight the road toolbar button and wait for the user to click it>
+		 
+		Let's build a Lorry (or truck) station.
+		 
+		<highlight the lorry station button and wait for the user to click on it>
+		 
+		One thing about truck stops (or lorry stations) is that they can be built on top of existing roads. Build a truck stop in {Town Name} on one of the existing roads.
+		 
+		<highlight the drive thru truck stops>
+		
+		<wait for the user to build a station in town, and make sure it accepts goods; if the station does not accept goods, tell the user to try again, and possibly remove the old station>
+ 
+	3.3 - Oil Refinery Station
+ 
+		Next we need to build another station to pick up the goods from the Oil Refinery. Make sure the Oil Refinery is within the catchment area of your new station. 
+		 
+		<wait for the user to build a truck station next to the Oil Refinery that will allow the pick up of goods>
+ 
+	3.4 - Road Connection
+ 
+		Next, we need to build a road to connect to two stations. One of the nice things about roads is that we can use anyone else's roads too. So we only have to connect to the existing town roads. Use the road tools...
+		 
+		<highlight the two road tools (for building roads)>
+		 
+		... to connect these two squares.
+		 
+		<highlight the town road tile closest to the Oil Refinery (assuming it connects with the road station built in town) and the truck station built next to the refinery>
+		
+		<wait until the user builds a road linking the two stations>
+	 
+	3.5 - Depot Construction
+ 
+		Like for the ships, we need to build a depot to build trucks at. Build a truck depot and connect it (by road) to the existing road network.
+		 
+		<highlight the road depot button and wait for the user to build a road depot>
+		
+		<wait for the road depot to be connected to both stations>
+ 
+	3.6 - Vehicles and Orders
+ 
+		Now we have everything in place to start our goods service. Click on the depot.
+		 
+		<highlight the depot tile and wait for the user to click on it>
+		 
+		Let's build a new vehicle.
+		 
+		<highlight the "build new vehicle" button and wait for the user to click it>
+		 
+		Build a Goods truck.
+		 
+		<highlight the goods truck and wait for the user to build a goods truck>
+		 
+		Now give the truck orders, just like you did for the ship. Make sure that the truck is set to "full load" at {Oil Refinery Station}. When the orders are in place, start the truck.
+		 
+		<wait until the truck has orders to go to both stations, is set to full load at the oil refinery station, and the truck is running>
+ 
+	3.7 - Cloning
+ 
+		Congratulation! You have your first truck running.
+		 
+		One of the problems with road vehicles is they tend to have low capacity, and so if an industry has high production, you may need many trucks. There is an easy way  to make extra vehicles for the route through "cloning".
+		 
+		Click on the road depot.
+		 
+		<wait for the user to open the road depot window>
+		 
+		Click on the "clone" button.
+		 
+		< wait for the user to click on the clone button>
+		 
+		Now click on the existing truck. You can use the arrow keys to move the viewport around if you need to find it.
+		 
+		< wait until the truck has been cloned>
+		 
+		Now start your new truck!
+		 
+		<wait for the second truck to be started>
+ 
+	3.8 - Conclusion
+ 
+		Congratulations, you now know how to build truck stations, connect them, build trucks, and clone vehicles!
+
+4. Road Vehicles (Bus Service) and Town Growth
+ 
+	Requirements:
+	- large-ish town, big enough to support four bus stops (1,500-2,000 population?), that does not require any TOWN_EFFECT cargo to grow
+ 
+	4.1 - Introduction
+ 
+		<move viewport to chapter town>
+
+		<record current population of chapter town>
+		 
+		This chapter has two goals: to teach you about town growth and to help you set up local bus service.
+		 
+		Towns will typically grow slowly on there own, however to encourage town growth we can meet two different sets of requirements. The first is that there are four stations within the town serviced each month. This is what our bus service aims to provide.
+		 
+		The second is called "Town Effect" cargo, where a certain cargo must be supplied to the town each month. The cargos needed depend on the climate of your game: on temperate games (like this one), this doesn't apply; on arctic games, towns above the snowline need food; On tropical games, towns in the desert need water to grow; in toyland games, [what do you need on toyland games...?]
+		 
+		OpenTTD makes it easy to keep track what you need to do to help towns grow. Click on the town name for {chapter town}.
+		 
+		<wait for the user to click on the town name and for the town info window to appear>
+		 
+		This windows shows you some details of the town, including name, population, the amount of passengers and mail produced by the town, what it needs to grow, and of the town is growing. Note that the info in this window is only updated once or twice a month.
+ 
+	4.2 - Build Bus Stations
+	
+		Let's get to building! We're going to build four bus stations and move passengers between them to help the town grow and to make a little bit of money. Open up the road toolbar.
+		 
+		<highlight the rood toolbar button and wait for the user to click on it>
+		 
+		Select the bus stop button. Notice that this is different from the truck stop button.
+		 
+		<highlight the the bus stop button and wait for the user to click on it>
+		 
+		Now build four different bus stops in {chapter town}. Try to build them in different parts of town to get good coverage. Remember that you can build bus stops right on the road. Build roads if you need to to make sure busses can travel from one stop to another.
+ 
+		[should we offer to suggest locations for the bus tops?]
+		 
+		<wait for the user to build four bus stops and for there to be a road connection between the four stations>
+	
+	4.3 - Build Depot
+	
+		Now build a depot to build busses. Build roads as needed to connect it to the rest of the network.
+		 
+		<highlight the depot button and wait for the user to build a bus depot and connect it to the bus stations>
+	
+	4.4 - Orders (Set I)
+		 
+		Now build a bus and give it orders to stop at {bus station 1} and {bus station 2}.
+		 
+		<wait for the bus to be built and the orders given>
+		
+	4.5 - Orders (Set II)
+	
+		Now do the same, but make this bus stop at {bus station 3} and {bus station 4}.
+		 
+		<wait for the bus to be built and the orders given>
+	
+	4.6 - Cloning
+	
+		[consider having the user clone both busses]
+ 
+	4.7 - Conclusion
+	
+		Now we just wait and watch the town grow. You can hold TAB to run the game in fast forward for a bit.
+		 
+		<wait for the town to grow a bit; maybe put signs to the edge of town documenting the town size every six months or every year>
+		 
+		Congratulations! You have grown the town from {original population} to {current population}.
+		
+		You have finished the chapter and now know how to set up bus service and how to grow towns!
+
+5. Trains
