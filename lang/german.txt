@@ -1,0 +1,35 @@
+STR_INTRO_1         :Einführung{}{}Hallo and willkommen zu diesem OpenTTD-Tutorial.
+STR_INTRO_2         :Kapitel:{}{}1. Flugzeuge{}2. Schiffe{}3. Straßenfahrzeuge{}4. Züge
+
+
+STR_AIRPLANES_1_1_1_INTRO           :Flugzeuge - Erster Flughafen{}{}Im ersten Teil werden wir zwei Städte mittels einer Fluglinie verbinden. Wir fangen damit an, einen Flughafen in {TOWN} zu bauen.
+STR_AIRPLANES_1_1_2_PLACEMENT       :Wir bauen den Flughafen in der Nähe dieser Stadt. Bitte folge den hervorgehobenen Knöpfen in der Menüleiste.
+STR_AIRPLANES_1_1_3_ACCEPTANCE      :Um so viele Passagiere wie möglich zu bekommen, wollen wir so viel wie möglich von der Stadt mit dem Einzugsbereichs des Flughafens abdecken. Der kleine Flughafen hate einen Einzugsbereich von vier Feldern. Um diesen Einzugsbereich anzuzeigen, klicke auf den hervorgehobenen Knopf.
+STR_AIRPLANES_1_1_4_ACCEPTANCE      :Unten im Fenster "Flughafenauswahl" finden sich zwei Zeilen. Die eine fängt mit "akzeptiert" an, die andere mit "liefert". Angegeben sind diejenigen Frachtarten, die im blau hervorgehobenen Einzugsbereich abgeholt ("liefert") bzw. angeliefert ("akzeptiert") werden können. Es ist wichtig, die Stations (den Flughafen) dort zu bauen, wo sie tatsächlich die Fracht liefern und akzeptieren kann.
+STR_AIRPLANES_1_1_5_PLACE_AP        :Bewege den Cursor so, dass die weiß umrandeten Felder ein ebenes Gebiet umfassen auf dem sich keine Gebäude oder Straßen befinden. Bäume werden automatisch gefällt. Stelle sicher, dass der mit blauer Umrandung hervorgehobene Einzugsbereich so viel von der Stadt umfaßt wie möglich. Klick, um den Flughafen zu bauen.
+
+STR_AIRPLANES_1_2_1_WHERE           :Zweiter Flughafen{}{}Um Passagiere transportieren zu können, brauchen wir einen zweiten Flughafen. Dieser soll weit entfernt gebaut werden, weil Passagiere im Allgemeinen mehr zahlen, wenn sie weiter reisen. Wir suchen nach einer Stadt die etwa gleich groß unserer ersten Stadt ist, so dass das Passagieraufkommen in beiden etwa gleich ist. Der zweite Flughafen wird in {TOWN} gebaut werden.
+STR_AIRPLANES_1_2_2_BUILD           :Um den Flughafen in {TOWN} zu bauen, folge den gleichen Schritten wie beim Bau des ersten Flughafens in {TOWN}.
+
+STR_AIRPLANES_1_3_1_HANGAR          :Kaufe ein Flugzeug{}{}Nun können wir ein Flugzeug kaufen. Klicke auf den Hangar auf dem Flughafen.
+STR_AIRPLANES_1_3_2_BUY             :In OpenTTD kaufen wir erst das Flugzeug und weise ihm anschließend eine Flugroute zu.
+STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :Wähle ein Flugzeug und klicke auf es, um es zu kaufen. Vorzugsweise wähle den "Coleman Count", da es die größte Anzahl an Sitzen hat.
+STR_AIRPLANES_1_3_4_ORDERS          :Nun werden wir dem Flugzeug einen Fahrplan zuweisen. Klick auf den hervorgehobenen Knopf, um das Auftragsmenü aufzurufen.
+STR_AIRPLANES_1_3_5_ORDERS          :Klick auf den Flughafen {TOWN}.
+STR_AIRPLANES_1_3_6_TOWN_LIST       :Um zu Stadt A zurückzugehen, kannst Du das Fenster mit den verfügbaren Stationen nutzen.
+STR_AIRPLANES_1_3_7_TOWN_LIST       :Klicke auf {STATION} in der Liste.
+STR_AIRPLANES_1_3_8_ORDERS          :Nun klicke auf den Flughafen im Hauptbildschirm, um dem Flugzeug den Auftrag zu geben, dorthin zu fliegen.
+STR_AIRPLANES_1_3_9_START_AIRCRAFT  :Nachdem wir nun dem Flugzeug einen Fahrplan zugewiesen haben, sollten wir es losschicken. Klicke auf den horizontalen Knopf am unteren Rand des Flugzeugfensters, um es zu starten.
+
+STR_AIRPLANES_1_4_1_SUM_UP          :Zusammenfassung{}{}Du hast nun Deine erste Route in OpenTTD fertiggestellt. Bevor wir dieses beenden, schauen wir uns noch an wie der Transport funktioniert. Um die Anzahl wartender Passagiere und Post anzuschauen, klicke irgendwo auf den Flughafen außer auf den Hangar.
+STR_AIRPLANES_1_4_2_STATION_WINDOW  :In dem Fenster kannst Du oben sehen, welche Frachtarten darauf warten, abgeholt zu werden. Darunter ist aufgelistet, welche Frachtarten von der Station akzeptiert werden, sprich, welche Du mit Flugzeugen dorthin bringen kannst. Wenn Du auf den Bewertungs-Knopf klickst, kannst Du sehen wie gut unser Transport - Service an dieser Station bewertet wird.
+STR_AIRPLANES_1_4_3_STATION_WINDOW  :Zu wissen wie viele Leute am Flughafen auf Abholung warten, ist wichtig, wenn es darum geht abzuschätzen, ob und wann sich der Kauf eines weiteren Flugzeugs lohnt.
+STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :Ein weiterer, wichtiger Punkt ist, ob das Flugzeug Gewinn abwirft und wieviele Leute das Flugzeug nutzen.
+STR_AIRPLANES_1_4_5_DONE            :Du hast nun das erste Kapitel dieses Tutorials abgeschlossen. Schau dem Flugzeug beim Betrieb zu und füge gegebenenfalls ein weiteres der Route hinzu. Wenn Du bereit bist das Tutorial fortzusetzen, klicke auf "weiter".
+
+# Other strings that are not in the regular timeline of messages
+STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD  :Das Tutorial wartet daruf, dass Du den Flughafen baust.
+STR_AIRPLANES_HANGAR                       :Hangar
+
+
+STR_NO_MORE_CHAPTERS                       :Dieses Tutorial hat keine weiteren Kapitel. Um das Gelernte zu festigen und zu vertiefen, könntest Du ein neues Spiel anfangen. Eventuell möchtest Du auch ein oder zwei KI-Spieler aktivieren, so dass Du auch deren Spielstil beobachten kannst.
