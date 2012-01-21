@@ -146,8 +146,9 @@ function TestGame::RunTutorial()
 		}
 		else
 		{
-			GSGoal.Question(0, HUMAN_COMPANY, GSText(GSText.STR_NO_MORE_CHAPTERS), GSGoal.BUTTON_CLOSE);
+			GSGoal.Question(0, HUMAN_COMPANY, GSText(GSText.STR_NO_MORE_CHAPTERS), GSGoal.QT_INFORMATION GSGoal.BUTTON_CLOSE);
 			this._end_of_tutorial = true;
+			return;
 		}
 	}
 

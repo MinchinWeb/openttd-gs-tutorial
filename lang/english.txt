@@ -32,4 +32,4 @@ STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to bu
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
-STR_NO_MORE_CHAPTERS  :There are no more chapters in this tutorial. To remember what you've learned and continue learning more about OpenTTD you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their play style.
+STR_NO_MORE_CHAPTERS  :End of Tutorial{}{}There are no more chapters in this tutorial. To remember what you've learned and continue learning more about OpenTTD you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their play style.
