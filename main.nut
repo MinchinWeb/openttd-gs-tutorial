@@ -30,6 +30,7 @@ class TestGame extends GSController
 	_current_chapter_id = null;
 	_chapter_steps = null;
 	_current_step = null;
+	_first_step = false;
 
 	_chapter_storage = null;
 
@@ -85,10 +86,11 @@ function TestGame::Init()
 	if (this._load_data != null)
 	{
 		// Try to load the chapter that was active when the game was saved
-		if (this.LoadChapter(this._load_data.chapter))
+		local index = this.GetChapterIndex(this._load_data.chapter);
+		if (index != -1 && LoadChapter(CHAPTER_LIST[index]))
 		{
-			// Set current step to the step it had when the game was saved
-			this._current_step = this._load_data.step; 
+			// Set current step to the step that was just executed before when the game was saved
+			this._current_step = Helper.Max(-1, this._load_data.step - 1);
 
 			loaded_state = true;
 		}
@@ -150,7 +152,7 @@ function TestGame::RunTutorial()
 	}
 
 	// Is current step done?
-	if(this._current_step < 0 || this._chapter_steps[this._current_step].IsDone())
+	if(this._first_step || this._chapter_steps[this._current_step].IsDone())
 	{
 		this._current_step++;
 
@@ -160,23 +162,31 @@ function TestGame::RunTutorial()
 
 		// Execute next step
 		this._chapter_steps[this._current_step].Execute();
+
+		// Remove flag that allows execution of non-finished steps if they are the first to be executed
+		// (used both for first step in a chapter and after loading a save game)
+		this._first_step = false;
 	}
 }
 
 function TestGame::Save()
 {
+	Log.Info("Saving data to savegame", Log.LVL_INFO);
 	return { 
-		chapter = "bus",
-  		step = this._current_step
+		chapter = this._current_chapter_id,
+  		step = this._current_step,
 	};
 }
 
-function TestGame::Load(tbl, version)
+function TestGame::Load(version, tbl)
 {
+	Log.Info("Loading data from savegame of tutorial version: " + version, Log.LVL_INFO);
+	Log.Info("chapter: " + tbl.chapter, Log.LVL_INFO);
+	Log.Info("step: " + tbl.step, Log.LVL_INFO);
 	// Store a copy of the table from the save game
 	this._load_data = { 
 		chapter = tbl.chapter,
-		step = tbl.step
+		step = tbl.step,
 	};
 }
 
@@ -193,6 +203,9 @@ function TestGame::LoadChapter(chapter)
 	// Load new chapter
 	this._current_chapter_id = chapter.ID();
 	chapter.LoadChapter(this);
+
+	// Set flag that first step is to be executed ( => there is no previous step that has to be marked as done )
+	this._first_step = true;
 
 	return true;
 }
