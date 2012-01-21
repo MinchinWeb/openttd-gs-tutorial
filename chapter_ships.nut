@@ -4,7 +4,13 @@ class ChapterShips {
 	constructor() {
 	}
 
+	static function ID();
 	static function LoadChapter(main_instance);
+}
+
+/*static*/ function ChapterShips::ID()
+{
+	return "ships";
 }
 
 /*static*/ function ChapterShips::LoadChapter(main_instance)
