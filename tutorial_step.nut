@@ -3,6 +3,9 @@
 WAIT <- true
 NO_WAIT <- false
 
+// The uniqueid of the message window
+MSG_WIN_UNIQUE_NUM <- 1;
+
 // Encapsulate strings with this class to indicate that
 // the string should be used as a key in the chapter
 // storage table.
@@ -189,7 +192,8 @@ function MessageWindowStep::Execute()
 	}
 
 	// Open message window
-	this._unique_id = 0;
+	this._unique_id = MSG_WIN_UNIQUE_NUM;
+	GSWindow.Close(GSWindow.WC_GOAL_QUESTION, this._unique_id); // close old window first
 	GSGoal.Question(this._unique_id, HUMAN_COMPANY, this._message, GSGoal.QT_INFORMATION, GSGoal.BUTTON_CONTINUE);
 }
 
@@ -251,6 +255,17 @@ function CloseWindowStep::IsDone()
 {
 	// Done after execution
 	return true;
+}
+
+/*
+ * A CloseMessageWindowStep is used to close windows opened by MessageWindowStep
+ */
+class CloseMessageWindowStep extends CloseWindowStep
+{
+	constructor()
+	{
+		::CloseWindowStep.constructor(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)
+	}
 }
 
 /*

@@ -44,7 +44,7 @@ class ChapterAirplanes {
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterAirplanes.WaitForAirportInTown(table.town_a);
 	}));
-	main_instance.AddStep(CloseWindowStep(GSWindow.WC_GOAL_QUESTION, 0)); // close message if user didn't close it
+	main_instance.AddStep(CloseMessageWindowStep()); // close message if user didn't close it
 	// close build windows, so the user get to find them again (with guidance)
 	main_instance.AddStep(CloseWindowStep(GSWindow.WC_BUILD_STATION, 3)); 
 	main_instance.AddStep(CloseWindowStep(GSWindow.WC_BUILD_TOOLBAR, 3)); 
@@ -79,10 +79,8 @@ class ChapterAirplanes {
 		table.hangar_b <- hangar_tile; // allow access from tutorial step as the depot window will use the same window number as the depot tile
 	}));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("hangar_b"), WAIT_ON_OPEN)); // wait for hangar window to open
-	main_instance.AddStep(CloseWindowStep(GSWindow.WC_GOAL_QUESTION, 0)); 
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_2_BUY), NO_WAIT)); // ask to click build aircraft
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("hangar_b"), GSWindow.WID_D_BUILD));
-	main_instance.AddStep(CloseWindowStep(GSWindow.WC_GOAL_QUESTION, 0)); // close message if user didn't close it
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_VEHICLE, TableKey("hangar_b"), GSWindow.WID_BV_LIST, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) { // wait a short while
@@ -106,7 +104,6 @@ class ChapterAirplanes {
 	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_4_ORDERS), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_SHOW_ORDERS, WAIT));
-	main_instance.AddStep(CloseWindowStep(GSWindow.WC_GOAL_QUESTION, 0)); // close message if user didn't close it
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
 	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order
 /*		local company_mode = GSCompanyMode(HUMAN_COMPANY);
@@ -131,7 +128,7 @@ class ChapterAirplanes {
 	{
 		if(!message && 
 				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, 1)) // require the main timeline message to be closed in order to show the notification window
+				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
 		{
 			// The user might not know that we are waiting
 			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD, town), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
