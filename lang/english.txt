@@ -33,3 +33,4 @@ STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
 STR_NO_MORE_CHAPTERS  :End of Tutorial{}{}There are no more chapters in this tutorial. To remember what you've learned and continue learning more about OpenTTD you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their play style.
+STR_ERROR_MULTIPLAYER :The tutorial can not be ran in multi player games. You have use it in a single player game.

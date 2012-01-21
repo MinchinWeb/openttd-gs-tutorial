@@ -8,7 +8,7 @@ require("chapter_road_vehicles.nut");
 require("chapter_trains.nut");
 
 /* Import SuperLib for GameScript */
-import("util.superlib", "SuperLib", 18);
+import("util.superlib", "SuperLib", 19);
 Result <- SuperLib.Result;
 Log <- SuperLib.Log;
 Helper <- SuperLib.Helper;
@@ -48,6 +48,21 @@ class TestGame extends GSController
  */
 function TestGame::Start()
 {
+	// Check for multiplayer game
+	if(GSGame.IsMultiplayer())
+	{
+		this.Sleep(1); // start game
+
+		// Report problem
+		Log.Error("Error: Tutorial can't be run in multiplayer");
+		while(true)
+		{
+			GSGoal.Question(0, GSCompany.COMPANY_INVALID, GSText(GSText.STR_ERROR_MULTIPLAYER), GSGoal.QT_ERROR, GSGoal.BUTTON_CLOSE);
+			this.Sleep(10);
+		}
+	}
+
+
 	// Any GameScript init code goes here
 	this.Init();
 
