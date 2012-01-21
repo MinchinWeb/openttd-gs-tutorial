@@ -196,7 +196,8 @@ function MessageWindowStep::Execute()
 function MessageWindowStep::IsDone()
 {
 	// This tutorial step is done when the user has answered the question
-	return !this._wait_on_click || this._done;
+	return !this._wait_on_click || this._done ||
+		!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, this._unique_id); // also check if the window was closed without pressing one of the answer buttons.
 }
 
 function MessageWindowStep::Event(event)
