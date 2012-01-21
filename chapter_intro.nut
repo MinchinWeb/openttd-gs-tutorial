@@ -17,7 +17,7 @@ class ChapterIntro {
 {
 	main_instance.AddStep(CodeStep( function(table) {
 
-				GSLog.Info("A silly log message from the Intro chapter");
+				Log.Info("A silly log message from the Intro chapter", Log.LVL_INFO);
 
 				}));
 
