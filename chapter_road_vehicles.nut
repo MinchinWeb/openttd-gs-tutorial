@@ -15,7 +15,6 @@ class ChapterRoadVehicles {
 
 /*static*/ function ChapterRoadVehicles::LoadChapter(main_instance)
 {
-	main_instance.AddStep(MessageStep("RoadVehicles chapter\n\n" +
-			"In this chapter a first transport service will be setup using buses to transport passengers between two towns."));
+	main_instance.AddStep(MessageWindowStep("RoadVehicles chapter - TODO", WAIT));
 }
 
