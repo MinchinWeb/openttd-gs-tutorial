@@ -135,7 +135,7 @@ class ChapterAirplanes {
 				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, 0)) // require the main timeline message to be closed in order to show the notification window
 		{
 			// The user might not know that we are waiting
-			GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD, town), GSGoal.BUTTON_CLOSE);
+			GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD, town), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
 			message = true;
 		}
 

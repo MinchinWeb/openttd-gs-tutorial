@@ -190,7 +190,7 @@ function MessageWindowStep::Execute()
 
 	// Open message window
 	this._unique_id = 0;
-	GSGoal.Question(this._unique_id, HUMAN_COMPANY, this._message, GSGoal.BUTTON_CONTINUE);
+	GSGoal.Question(this._unique_id, HUMAN_COMPANY, this._message, GSGoal.QT_INFORMATION, GSGoal.BUTTON_CONTINUE);
 }
 
 function MessageWindowStep::IsDone()
