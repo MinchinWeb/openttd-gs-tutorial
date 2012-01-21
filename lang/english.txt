@@ -16,20 +16,20 @@ STR_AIRPLANES_1_3_2_BUY        :In OpenTTD we first buy the aircraft and then as
 STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :Select an aircraft and click to buy it. You might want to go for Coleman Count, which has highest capacity.
 STR_AIRPLANES_1_3_4_ORDERS     :Next we will assign orders to the aircraft so that it knows what to do. Click on the highlighted button to open the orders window.
 STR_AIRPLANES_1_3_5_ORDERS     :Click on the airport in {TOWN}.
-STR_AIRPLANES_1_3_6_TOWN_LIST  :To get back to Town A, you can use the station list window which shows a list of all your stations.
-STR_AIRPLANES_1_3_7_TOWN_LIST  :Click on {STATION} in the list.
+STR_AIRPLANES_1_3_6_STATION_LIST :To get back to Town A, you can use the station list window which shows a list of all your stations.
+STR_AIRPLANES_1_3_7_STATION_LIST :Click on {STATION} in the list.
 STR_AIRPLANES_1_3_8_ORDERS     :Now click on the airport in the main view port to give the aircraft order to go here.
 STR_AIRPLANES_1_3_9_START_AIRCRAFT :Now we are done assigning orders to the aircraft. The next step is to start it. Click once on the horizontal button in the aircraft window to start it.
 
 STR_AIRPLANES_1_4_1_SUM_UP     :Sum up{}{}You have now completed your first transport route in OpenTTD. Before rounding up we will take a look at how the transportation works. To see the amount of passengers and mail that is waiting at a station, click on anywhere on the airport except on the hangar.
-STR_AIRPLANES_1_4_2_STATION_WINDOW :In this window you can see at the top which cargoes that wait to be picked up by an aircraft. Below the line you can see which cargoes that the station accepts. That is what cargoes can be delivered from another airport to this one. If you click on the ratings button, you will see how good rating your transport service has at this station.
-STR_AIRPLANES_1_4_3_STATION_WINDOW :Knowing how many people are waiting on your airports is important to know when you can buy another airport.
-STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :Another important figure is to see if your aircraft is making profit and how many people is using the aircraft.
-STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this tutorial. Take a look on the aircraft in operation and perhaps add another aircraft. When you feel ready to continue with this guide, click on next.
+STR_AIRPLANES_1_4_2_STATION_WINDOW :In this window you can see at the top which cargoes that wait to be picked up by an aircraft. Below the line you can see which cargoes that the station accepts. That is what cargoes can be delivered from another airport to this one. If you click on the ratings button, you will see how good rating your transport service has at this station.{}{}Knowing how many people are waiting on your airports is important to know when you can buy another aircraft.
+STR_AIRPLANES_1_4_3_AIRCRAFT_PROFIT :Another important figure is to see if your aircraft is making profit and how many people is using the aircraft. Click on the highlighted button on the aircraft window to see the aircraft details.
+STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :In this window you can see several details about your aircraft: profit, how much cargo is currently loaded, capacity etc.{}{}If you want to rename your aircraft or change the service interval you find the controls for that in this window.
+STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this tutorial.{}{}Take a look on the aircraft in operation and perhaps add another aircraft. When you feel ready to continue with this guide, close this window and all other windows by pressing the DELETE button on your keyboard.
 
 # Other strings that are not in the regular timeline of messages
 STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to build an airport in {TOWN}.
-STR_AIRPLANES_HANGAR :Hangar
+STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
 STR_NO_MORE_CHAPTERS  :There are no more chapters in this tutorial. To remember what you've learned and continue learning more about OpenTTD you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their play style.

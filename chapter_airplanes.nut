@@ -75,7 +75,7 @@ class ChapterAirplanes {
 	main_instance.AddStep(CodeStep( function(table) { 
 		// build sign and wait for window to open
 		local hangar_tile = GSAirport.GetHangarOfAirport(GSStation.GetLocation(table.airport_b));
-		Helper.SetSign(hangar_tile, GSText(GSText.STR_AIRPLANES_HANGAR), true);
+		Helper.SetSign(hangar_tile, GSText(GSText.STR_AIRPLANES_HANGAR_SIGN), true);
 		table.hangar_b <- hangar_tile; // allow access from tutorial step as the depot window will use the same window number as the depot tile
 	}));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("hangar_b"), WAIT_ON_OPEN)); // wait for hangar window to open
@@ -104,19 +104,44 @@ class ChapterAirplanes {
 	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_4_ORDERS), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_SHOW_ORDERS, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
+
+	// temporary use WAIT for this step, until OpenTTD supports waiting for an order to exist
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), WAIT, TableKey("town_b"))); // click on ap in town b
+	/*main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
 	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order
-/*		local company_mode = GSCompanyMode(HUMAN_COMPANY);
+		local company_mode = GSCompanyMode(HUMAN_COMPANY);
 		while(true)
 		{
 			//GSOrder is not yet in OpenTTD
 			GSOrder.GetOrderCount
 		}
-		*/
 	}));
+	*/
+
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_6_STATION_LIST), NO_WAIT, TableKey("town_a")));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_STATIONS, WAIT));
+	//main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_SIGN_LIST, 0, WAIT_ON_OPEN));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_7_STATION_LIST), WAIT, TableKey("town_a")));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), WAIT));
+	// todo: wait for order to be added instead of the continue button
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_9_START_AIRCRAFT), NO_WAIT));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_START_STOP, WAIT));
 
 
-
+	// 1.4 - Sum up
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_1_SUM_UP), NO_WAIT));
+	main_instance.AddStep(
+		OrStep( // Wait for station window for either of the two airports to open OR that the user clicks continue
+			WaitOnWindowStep(GSWindow.WC_STATION_VIEW, TableKey("airport_a"), WAIT_ON_OPEN),
+			WaitOnWindowStep(GSWindow.WC_STATION_VIEW, TableKey("airport_b"), WAIT_ON_OPEN),
+			WaitOnWindowStep(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM, WAIT_ON_CLOSE)
+		)
+	);
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_2_STATION_WINDOW), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_3_AIRCRAFT_PROFIT), NO_WAIT));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_SHOW_DETAILS, WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_5_DONE), WAIT));
 }
 
 /*static*/ function ChapterAirplanes::WaitForAirportInTown(town)

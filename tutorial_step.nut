@@ -93,6 +93,70 @@ class TutorialStep
 }
 
 /*
+ * OrStep takes a number of step instances as argument.
+ *
+ * Eg. to wait for one of two windows:
+ *   OrStep(WaitOnWindowStep(..), WaitOnWindowStep(other window))
+ */
+class OrStep extends TutorialStep
+{
+	_steps = null;
+
+	constructor(...)
+	{
+		this._steps = [];
+
+		// Read the variable parameters
+		if(vargc > 0)
+		{
+			for(local c = 0; c < vargc; c++) {
+				this._steps.append(vargv[c]);
+			}
+		}
+	}
+
+	function Execute();
+	function IsDone();
+	function Event(event);
+}
+
+function OrStep::Execute()
+{
+	foreach(step in this._steps)
+	{
+		step.Execute();
+	}
+}
+
+function OrStep::IsDone()
+{
+	foreach(step in this._steps)
+	{
+		if(step.IsDone()) return true;
+	}
+
+	return false;
+}
+
+function OrStep::Event(event)
+{
+	foreach(step in this._steps)
+	{
+		step.Event(event);
+	}
+}
+
+// Also, override the SetStorageTable function to pass the pointer along to the children
+function OrStep::SetStorageTable(table)
+{
+	this._storage = table;
+	foreach(step in this._steps)
+	{
+		step.SetStorageTable(table);
+	}
+}
+
+/*
  * A SignMessageStep displays a message using signs and wait 
  * for the user to click on the continue button (a sign).
  */
@@ -416,3 +480,4 @@ function GUIHighlightStep::Event(event)
 		Log.Info("User clicked at: window: " + click_event.GetWindowClass() + " number: " + click_event.GetWindowNumber() + " widget: " + click_event.GetWidgetNumber(), Log.LVL_DEBUG);
 	}
 }
+
