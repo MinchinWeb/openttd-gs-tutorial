@@ -87,7 +87,7 @@ function TestGame::Init()
 	{
 		// Try to load the chapter that was active when the game was saved
 		local index = this.GetChapterIndex(this._load_data.chapter);
-		if (index != -1 && LoadChapter(CHAPTER_LIST[index]))
+		if (index != -1 && LoadChapter(CHAPTER_LIST[index], this._load_data.chapter_storage))
 		{
 			// Set current step to the step that was just executed before when the game was saved
 			this._current_step = Helper.Max(-1, this._load_data.step - 1);
@@ -104,11 +104,11 @@ function TestGame::Init()
 	}
 }
 
-function TestGame::InitBeforeNewChapter()
+function TestGame::InitBeforeNewChapter(chapter_storage = {})
 {
 	this._chapter_steps = [];
 	this._current_step = -1;
-	this._chapter_storage = {}; // Table which all chapter steps can access to store data
+	this._chapter_storage = chapter_storage; // Table which all chapter steps can access to store data
 }
 function TestGame::AddStep( new_step )
 {
@@ -175,7 +175,9 @@ function TestGame::Save()
 	return { 
 		chapter = this._current_chapter_id,
   		step = this._current_step,
+		chapter_storage = this._chapter_storage,
 	};
+
 }
 
 function TestGame::Load(version, tbl)
@@ -187,16 +189,17 @@ function TestGame::Load(version, tbl)
 	this._load_data = { 
 		chapter = tbl.chapter,
 		step = tbl.step,
+		chapter_storage = tbl.chapter_storage,
 	};
 }
 
 /*
  * -------- Chapters ---------------------------------
  */
-function TestGame::LoadChapter(chapter)
+function TestGame::LoadChapter(chapter, chapter_storage = {})
 {
 	// Unload old chapter
-	this.InitBeforeNewChapter();
+	this.InitBeforeNewChapter(chapter_storage);
 
 	if(chapter == null) return false;
 
