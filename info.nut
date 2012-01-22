@@ -2,13 +2,13 @@
  * License: GPL2
  */
 
-SELF_VERSION <- 5;
+SELF_VERSION <- 6;
 require("version_upgrade.nut");
 
 class TestGame extends GSInfo {
 	function GetAuthor()           { return "Zuu"; }
 	function GetName()             { return "Beginner Tutorial"; }
-	function GetDescription()      { return "Select this as game script and start a new game. The tutorial is intended to be used without NewGRFs."; }
+	function GetDescription()      { return "Don't use this script in your games, instead load the Beginner Tutorial scenario. The reason why you see this script is that you have the developer tools active."; }
 	function GetVersion()          { return SELF_VERSION; }
 	function GetDate()             { return "2001-01-22"; }
 	function CreateInstance()      { return "TestGame"; }
