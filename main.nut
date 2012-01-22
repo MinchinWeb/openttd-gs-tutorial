@@ -48,23 +48,21 @@ class TestGame extends GSController
  */
 function TestGame::Start()
 {
-	// Check for multiplayer game
-	if(GSGame.IsMultiplayer())
+	// Any GameScript init code goes here
+	local error_string = this.Init();
+	if(error_string != null)
 	{
 		this.Sleep(1); // start game
-
-		// Report problem
-		Log.Error("Error: Tutorial can't be run in multiplayer");
 		while(true)
 		{
-			GSGoal.Question(0, GSCompany.COMPANY_INVALID, GSText(GSText.STR_ERROR_MULTIPLAYER), GSGoal.QT_ERROR, GSGoal.BUTTON_CLOSE);
-			this.Sleep(10);
+			// Broadcast error message from time to time so multiplayer error get noticed even if it is a
+			// dedicated server.
+			if(GSGame.IsMultiplayer() || !GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, 1000))
+				GSGoal.Question(1000, GSCompany.COMPANY_INVALID, error_string, GSGoal.QT_ERROR, GSGoal.BUTTON_CLOSE);
+
+			this.Sleep(100);
 		}
 	}
-
-
-	// Any GameScript init code goes here
-	this.Init();
 
 	Log.Info("Tutorial setup done", Log.LVL_INFO);
 
@@ -92,6 +90,9 @@ function TestGame::Start()
 
 function TestGame::Init()
 {
+	local error = this.CheckGame();
+	if(error != null) return error;
+
 	g_menu = Menu();
 	this._end_of_tutorial = false;
 
@@ -117,6 +118,34 @@ function TestGame::Init()
 		// => Start from the beginning (in future: possible show a menu of chapters)
 		this.LoadChapter(CHAPTER_LIST[0]);
 	}
+
+	return null;
+}
+
+function TestGame::CheckGame()
+{
+	// Check for multiplayer game
+	if(GSGame.IsMultiplayer())
+	{
+		this.Sleep(1); // start game
+
+		// Report problem
+		Log.Error("Error: Tutorial can't be run in multiplayer");
+		return GSText(GSText.STR_ERROR_MULTIPLAYER);
+	}
+
+	// If GSOrders doesn't exist, OpenTTD is too old
+	try
+	{
+		// dummy code that will throw an exception if GSOrder doesn't exist
+		if(GSOrder.GetOrderCount) {}
+	}
+	catch(e)
+	{
+		return GSText(GSText.STR_ERROR_OLD_OPENTTD);
+	}
+
+	return null;
 }
 
 function TestGame::InitBeforeNewChapter(chapter_storage = {})
