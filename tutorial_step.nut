@@ -398,6 +398,60 @@ function CodeStep::IsDone()
 }
 
 /*
+ * A conditional step takes two parameters:
+ * - a function that should return true or false 
+ * - a step
+ * Only if the function returns true, the step is executed.
+ */
+class ConditionalStep extends TutorialStep
+{
+	_function = null;
+	_step = null;
+	_condition_result = null;
+
+	constructor(conditionFunc, step)
+	{
+		this._function = conditionFunc;
+		this._step = step;
+		this._condition_result = null;
+	}
+
+	function Execute();
+	function IsDone();
+}
+
+function ConditionalStep::Execute()
+{
+	this._condition_result = this._function(this._storage);
+	if(this._condition_result)
+	{
+		this._step.Execute();
+	}
+}
+
+function ConditionalStep::IsDone()
+{
+	return !this._condition_result || // if the condition returned false => the step was not executed => done
+		this._step.IsDone(); // else, ask the step if it is done
+}
+
+function ConditionalStep::Event(event)
+{
+	// pass along event to the step if it has been executed
+	if(this._condition_result == true)
+	{
+		this._step.Event(event);
+	}
+}
+
+// Also, override the SetStorageTable function to pass the pointer along to the child step
+function ConditionalStep::SetStorageTable(table)
+{
+	this._storage = table;
+	this._step.SetStorageTable(table);
+}
+
+/*
  * A gui highlight step flashes a GUI button and ends
  * when that GUI button is clicked by a user.
  *
