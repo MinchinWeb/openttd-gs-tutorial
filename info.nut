@@ -1,10 +1,13 @@
+/*
+ * License: GPL2
+ */
 
 class TestGame extends GSInfo {
 	function GetAuthor()		{ return "Zuu"; }
-	function GetName()			{ return "Game Tutorial"; }
-	function GetDescription() 	{ return "Select this as game script and start a new game"; }
-	function GetVersion()		{ return 4; }
-	function GetDate()			{ return "2001-01-21"; }
+	function GetName()			{ return "Beginner Tutorial"; }
+	function GetDescription() 	{ return "Select this as game script and start a new game. The tutorial is intended to be used without NewGRFs."; }
+	function GetVersion()		{ return 5; }
+	function GetDate()			{ return "2001-01-22"; }
 	function CreateInstance()	{ return "TestGame"; }
 	function GetShortName()		{ return "TUT_"; }
 	function GetAPIVersion()	{ return "1.2"; }

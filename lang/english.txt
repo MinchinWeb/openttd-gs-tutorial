@@ -1,5 +1,5 @@
 STR_INTRO_1         :Introductory Chapter{}{}Hello and welcome to this ingame OpenTTD tutorial!
-STR_INTRO_2         :Chapters:{}{}1. Aircraft{}2. Ships{}3. Road Vehicles{}4. Trains
+STR_INTRO_2         :Chapters:{}{}1. Aircraft{}2. Ships (todo){}3. Road Vehicles (todo){}4. Trains (todo)
 
 
 STR_AIRPLANES_1_1_1_INTRO      :Aircraft - Building the First Airport{}{}In this first chapter, we are going to connect two towns using aircraft. We are going to start by building an airport in {TOWN}.
