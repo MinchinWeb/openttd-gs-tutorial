@@ -22,11 +22,6 @@ class ChapterAirplanes {
 		table.town_a <- 0;
 		table.town_b <- 2;
 
-		local t = {};
-		t.test <- "123";
-		Log.Info(t.rawget("test"));
-			//Log.Info("param : " + this._storage.raw_get(this._param));
-
 	}));
 
 	// 1.1 First airport
@@ -105,6 +100,12 @@ class ChapterAirplanes {
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_4_ORDERS), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_SHOW_ORDERS, WAIT));
 
+	// conditionally show a message to click on goto if quick goto is off.
+	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
+		MessageWindowStep(GSText(GSText.STR_AIRPLANES_CLICK_GO_TO), NO_WAIT)));
+	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
+		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("aircraft"), GSWindow.WID_O_GOTO, WAIT)));
+
 	// temporary use WAIT for this step, until OpenTTD supports waiting for an order to exist
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), WAIT, TableKey("town_b"))); // click on ap in town b
 	/*main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
@@ -122,6 +123,13 @@ class ChapterAirplanes {
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_STATIONS, WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_STATION_LIST, HUMAN_COMPANY, GSWindow.WID_STL_LIST, NO_WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_7_STATION_LIST), WAIT, TableKey("airport_a")));
+
+	// click on goto again if quick goto is off
+	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
+		MessageWindowStep(GSText(GSText.STR_AIRPLANES_CLICK_GO_TO), NO_WAIT)));
+	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
+		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("aircraft"), GSWindow.WID_O_GOTO, WAIT)));
+
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), WAIT));
 	// todo: wait for order to be added instead of the continue button
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_9_START_AIRCRAFT), NO_WAIT));

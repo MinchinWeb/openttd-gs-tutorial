@@ -28,6 +28,7 @@ STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :In this window you can see several details 
 STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this tutorial.{}{}Take a look at the aircraft in operation and perhaps add another aircraft. When you feel ready to continue with this guide, close this window and all other windows by pressing the DELETE button on your keyboard.
 
 # Other strings that are not in the regular timeline of messages
+STR_AIRPLANES_CLICK_GO_TO      :Click on the Go To button.
 STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to build an airport in {TOWN}.
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
