@@ -1,39 +1,39 @@
-STR_INTRO_1         :Introductory Chapter{}{}Hello and welcome to this ingame OpenTTD tutorial!
-STR_INTRO_2         :Chapters:{}{}1. Aircraft{}2. Ships (todo){}3. Road Vehicles (todo){}4. Trains (todo)
+STR_INTRO_1         :Introductory Chapter{}{}Hello, and welcome to this ingame OpenTTD tutorial!
+STR_INTRO_2         :Chapters:{}{}1. Aircraft{}2. Ships (Incomplete){}3. Road Vehicles (Incomplete){}4. Trains (Incomplete)
 
 
-STR_AIRPLANES_1_1_1_INTRO      :Aircraft - Building the First Airport{}{}In this first chapter, we are going to connect two towns using aircraft. We are going to start by building an airport in {TOWN}.
-STR_AIRPLANES_1_1_2_PLACEMENT  :We are going to try to build an airport near this town. Please click on the highlighted buttons, starting on the main toolbar.
-STR_AIRPLANES_1_1_3_ACCEPTANCE :To get the greatest number of passengers at our airport, we want to have as much of the town as possible within the coverage area. The small airport has a coverage area radius of 4 tiles, which can be can be shown using the GUI. Click on the highlighted button.
-STR_AIRPLANES_1_1_4_ACCEPTANCE :At the bottom of the airport selection window, you will notice two lines of text. One starts with "Accepts", while the other starts with "Supplies". After this, those cargo types which are currently available in the coverage area will be shown, both for collection ("Supplies") and delivery ("Accepts"). It's important to place your airport where it will both "Accept" and "Supply" passengers.
+STR_AIRPLANES_1_1_1_INTRO      :Aircraft - Building an Airport{}{}In this first chapter, you'll be shown how to transport passengers between two towns using aircraft. You'll start by building an airport in {TOWN}.
+STR_AIRPLANES_1_1_2_PLACEMENT  :You are going to build your first airport near this town. Click on the highlighted buttons, starting on the main toolbar.
+STR_AIRPLANES_1_1_3_ACCEPTANCE :To get the greatest number of passengers at your airport, you want to have as much of the town as possible within its coverage area. The small airport has a coverage area radius of four tiles, which can be shown using the GUI. Click on the highlighted button.
+STR_AIRPLANES_1_1_4_ACCEPTANCE :At the bottom of the airport selection window, you can see two lines of text. One starts with "Accepts", while the other starts with "Supplies". After this, those cargo types which are currently available in the coverage area will be shown, both for collection ("Supplies") and delivery ("Accepts"). It's important to place your airport where it will both "Accept" and "Supply" passengers.
 STR_AIRPLANES_1_1_5_PLACE_AP   :Move your cursor so that the white squares are on a flat area with no buildings or roads. Any trees will be removed automatically. Make sure that the blue squares, which show the coverage area of the airport, cover as much of the town as possible. Click on the ground to build the airport.
 
-STR_AIRPLANES_1_2_1_WHERE      :Building the Second Airport{}{}In order to transport passengers they need somewhere to go. So we are going to continue by building a second airport. This airport will be built reasonably far away from the first, as passengers generally pay more the further they travel. We are also going to look for a town with a similar population size to the first one, as this means that there will be an equal amount of passengers going in each direction. We are going to build the second airport near {TOWN}.
-STR_AIRPLANES_1_2_2_BUILD      :To build the second airport in {TOWN}, follow the same steps as when we built the first airport in {TOWN}. 
+STR_AIRPLANES_1_2_1_WHERE      :Building a Second Airport{}{}In order to transport passengers they need somewhere to go. For this to be possible, you will need to build a second airport. This airport will be built reasonably far away from the first, as passengers generally pay your company more the further they travel. Your second airport should be built near a town with a similar population size to the first one, as this means that there will be an equal amount of passengers going in each direction. This time, you should build your second airport near {TOWN}.
+STR_AIRPLANES_1_2_2_BUILD      :To build your second airport in {TOWN}, follow the same steps as when you built the first airport in {TOWN}, as shown by the highlighted buttons. 
 
-STR_AIRPLANES_1_3_1_HANGAR     :Buying an Aircraft{}{}Now we are ready to buy an aircraft. Click on the hangar building in the airport.
-STR_AIRPLANES_1_3_2_BUY        :In OpenTTD, we buy the aircraft first, then assign orders to it. Click on the highlighted button to choose an aircraft.
-STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :Select an aircraft and click on the highlighted button to buy it. You may want to choose the Coleman Count, as this has the highest capacity.
-STR_AIRPLANES_1_3_4_ORDERS     :Next, we are going to assign orders to the aircraft so that it knows where to go. Click on the highlighted button to open the orders window.
-STR_AIRPLANES_1_3_5_ORDERS     :Click anywhere on the airport in {TOWN} except on the hangar.
-STR_AIRPLANES_1_3_6_STATION_LIST :To get back to Town A, you can use the station list window which shows a list of all of your stations. Click on the highlighted button on the main toolbar.
+STR_AIRPLANES_1_3_1_HANGAR     :Buying an Aircraft{}{}Now you are ready to buy your first aircraft. Click on the hangar building in the airport.
+STR_AIRPLANES_1_3_2_BUY        :In OpenTTD, you buy the aircraft first, then assign orders to it. Click on the highlighted button to choose an aircraft.
+STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :Select an aircraft by clicking on it, then click on the highlighted button to buy it. You may want to choose the Coleman Count, as this has the highest capacity.
+STR_AIRPLANES_1_3_4_ORDERS     :Next, you will need to assign orders to the aircraft so that it knows where to go. Click on the highlighted button to open the orders window.
+STR_AIRPLANES_1_3_5_ORDERS     :Click anywhere on the airport in {TOWN}, excluding the hangar. This gives an order to the aircraft to go to this airport, and load any passengers and mail which are waiting.
+STR_AIRPLANES_1_3_6_STATION_LIST :To get back to your first airport, you can use the station list window which shows a list of all of your stations. Click on the highlighted button on the main toolbar.
 STR_AIRPLANES_1_3_7_STATION_LIST :Click on {STATION} in the list.
-STR_AIRPLANES_1_3_8_ORDERS     :Now, in the main viewport, click anywhere on the airport except on the hangar. This gives an order to the aircraft to go to this airport, and load any passengers and mail which are waiting.
-STR_AIRPLANES_1_3_9_START_AIRCRAFT :Now we have finished assigning orders to the aircraft. Close the orders window using the cross. The final step is to start the aircraft. Click once on the highlighted horizontal button in the aircraft's window to start it.
+STR_AIRPLANES_1_3_8_ORDERS     :Now, in the main viewport, click anywhere on the airport, excluding the hangar. 
+STR_AIRPLANES_1_3_9_START_AIRCRAFT :Now your aircraft has its orders. Close the orders window using the cross.{}{}The final step is to start your aircraft. Click once on the highlighted horizontal button in the aircraft's window to start it.
 
-STR_AIRPLANES_1_4_1_SUM_UP     :Summary{}{}You have now completed your first transport route in OpenTTD. Before finishing, we are going to take a look at some details of the route. To see the number of passengers and amount of mail waiting at the airport, click anywhere on the airport except on the hangar.
-STR_AIRPLANES_1_4_2_STATION_WINDOW :In the station window, you can see at the top the cargo waiting to be collected. Below the line, you can see the different cargo types that the airport accepts. These are the cargo types which can be delivered to this airport from another one. If you click on the ratings button, you will see how good a rating your transport company has at this airport.{}{}Knowing how many people are waiting at your airports is an important factor in deciding when you should buy another aircraft.
-STR_AIRPLANES_1_4_3_AIRCRAFT_PROFIT :Another important thing to check is if your aircraft is making a profit, and how many people are using the aircraft. Click on the highlighted button on the aircraft window to see the aircraft's details.
-STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :In this window you can see several details about your aircraft: yearly profit, how much cargo is currently loaded, capacity, etc.{}{}If you would like to rename your aircraft or change the service interval, these can be done using controls in this window.
-STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this tutorial.{}{}Take a look at the aircraft in operation and perhaps add another aircraft. When you feel ready to continue with this guide, close this window and all other windows by pressing the DELETE button on your keyboard.
+STR_AIRPLANES_1_4_1_SUM_UP     :Summary{}{}You have now completed your first transport route in OpenTTD. Before moving onto the next chapter, this tutorial will show you how to look at some more detailed information about your route.{}{}To see the number of passengers and the amount of mail waiting at an airport, click anywhere on the airport, excluding the hangar.
+STR_AIRPLANES_1_4_2_STATION_WINDOW :In this window, you can see at the top the cargo waiting to be collected from the airport. Knowing how many people are waiting at your airports is an important factor in deciding when you should buy another aircraft.{}{}Below the line, you can see the different cargo types that the airport accepts. These are the cargo types which can be delivered to this airport from another one. If you click on the ratings button, this will change to show you how good a rating your transport company has at this airport.
+STR_AIRPLANES_1_4_3_AIRCRAFT_PROFIT :Another important piece of information to know is whether or not your aircraft is making a profit, and how many people are using the aircraft. Click on the highlighted button on the aircraft window to see the aircraft's details.
+STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :In this window you can see several pieces of information about your aircraft: yearly profit, how much cargo is currently loaded, capacity, etc.{}{}If you would like to rename your aircraft or change its service interval, you can do this using controls in this window.
+STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this tutorial.{}{}Take a look at the aircraft in operation, then perhaps add another aircraft. When you feel ready to continue with this tutorial, close this window and all other windows by pressing the DELETE button on your keyboard.
 
 # Other strings that are not in the regular timeline of messages
-STR_AIRPLANES_CLICK_GO_TO      :Click on the Go To button.
+STR_AIRPLANES_CLICK_GO_TO      :Click on the highlighted Go To button.
 STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to build an airport in {TOWN}.
-STR_AIRPLANES_NOTICE_HANGAR_ORDER         :You clicked on the hangar, not the airport.{}{}1. Select the order in the order window by clicking on it.{}2.Click on the delete button in the order window.{}3. Click on the Go To button{}4. Try to add an order to {STATION} again by clicking somewhere else on the airport than on the hangar.
+STR_AIRPLANES_NOTICE_HANGAR_ORDER         :You have clicked on the hangar, not on the airport.{}{}1. Select the order concerning the hangar in the order window by clicking on it.{}2.Click on the delete button in the order window.{}3. Click on the Go To button.{}4. Try to add an order to {STATION} again by clicking somewhere on the airport other than the hangar.
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
 STR_NO_MORE_CHAPTERS  :End of Tutorial{}{}There are no more chapters in this tutorial. To revise what you've learnt and to continue learning more about OpenTTD, you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their playing styles.
-STR_ERROR_MULTIPLAYER :The tutorial cannot be run in multiplayer games. It can only be run in a single player game.
+STR_ERROR_MULTIPLAYER :This tutorial cannot be run in multiplayer games. It can only be run in a single player game.
 STR_ERROR_OLD_OPENTTD :Your OpenTTD version is too old to run the Tutorial.{}{}Minimum version is r23837.
