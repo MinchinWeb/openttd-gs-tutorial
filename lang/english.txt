@@ -15,7 +15,7 @@ STR_AIRPLANES_1_3_1_HANGAR     :Buying an Aircraft{}{}Now we are ready to buy an
 STR_AIRPLANES_1_3_2_BUY        :In OpenTTD, we buy the aircraft first, then assign orders to it. Click on the highlighted button to choose an aircraft.
 STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :Select an aircraft and click on the highlighted button to buy it. You may want to choose the Coleman Count, as this has the highest capacity.
 STR_AIRPLANES_1_3_4_ORDERS     :Next, we are going to assign orders to the aircraft so that it knows where to go. Click on the highlighted button to open the orders window.
-STR_AIRPLANES_1_3_5_ORDERS     :Click on the airport in {TOWN}.
+STR_AIRPLANES_1_3_5_ORDERS     :Click anywhere on the airport in {TOWN} except on the hangar.
 STR_AIRPLANES_1_3_6_STATION_LIST :To get back to Town A, you can use the station list window which shows a list of all of your stations. Click on the highlighted button on the main toolbar.
 STR_AIRPLANES_1_3_7_STATION_LIST :Click on {STATION} in the list.
 STR_AIRPLANES_1_3_8_ORDERS     :Now, in the main viewport, click anywhere on the airport except on the hangar. This gives an order to the aircraft to go to this airport, and load any passengers and mail which are waiting.
