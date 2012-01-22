@@ -30,6 +30,7 @@ STR_AIRPLANES_1_4_5_DONE       :You have now completed the first chapter of this
 # Other strings that are not in the regular timeline of messages
 STR_AIRPLANES_CLICK_GO_TO      :Click on the Go To button.
 STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to build an airport in {TOWN}.
+STR_AIRPLANES_NOTICE_HANGAR_ORDER         :You clicked on the hangar, not the airport.{}{}1. Select the order in the order window by clicking on it.{}2.Click on the delete button in the order window.{}3. Click on the Go To button{}4. Try to add an order to {STATION} again by clicking somewhere else on the airport than on the hangar.
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 

@@ -107,18 +107,10 @@ class ChapterAirplanes {
 		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("aircraft"), GSWindow.WID_O_GOTO, WAIT)));
 
 	// temporary use WAIT for this step, until OpenTTD supports waiting for an order to exist
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), WAIT, TableKey("town_b"))); // click on ap in town b
-	/*main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
-	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order
-		local company_mode = GSCompanyMode(HUMAN_COMPANY);
-		while(true)
-		{
-			//GSOrder is not yet in OpenTTD
-			GSOrder.GetOrderCount
-		}
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_5_ORDERS), NO_WAIT, TableKey("town_b"))); // click on ap in town b
+	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order to airport b
+		ChapterAirplanes.WaitForOrderToAirport(table.aircraft, table.airport_b);
 	}));
-	*/
-
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_6_STATION_LIST), NO_WAIT, TableKey("town_a")));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_STATIONS, WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_STATION_LIST, HUMAN_COMPANY, GSWindow.WID_STL_LIST, NO_WAIT));
@@ -130,8 +122,10 @@ class ChapterAirplanes {
 	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
 		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("aircraft"), GSWindow.WID_O_GOTO, WAIT)));
 
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), WAIT));
-	// todo: wait for order to be added instead of the continue button
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), NO_WAIT));
+	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order to airport a
+		ChapterAirplanes.WaitForOrderToAirport(table.aircraft, table.airport_a);
+	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_9_START_AIRCRAFT), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("aircraft"), GSWindow.WID_VV_START_STOP, WAIT));
 
@@ -189,4 +183,40 @@ class ChapterAirplanes {
 	}
 
 	return -1;
+}
+
+/*static*/ function ChapterAirplanes::WaitForOrderToAirport(aircraft, station_id)
+{
+	local company_mode = GSCompanyMode(HUMAN_COMPANY);
+	local message_id = 2;
+	local message = false;
+	while(true)
+	{
+		for(local i = 0; i < GSOrder.GetOrderCount(aircraft); i++)
+		{
+			if(GSOrder.IsGotoStationOrder(aircraft, i) &&
+					GSStation.GetStationID(GSOrder.GetOrderDestination(aircraft, i)) == station_id)
+			{
+				return;
+			}
+			else if(!message && GSOrder.IsGotoDepotOrder(aircraft, i))
+			{
+				company_mode = null;
+
+				// GSGoal.Question don't work with a company mode active
+				message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_AIRPLANES_NOTICE_HANGAR_ORDER, station_id), GSGoal.QT_WARNING, GSGoal.BUTTON_CLOSE);
+				company_mode = GSCompanyMode(HUMAN_COMPANY);
+
+
+				local order_count = GSOrder.GetOrderCount(aircraft);
+				GSWindow.Highlight(GSWindow.WC_VEHICLE_ORDERS, aircraft, GSWindow.WID_O_ORDER_LIST, GSWindow.TC_DARK_BLUE);
+				GSWindow.Highlight(GSWindow.WC_VEHICLE_ORDERS, aircraft, GSWindow.WID_O_DELETE, GSWindow.TC_DARK_BLUE);
+				while(GSOrder.GetOrderCount(aircraft) == order_count) { GSController.Sleep(1); } // wait until order has been removed
+				GSWindow.Highlight(GSWindow.WC_VEHICLE_ORDERS, aircraft, GSWindow.WID_O_GOTO, GSWindow.TC_DARK_BLUE);
+
+			}
+		}
+
+		GSController.Sleep(1);
+	}
 }
