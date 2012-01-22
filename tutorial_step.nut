@@ -398,7 +398,7 @@ function CodeStep::IsDone()
 }
 
 /*
- * A code step flashes a GUI button and ends
+ * A gui highlight step flashes a GUI button and ends
  * when that GUI button is clicked by a user.
  *
  * The click event is catched by the main
