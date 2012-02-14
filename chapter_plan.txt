@@ -164,102 +164,102 @@ At the bottom of the "airport selection" window, you will notice two lines. One 
 
 	2.1 - Ship dock construction
 	
-		In this part we are going to move oil from an oil rig to an oil refinery using a ship. First you will need to build a dock next to the oil refinery.
+	1	In this part we are going to move oil from an oil rig to an oil refinery using a ship. First you will need to build a dock next to the oil refinery.
 	
 		<move viewport to the oil refinery>
 	
-		First you need to open the waterway construction window.
+	2	First you need to open the waterway construction window.
 	
 		<highlight waterways construction button in the main toolbar, wait until the user clicks it>
 	
-		Good, now you need to select the ship dock and place it near the oil refinery in such a way the catchment area overlaps the oil refinery and half of the ship dock is on water.
+	3	Good, now you need to select the ship dock and place it near the oil refinery in such a way the catchment area overlaps the oil refinery and half of the ship dock is on water.
 	
 		<highlight the ship dock and wait until the player has selected it and placed one near the oil refinery>
 	
-		Well done. The oil refinery can receive oil from ships now.
+	4	Well done. The oil refinery can receive oil from ships now.
 	
 
 	2.2 - Ship depot construction
 	
-		Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate depot for ships. So we are going to build one now.
+	1	Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate depot for ships. So we are going to build one now.
 	
 		<highlight the ship depot>
 	
-		Now, place it on the water near the ship dock, but don't block the ship dock.
+	2	Now, place it on the water near the ship dock, but don't block the ship dock.
 	
 		<wait until the player has placed a ship depot>
 	
 
 	2.3 - Buying a ship and giving it orders
 		
-		Select the depot and buy a ship capable of transporting oil.
+	1	Select the depot and buy a ship capable of transporting oil.
 	
 		<wait until the player has bought a ship>
 	
-		Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery.
+	2	Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery.
 	
 		<move the few port to the oil rig>
 	
-		Oh no! The oil rig hasn't got a ship dock next to it. No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station. Give the ship orders for the oil rig and the ship dock next to the oil refinery.
+	3	Oh no! The oil rig hasn't got a ship dock next to it. No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station. Give the ship orders for the oil rig and the ship dock next to the oil refinery.
 	
 		<wait until the player has given the ship the orders>
 	
 
 	2.4 - The first order flag
 	
-		Now, let the ship leave the the depot. It'll go its merry way.
+	1	Now, let the ship leave the the depot. It'll go its merry way.
 	
 		<wait until the ship has left the oil rig for the second time>
 	
-		Good, lets see how much oil the ship is transporting. Take a look at the ships details window to find that out.
+	2	Good, lets see how much oil the ship is transporting. Take a look at the ships details window to find that out.
 	
 		<Wait until the ship's details window is opened>
 		
-		Well, it is transporting oil, but not much. Lets make our ship wait for a full load. In order to do that we need to edit the ship's orders a bit. So, lets open the ship's order window.
+	3	Well, it is transporting oil, but not much. Lets make our ship wait for a full load. In order to do that we need to edit the ship's orders a bit. So, lets open the ship's order window.
 
 		<wait until the ships order window is opened>
 	
-		Now, click on the order for the oil rig.
+	4	Now, click on the order for the oil rig.
 	
 		<wait until the order for the oil rig is selected>
 	
-		Good, now look at the two rows of buttons at the bottom of the window. The top row is for order flags, the bottom row is for deleting or adding orders.
+	5	Good, now look at the two rows of buttons at the bottom of the window. The top row is for order flags, the bottom row is for deleting or adding orders.
 	
 		<highlight the buttons at the bottom of the window>
 	
-		Click on "full load any cargo"
+	6	Click on "full load any cargo"
 	
 		<wait until the "full load" button is pressed>
 	
 		<Highlight the order for the oil rig again>
 	
-		Notice the change in the order. When the ship next attends the oil rig it will wait for a full load of oil before departing. It will take some time for the ship to load, so we will just continue.
+	7	Notice the change in the order. When the ship next attends the oil rig it will wait for a full load of oil before departing. It will take some time for the ship to load, so we will just continue.
 
 
 
 	2.5 - canals
 	
-		Well our first ship will handle itself just fine now, however there is a second oil rig somewhere else. However there is a slight problem; we cannot reach it as there as no sea route between our oil refinery and the oil rig.
+	1	Well our first ship will handle itself just fine now, however there is a second oil rig somewhere else. However there is a slight problem; we cannot reach it as there as no sea route between our oil refinery and the oil rig.
 		
 		There are two ways to create a route to that oil rig. The first is to simply lower the land to create a path the second is to create a canal. We are going to create a canal, terraforming will come later.
 		
-		Start by selecting the canal.
+	2	Start by selecting the canal.
 		
 		<highlight the canal tool>
 		
-		Now, start laying down canal tiles between the two highlighted tiles.
+	3	Now, start laying down canal tiles between the two highlighted tiles.
 		
 		<wait until the player connected both tiles with canal tiles>
 		
-		Now, select the build lock tool.
+	4	Now, select the build lock tool.
 		
 		<highlight the build lock tool and wait until the user selects it>
 		
-		Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
+	5	Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
 		
 		<wait until the user has placed a lock at either end of the canal>
 		
-		Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait foor a full load too.
+	6	Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait foor a full load too.
 		
 		<wait until the user has built a new ship and has given it orders for the new oil rig and oil refinery>
 		
