@@ -2,9 +2,11 @@
 require("menu.nut");
 require("tutorial_step.nut");
 require("chapter_intro.nut");
+require("chapter_navigation.nut");
 require("chapter_airplanes.nut");
 require("chapter_ships.nut");
-require("chapter_road_vehicles.nut");
+require("chapter_trucks.nut");
+require("chapter_buses.nut");
 require("chapter_trains.nut");
 
 /* Import SuperLib for GameScript */
@@ -21,7 +23,7 @@ Industry <- SuperLib.Industry;
 /* Globals */
 g_menu <- null;
 HUMAN_COMPANY <- 0;
-CHAPTER_LIST <- [ ChapterIntro, ChapterAirplanes, ChapterShips, ChapterRoadVehicles, ChapterTrains ];
+CHAPTER_LIST <- [ ChapterIntro, ChapterNavigation, ChapterAirplanes, ChapterShips, ChapterTrucks, ChapterBuses, ChapterTrains ];
 //CHAPTER_LIST <- [ "intro", "airplanes", "ships", "road vehicles", "trains" ];
 
 
@@ -273,10 +275,101 @@ function TestGame::GetChapterIndex(chapter_id)
 
 function TestGame::GetNextChapter(chapter_id)
 {
-	local index = TestGame.GetChapterIndex(chapter_id);
-	if(index < 0) return null;
-	if(index + 1 >= CHAPTER_LIST.len()) return null;
-	return CHAPTER_LIST[index + 1];
+	local chapter_index = null;
+
+	local button = this.ModalQuestion(GSText(GSText.STR_NEXT_CHAPTER_OR_SELECT), GSGoal.BUTTON_YES + GSGoal.BUTTON_NO);
+	if(button == GSGoal.BUTTON_YES)
+	{
+		// Display chapter menu
+		local i = 0;
+		while(chapter_index == null)
+		{
+			// Pick buttons
+			local buttons = GSGoal.BUTTON_PREVIOUS + GSGoal.BUTTON_START + GSGoal.BUTTON_NEXT;
+
+			// Display message for chapter i
+			button = this.ModalQuestion(GSText(GSText.STR_CHAPTER_MENU_INTRO + i), buttons);
+
+			switch(button)
+			{
+				case GSGoal.BUTTON_PREVIOUS:
+					if(i > 0)
+						i--;
+					else
+						i = CHAPTER_LIST.len() -1; // loop around
+					break;
+
+				case GSGoal.BUTTON_NEXT:
+					if(i < CHAPTER_LIST.len() - 1)
+						i++;
+					else
+						i = 0; // loop around
+					break;
+
+				case GSGoal.BUTTON_START:
+					chapter_index = i;
+					break;
+			}
+		}
+
+	}
+	else
+	{
+		// Use chapter + 1 as next chapter
+		chapter_index = TestGame.GetChapterIndex(chapter_id) + 1;
+	}
+	
+	if(chapter_index < 0) return null;
+	if(chapter_index >= CHAPTER_LIST.len()) return null;
+	return CHAPTER_LIST[chapter_index];
+
 }
+
+// Returns the clicked button. Redisplays the question at timeout until the user answer the question.
+function TestGame::ModalQuestion(text, buttons)
+{
+	local button = -1;
+	while(true) // <-- redisplay the question at timeout rather than assuming a specific answer
+	{
+		local question_id = 0;
+		local timeout = 60 * 3;
+		GSGoal.Question(question_id, HUMAN_COMPANY, text, GSGoal.QT_QUESTION, buttons);
+		button = this.WaitForButtonEvent(question_id, timeout);
+		if(button != -1)
+			break;
+	}
+
+	return button;
+}
+
+// This function eats all events while it is waiting for the question event!
+// Returns -1 on timeout
+// timeoutSeconds == -1 => no timeout
+function TestGame::WaitForButtonEvent(questionUniqueId, timeoutSeconds)
+{
+	local start_time = GSDate.GetSystemTime();
+	while(timeoutSeconds == -1 || start_time + timeoutSeconds > GSDate.GetSystemTime())
+	{
+		if(GSEventController.IsEventWaiting())
+		{
+			local ev = GSEventController.GetNextEvent();
+			local ev_type = ev.GetEventType();
+
+			if(ev_type == GSEvent.ET_GOAL_QUESTION_ANSWER)
+			{
+				local click_event = GSEventGoalQuestionAnswer.Convert(ev);
+				if(click_event.GetUniqueID() == questionUniqueId)
+					return click_event.GetButton();
+			}
+		}
+
+		this.Sleep(1);
+	}
+
+	// Timeout
+	return -1;
+}
+
+			
 
 

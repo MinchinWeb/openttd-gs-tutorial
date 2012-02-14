@@ -1,5 +1,21 @@
+# ----- Chapter selection menu ------------------------------------------------
+
+STR_NEXT_CHAPTER_OR_SELECT :Do you want to select your next chapter?{}{}Yes = Show a dialog to pick next chapter{}No = Go to next chapter in sequence
+
+# WARNING: Don't change the order of these strings! The code rely on them being in the same order as the chapters
+STR_CHAPTER_MENU_INTRO      :0. Intro{}{}This chapter gives a short introduction to the tutorial.
+STR_CHAPTER_MENU_NAVIGATION :1. Navigation{}{}This chapter shows the basics on how to navigate in OpenTTD.
+STR_CHAPTER_MENU_AIRCRAFT   :2. Aircraft{}{}Topics: airports, aircrafts, coverage radius, station list
+STR_CHAPTER_MENU_SHIPS      :3. Ships{}{}[Description of chapter]
+STR_CHAPTER_MENU_TRUCKS     :4. Trucks{}{}[Description of chapter]
+STR_CHAPTER_MENU_BUSES      :5. Buses and town growth{}{}[Description of chapter]
+STR_CHAPTER_MENU_TRAINS     :6. Trains{}{}[Description of chapter]
+
+
+# ----- Chapters --------------------------------------------------------------
+
 STR_INTRO_1         :Introductory Chapter{}{}Hello, and welcome to this ingame OpenTTD tutorial!
-STR_INTRO_2         :Chapters:{}{}1. Aircraft{}2. Ships (Incomplete){}3. Road Vehicles (Incomplete){}4. Trains (Incomplete)
+STR_INTRO_2         :Chapters:{}{}0. Introduction (this chapter){}1. Navigation{}2. Aircraft{}3. Ships (Incomplete){}4. Trucks (Incomplete){}5. Buses (Incomplete){}6. Trains (Incomplete){}{}The tutorial have been designed for taking the chapters in this order, but after each chapter you will be given an option to jump to whatever chapter you want.
 
 
 STR_AIRPLANES_1_1_1_INTRO      :Aircraft - Building an Airport{}{}In this first chapter, you'll be shown how to transport passengers between two towns using aircraft. You'll start by building an airport in {TOWN}.
@@ -34,6 +50,39 @@ STR_AIRPLANES_NOTICE_HANGAR_ORDER         :You have clicked on the hangar, not o
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
-STR_NO_MORE_CHAPTERS  :End of Tutorial{}{}There are no more chapters in this tutorial. To revise what you've learnt and to continue learning more about OpenTTD, you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their playing styles.
+STR_SHIPS_2_1_1    :Ship dock construction{}{}In this part we are going to move oil from an oil rig to an oil refinery using a ship. First you will need to build a dock next to the oil refinery. When you click on continue, the main viewport will move there.
+STR_SHIPS_2_1_2    :First you need to open the waterway construction window.
+STR_SHIPS_2_1_3    :Good, now you need to select the ship dock and place it near the oil refinery in such a way the catchment area overlaps the oil refinery and half of the ship dock is on water.
+STR_SHIPS_2_1_4    :Well done. The oil refinery can receive oil from ships now.
+
+STR_SHIPS_2_2_1    :Ship depot construction{}{}Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate depot for ships. So we are going to build one now.
+STR_SHIPS_2_2_2    :Now, place it on the water near the ship dock, but don't block the ship dock.
+
+STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Select the depot and buy a ship capable of transporting oil.
+STR_SHIPS_2_3_2    :Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery.
+STR_SHIPS_2_3_3    :Oh no! The oil rig hasn't got a ship dock next to it. No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station. Give the ship orders for the oil rig and the ship dock next to the oil refinery.
+
+STR_SHIPS_2_4_1    :The first order flag{}{}Now, let the ship leave the the depot. It'll go its merry way.
+STR_SHIPS_2_4_2    :Good, lets see how much oil the ship is transporting. Take a look at the ships details window to find that out.
+STR_SHIPS_2_4_3    :Well, it is transporting oil, but not much. Lets make our ship wait for a full load. In order to do that we need to edit the ship's orders a bit. So, lets open the ship's order window.
+STR_SHIPS_2_4_4    :Now, click on the order for the oil rig.
+STR_SHIPS_2_4_5    :Good, now look at the two rows of buttons at the bottom of the window. The top row is for order flags, the bottom row is for deleting or adding orders.
+STR_SHIPS_2_4_6    :Click on "full load any cargo"
+STR_SHIPS_2_4_7    :Notice the change in the order. When the ship next attends the oil rig it will wait for a full load of oil before departing. It will take some time for the ship to load, so we will just continue.
+
+STR_SHIPS_2_5_1    :Canals{}{}Well our first ship will handle itself just fine now, however there is a second oil rig somewhere else. However there is a slight problem; we cannot reach it as there as no sea route between our oil refinery and the oil rig.{}{}There are two ways to create a route to that oil rig. The first is to simply lower the land to create a path the second is to create a canal. We are going to create a canal, terraforming will come later.
+STR_SHIPS_2_5_2    :Start by selecting the canal.
+STR_SHIPS_2_5_3    :Now, start laying down canal tiles between the two highlighted tiles.
+STR_SHIPS_2_5_4    :Now, select the build lock tool.
+STR_SHIPS_2_5_5    :Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
+STR_SHIPS_2_5_6    :Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait for a full load too.
+
+STR_SHIPS_2_5_7    :Rounding up{}{}Finally! We're done with ships. There are some more oil rigs around the map, why don't you try and connect them to the oil refinery. Alternatively you could just move on to the next chapter by clicking next.
+
+STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD :The tutorial is waiting for you to build a dock near {INDUSTRY}.
+
+
+# ----- Other messages --------------------------------------------------------
+STR_NO_MORE_CHAPTERS  :End of Tutorial{}{}There are no more chapters in this tutorial. To revise what you've learnt and to continue learning more about OpenTTD, you might want to try out your new knowledge in a game. Perhaps include one or two AI players so that you can watch their playing styles.{}{}Further documentation and tutorials can be found on the OpenTTD wiki: wiki.openttd.org.
 STR_ERROR_MULTIPLAYER :This tutorial cannot be run in multiplayer games. It can only be run in a single player game.
 STR_ERROR_OLD_OPENTTD :Your OpenTTD version is too old to run the Tutorial.{}{}Minimum version is r23837.
