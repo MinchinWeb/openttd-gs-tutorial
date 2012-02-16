@@ -1,6 +1,7 @@
 /* Include Tutorial files */
 require("menu.nut");
 require("tutorial_step.nut");
+require("common.nut");
 require("chapter_intro.nut");
 require("chapter_navigation.nut");
 require("chapter_airplanes.nut");

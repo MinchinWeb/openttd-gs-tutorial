@@ -55,17 +55,17 @@ STR_SHIPS_2_1_2    :First you need to open the waterway construction window.
 STR_SHIPS_2_1_3    :Good, now you need to select the ship dock and place it near the oil refinery in such a way the catchment area overlaps the oil refinery and half of the ship dock is on water.
 STR_SHIPS_2_1_4    :Well done. The oil refinery can receive oil from ships now.
 
-STR_SHIPS_2_2_1    :Ship depot construction{}{}Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate depot for ships. So we are going to build one now.
+STR_SHIPS_2_2_1    :Shipyard construction{}{}Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate shipyard for ships. So we are going to build one now.
 STR_SHIPS_2_2_2    :Now, place it on the water near the ship dock, but don't block the ship dock.
 
-STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Select the depot and buy a ship capable of transporting oil.
+STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Select the shipyard and buy a ship capable of transporting oil.
 STR_SHIPS_2_3_2    :Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery.
 STR_SHIPS_2_3_3    :Oh no! The oil rig hasn't got a ship dock next to it. No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station. Give the ship orders for the oil rig and the ship dock next to the oil refinery.
 
-STR_SHIPS_2_4_1    :The first order flag{}{}Now, let the ship leave the the depot. It'll go its merry way.
+STR_SHIPS_2_4_1    :The first order flag{}{}Now, let the ship leave the the shipyard. It'll go its merry way. Hold the TAB-key to enable fast forward of the game until the ship has left the oil rig for the second time.
 STR_SHIPS_2_4_2    :Good, lets see how much oil the ship is transporting. Take a look at the ships details window to find that out.
 STR_SHIPS_2_4_3    :Well, it is transporting oil, but not much. Lets make our ship wait for a full load. In order to do that we need to edit the ship's orders a bit. So, lets open the ship's order window.
-STR_SHIPS_2_4_4    :Now, click on the order for the oil rig.
+STR_SHIPS_2_4_4    :Now, click on the order for the oil rig. (then click on the continue button of this window)
 STR_SHIPS_2_4_5    :Good, now look at the two rows of buttons at the bottom of the window. The top row is for order flags, the bottom row is for deleting or adding orders.
 STR_SHIPS_2_4_6    :Click on "full load any cargo"
 STR_SHIPS_2_4_7    :Notice the change in the order. When the ship next attends the oil rig it will wait for a full load of oil before departing. It will take some time for the ship to load, so we will just continue.
@@ -77,9 +77,17 @@ STR_SHIPS_2_5_4    :Now, select the build lock tool.
 STR_SHIPS_2_5_5    :Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
 STR_SHIPS_2_5_6    :Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait for a full load too.
 
-STR_SHIPS_2_5_7    :Rounding up{}{}Finally! We're done with ships. There are some more oil rigs around the map, why don't you try and connect them to the oil refinery. Alternatively you could just move on to the next chapter by clicking next.
+STR_SHIPS_2_6_1    :Rounding up{}{}Finally! We're done with ships. There are some more oil rigs around the map, why don't you try and connect them to the oil refinery. Alternatively you could just move on to the next chapter by clicking next.
 
+# Waiting notice messages (shown only after that the tutorial have been waiting some time for the user)
 STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD :The tutorial is waiting for you to build a dock near {INDUSTRY}.
+STR_SHIPS_NOTICE_WAITING_FOR_SHIP_YARD_BUILD :The tutorial is waiting for you to build a shipyard.
+STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP   :The tutorial is waiting for you to buy a ship that takes oil. If you have already bought a ship, make sure that it can transport oil.
+STR_SHIPS_NOTICE_WAITING_FOR_ORDERS     :The tutorial is waiting for you to give orders to your new ship ({VEHICLE}). Order it to go from {STATION} to {STATION}.
+# Signs:
+STR_SHIPS_SIGN_OILRIG_STATION :Dock tile
+STR_SHIPS_SIGN_CANAL_BEGIN :Canal start
+STR_SHIPS_SIGN_CANAL_END :Canal end
 
 
 # ----- Other messages --------------------------------------------------------
