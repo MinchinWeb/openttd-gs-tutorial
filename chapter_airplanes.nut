@@ -29,9 +29,11 @@ class ChapterAirplanes {
 	main_instance.AddStep(CodeStep( function(table) {
 		GSViewport.ScrollTo(GSTown.GetLocation(table.town_a)); // scroll viewport to town A
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_1_2_PLACEMENT), WAIT));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_AIR));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 3, GSWindow.WID_AT_AIRPORT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_1_2_PLACEMENT), NO_WAIT));
+	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_BUILD_TOOLBAR, 3); },
+		GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_AIR)));
+	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_BUILD_STATION, 3); },
+		GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 3, GSWindow.WID_AT_AIRPORT)));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_STATION, 3, GSWindow.WID_AP_BTN_DOHILIGHT, NO_WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_1_3_ACCEPTANCE), WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_1_4_ACCEPTANCE), WAIT));
