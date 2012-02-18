@@ -206,6 +206,14 @@ class MessageWindowStep extends TutorialStep
 	_wait_on_click = null;
 	_param_list = null;
 
+	// @param message literal string or GSText instance
+	// @param wait WAIT or NO_WAIT to indicate if the tutorial step should wait
+	//    for the user to close the message window or not. The message window
+	//    will also use a different button depending on the wait parameter.
+	//    If WAIT is passed, then GSGoal.BUTTON_CONTINUE is used. Otherwise,
+	//    if NO_WAIT is passed, then GSGoal.BUTTON_CLOSE is used.
+	//    
+	//
 	// As variable parameters this tutorial step accepts parameters to GSText.
 	// The parameter values can either be raw values or a TabelKey instance that
 	// contains a string that is used as key in the chapter storage table. 
@@ -257,8 +265,9 @@ function MessageWindowStep::Execute()
 
 	// Open message window
 	this._unique_id = MSG_WIN_UNIQUE_NUM;
+	local button = this._wait_on_click == WAIT? GSGoal.BUTTON_CONTINUE : GSGoal.BUTTON_CLOSE;
 	GSWindow.Close(GSWindow.WC_GOAL_QUESTION, this._unique_id); // close old window first
-	GSGoal.Question(this._unique_id, HUMAN_COMPANY, this._message, GSGoal.QT_INFORMATION, GSGoal.BUTTON_CONTINUE);
+	GSGoal.Question(this._unique_id, HUMAN_COMPANY, this._message, GSGoal.QT_INFORMATION, button);
 }
 
 function MessageWindowStep::IsDone()
