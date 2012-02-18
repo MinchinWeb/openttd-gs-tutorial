@@ -59,7 +59,7 @@ STR_SHIPS_2_1_4    :Well done. The oil refinery can receive oil from ships now.
 STR_SHIPS_2_2_1    :Shipyard construction{}{}Buying ships works the same as buying aircraft. However, while aircraft are bought in an hangar on the airport you need a separate shipyard for ships. So we are going to build one now.
 STR_SHIPS_2_2_2    :Now, place it on the water near the ship dock, but don't block the ship dock.
 
-STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Select the shipyard and buy a ship capable of transporting oil.
+STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Click on the shipyard to open the depot window and buy a ship capable of transporting oil.
 STR_SHIPS_2_3_2    :Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery. Click on continue, and you will be taken to the oilrig.
 STR_SHIPS_2_3_3    :Oh no! The oil rig hasn't got a ship dock next to it.{}{}No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station, so there we had to build a dock.{}{}Order the ship to first go to the oilrig ({STATION}) and then to the refinery dock ({STATION}). Note that you have to click on the tile marked as dock tile on the oilrig to set the goto order.
 
