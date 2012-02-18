@@ -51,7 +51,7 @@ class ChapterAirplanes {
 	main_instance.AddStep(CodeStep( function(table) {
 		GSViewport.ScrollTo(GSTown.GetLocation(table.town_b)); // scroll viewport to town B
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_2_2_BUILD), WAIT, TableKey("town_b"), TableKey("town_a")));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_2_2_BUILD), NO_WAIT, TableKey("town_b"), TableKey("town_a")));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_AIR));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 3, GSWindow.WID_AT_AIRPORT, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
@@ -198,6 +198,13 @@ class ChapterAirplanes {
 			if(GSOrder.IsGotoStationOrder(aircraft, i) &&
 					GSStation.GetStationID(GSOrder.GetOrderDestination(aircraft, i)) == station_id)
 			{
+				if(message)
+				{
+					company_mode = null;
+					GSLog.Info("close " + message_id);
+					GSGoal.CloseQuestion(message_id);
+					//company_mode = GSCompanyMode(HUMAN_COMPANY);
+				}
 				return;
 			}
 			else if(!message && GSOrder.IsGotoDepotOrder(aircraft, i))
@@ -220,4 +227,5 @@ class ChapterAirplanes {
 
 		GSController.Sleep(1);
 	}
+
 }
