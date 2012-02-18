@@ -24,6 +24,10 @@ class ChapterShips {
 		// Industry index 1 and 2
 		table.oilrig1 <- 1;
 		table.oilrig2 <- 2;
+
+		// station IDs for the oilrig stations
+		table.oilrig1_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig1));
+		table.oilrig2_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig2));
 	}));
 
 	// 2.1 - Ship dock construction (for refinery)
@@ -33,6 +37,7 @@ class ChapterShips {
 	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_2), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_3), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_STATION, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
@@ -49,7 +54,8 @@ class ChapterShips {
 	// 2.2 - Ship depot construction
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_2_1), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_DEPOT, NO_WAIT));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_DEPOT, WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_2_2), NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterShips.WaitForShipyard();
@@ -79,25 +85,31 @@ class ChapterShips {
 		GSController.Sleep(25); // sleep a short while
 		GSSign.BuildSign(station_loc, GSText(GSText.STR_SHIPS_SIGN_OILRIG_STATION)); // put a sign ontop of the station tile
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_3), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_3), NO_WAIT, TableKey("oilrig1_station"), TableKey("refinery_dock")));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click on orders button
+	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_VEHICLE_ORDERS, table.ship1); },
+		GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_ORDERS, WAIT))); // highlight btn to open orders window only if it is not open
+	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
+		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_GOTO, NO_WAIT)));
 	main_instance.AddStep(CodeStep( function(table) {
-		local oilrig_station = GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig1));
-		Common.WaitForOrderToStations(table.ship1, [table.refinery_dock, oilrig_station],
-			GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_ORDERS, table.ship1, oilrig_station, table.refinery_dock));
+		Common.WaitForOrderToStations(table.ship1, [table.refinery_dock, table.oilrig1_station],
+			GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_ORDERS, table.ship1, table.oilrig1_station, table.refinery_dock));
 	}));
 
 	// 2.4 - The first order flag
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_1), NO_WAIT));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click on start/stop button
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_START_STOP, WAIT)); 
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterShips.WaitForShipLeavingOilrigSecondTime(table);
 	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_2), NO_WAIT));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_DETAILS, NO_WAIT)); // don't wait on highlight click as the user might not have the vehicle window open
-	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DETAILS, TableKey("ship1"), WAIT_ON_OPEN));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_DETAILS, WAIT)); 
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_3), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_ORDERS, WAIT));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_ORDER_LIST, NO_WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_4), WAIT)); // click on oil rig order
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_4), NO_WAIT, TableKey("oilrig1_station"))); // click on oil rig order
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_ORDER_LIST, WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_5), WAIT)); // inform about buttons at bottom
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_6), NO_WAIT)); // ask to click on full load any cargo
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_FULL_LOAD, WAIT));
@@ -106,9 +118,9 @@ class ChapterShips {
 	// 2.5 - canals
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_1), WAIT)); // intro to canals
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_2), NO_WAIT)); // select canal tool
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER));
 	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_BUILD_TOOLBAR, 2); }, // highlight button to open water toolbar if it is not already open
 		GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER, WAIT)));
+	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_CANAL, WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_3), WAIT)); // connect highlighted tiles
 	// todo: detect that the two tiles are connected with canal tiles
@@ -145,24 +157,19 @@ class ChapterShips {
 		GSGoal.CloseQuestion(message_id);
 }
 
-/*static*/ function ChapterShips::CoverageDistance(station, tileb)
+/*static*/ function ChapterShips::DockInTileArea(station, tile_list)
 {
-	local tilea = GSStation.GetLocation(station);
-	local dx = Helper.Abs(GSMap.GetTileX(tilea) - GSMap.GetTileX(tileb));
-	local dy = Helper.Abs(GSMap.GetTileY(tilea) - GSMap.GetTileY(tileb));
-
-	GSLog.Info(dx + ":" + dy);
-
-	return Helper.Max(dx, dy);
+	return tile_list.HasItem(GSStation.GetLocation(station));
 }
 
 /*static*/ function ChapterShips::GetDockForIndustry(industry)
 {
 	local company_mode = GSCompanyMode(HUMAN_COMPANY);
 	local st_list = GSStationList(GSStation.STATION_DOCK);
+	local allowed_dock_tiles = GSTileList_IndustryAccepting(industry, GSStation.GetCoverageRadius(GSStation.STATION_DOCK));
 
-	st_list.Valuate(ChapterShips.CoverageDistance, GSIndustry.GetLocation(industry));
-	st_list.RemoveAboveValue(GSStation.GetCoverageRadius(GSStation.STATION_DOCK));
+	st_list.Valuate(ChapterShips.DockInTileArea, allowed_dock_tiles);
+	st_list.KeepValue(1);
 
 	if(st_list.IsEmpty())
 		return -1;
@@ -309,4 +316,62 @@ class ChapterShips {
 
 		GSController.Sleep(1); 
 	} 
+}
+
+/*static*/ function ChapterShips::WaitForCanal(fromTile, toTile)
+{
+	local start_time = GSDate.GetSystemTime();
+	local message = false;
+	local message_id = 2; // used as uniqueid for GSGoal.Question
+	while (!ChapterShips.HaveCanal(fromTile, toTile)) 
+	{
+		if(!message && 
+				start_time + 30 < GSDate.GetSystemTime() && 
+				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
+		{
+			// The user might not know that we are waiting
+			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_CANAL), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
+		}
+
+		GSController.Sleep(1);
+	}
+
+	// Close the notification if it has been shown
+	if(message)
+		GSGoal.CloseQuestion(message_id);
+}
+
+/*static*/ function ChapterShips::HaveCanal(fromTile, toTile)
+{
+	if(fromTile == toTile) return true;
+
+	//local company_mode = GSCompanyMode(HUMAN_COMPANY); // not needed for canals
+	local open_list = GSList();
+	local closed_list = GSList();
+	
+	// Init
+	local curr_tile = fromTile;
+	closed_list.AddItem(curr_tile);
+
+	while(true)
+	{
+		// Add the neighbours of current tile that have not been visited to open_list
+		local neighbors = Tile.GetNeighbours4MainDir(curr_tile);
+		neighbors.RemoveList(closed_list);
+		neighbours.Valuate(GSTile.IsWaterTile);
+		neighbours.KeepValue(1);
+		open_list.AddList(neighbors);
+
+		// If open_list is empty and we have not visited the toTile, there is no path.
+		if(open_list.IsEmpty())
+			return false;
+
+		// Pick a new curr_tile from open_list
+		curr_tile = open_list.Begin();
+		open_list.RemoveItem(curr_tile);
+
+		// Is the new curr_tile the toTile?
+		if(curr_tile == toTile)
+			return true;
+	}
 }
