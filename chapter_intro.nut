@@ -23,4 +23,5 @@ class ChapterIntro {
 
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_INTRO_1), WAIT));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_INTRO_2), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_INTRO_3), WAIT));
 }
