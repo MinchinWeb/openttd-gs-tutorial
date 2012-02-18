@@ -60,7 +60,7 @@ STR_SHIPS_2_2_1    :Shipyard construction{}{}Buying ships works the same as buyi
 STR_SHIPS_2_2_2    :Now, place it on the water near the ship dock, but don't block the ship dock.
 
 STR_SHIPS_2_3_1    :Buying a ship and giving it orders{}{}Click on the shipyard to open the depot window and buy a ship capable of transporting oil.
-STR_SHIPS_2_3_2    :Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery. Click on continue, and you will be taken to the oilrig.
+STR_SHIPS_2_3_2    :You can now close the depot window, but leave the ship window open.{}{}Ok, so now we are going to give it orders to pick up oil at the oil rig and transport it to the oil refinery. Click on continue, and you will be taken to the oilrig.
 STR_SHIPS_2_3_3    :Oh no! The oil rig hasn't got a ship dock next to it.{}{}No problem, it's got its own built in station. However, the oil refinery hasn't got its own built-in station, so there we had to build a dock.{}{}Order the ship to first go to the oilrig ({STATION}) and then to the refinery dock ({STATION}). Note that you have to click on the tile marked as dock tile on the oilrig to set the goto order.
 
 STR_SHIPS_2_4_1    :The first order flag{}{}Now, let the ship leave the the shipyard. It'll go its merry way. Hold the TAB-key to enable fast forward of the game until the ship has left the oil rig for the second time.
@@ -76,19 +76,25 @@ STR_SHIPS_2_5_2    :Start by selecting the canal.
 STR_SHIPS_2_5_3    :Now, move your main view by holding your right mouse button and move upwards until you see the signs that suggest a path for your canal.{}{}Use your left mouse button to lay down the canal tiles at the suggested location. It is important that you start and end at the suggested points or the tutorial will not find your connection.
 STR_SHIPS_2_5_4    :Now, select the build lock tool.
 STR_SHIPS_2_5_5    :Locks can only be placed on sloped tiles. You will notice that when you hover over a sloped tile, with this tool selected, that it will not only highlight the tile you are hovering above, but also two of it's neighboring tiles (one land tile and one sea tile or canal tile). When that happens you can place a lock. Now place a lock at either end of our canal.
-STR_SHIPS_2_5_6    :Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait for a full load too.
+STR_SHIPS_2_5_6    :Good, now you can build a ship and make it transport oil from the new oil rig to our oil refinery. Perhaps it's a good idea to make that ship wait for a full load too.{}{}There will be no guidance with highlights for this ship. Do you remember? Start by clicking on the shipyard. Buy a ship and then give it orders. Select the oilrig order and then click on full load any cargo.
 
-STR_SHIPS_2_6_1    :Rounding up{}{}Finally! We're done with ships. There are some more oil rigs around the map, why don't you try and connect them to the oil refinery. Alternatively you could just move on to the next chapter by clicking next.
+STR_SHIPS_2_6_1    :Rounding up{}{}Finally! We're done with ships. There is one more oilrig to the southwest of the refinery, why don't you try and connect it to the oil refinery. Alternatively you could just move on to the next chapter by clicking on continue or press the DELETE key to also remove all other windows.
 
 # Waiting notice messages (shown only after that the tutorial have been waiting some time for the user)
 STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD :The tutorial is waiting for you to build a dock near {INDUSTRY}.
 STR_SHIPS_NOTICE_WAITING_FOR_SHIP_YARD_BUILD :The tutorial is waiting for you to build a shipyard.
 STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP   :The tutorial is waiting for you to buy a ship that takes oil. If you have already bought a ship, make sure that it can transport oil.
 STR_SHIPS_NOTICE_WAITING_FOR_ORDERS     :The tutorial is waiting for you to give orders to your new ship ({VEHICLE}). Order it to go from {STATION} to {STATION}.
+STR_SHIPS_NOTICE_WAITING_FOR_CANAL      :The tutorial is waiting for you to build a canal between the two tiles marked with "Canal start" and "Canal end".
+STR_SHIPS_NOTICE_WAITING_FOR_LOCK       :The tutorial is waiting for you to build locks on the two tiles marked with "Lock".
+
 # Signs:
 STR_SHIPS_SIGN_OILRIG_STATION :Dock tile
-STR_SHIPS_SIGN_CANAL_BEGIN :Canal start
+STR_SHIPS_SIGN_CANAL_START :Canal start
 STR_SHIPS_SIGN_CANAL_END :Canal end
+# lock in this context is a lock for ships to go form sea up to the canal
+STR_SHIPS_SIGN_LOCK1 :Lock
+STR_SHIPS_SIGN_LOCK2 :Lock
 
 
 # ----- Other messages --------------------------------------------------------

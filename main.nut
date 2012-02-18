@@ -21,8 +21,12 @@ Direction <- SuperLib.Direction;
 Town <- SuperLib.Town;
 Industry <- SuperLib.Industry;
 
+/* Import TileLabels */
+import("scenario.tilelabels", "TileLabels", 1);
+
 /* Globals */
 g_menu <- null;
+g_tile_labels <- null;
 HUMAN_COMPANY <- 0;
 CHAPTER_LIST <- [ ChapterIntro, ChapterNavigation, ChapterAirplanes, ChapterShips, ChapterTrucks, ChapterBuses, ChapterTrains ];
 //CHAPTER_LIST <- [ "intro", "airplanes", "ships", "road vehicles", "trains" ];
@@ -98,6 +102,14 @@ function TestGame::Init()
 
 	g_menu = Menu();
 	this._end_of_tutorial = false;
+
+	// Initialize the tile labels library
+	g_tile_labels = TileLabels("$L=");
+	if (this._load_data != null && this._load_data.rawin("tile_labels"))
+	{
+		g_tile_labels.ImportFromSave(this._load_data.tile_labels);
+	}
+	g_tile_labels.ReadFromMap();
 
 	this.InitBeforeNewChapter();
 
@@ -224,6 +236,7 @@ function TestGame::Save()
 		chapter = this._current_chapter_id,
   		step = this._current_step,
 		chapter_storage = this._chapter_storage,
+		tile_labels = g_tile_labels.ExportToSave()
 	};
 
 }
@@ -233,12 +246,13 @@ function TestGame::Load(version, tbl)
 	Log.Info("Loading data from savegame of tutorial version: " + version, Log.LVL_INFO);
 	Log.Info("chapter: " + tbl.chapter, Log.LVL_INFO);
 	Log.Info("step: " + tbl.step, Log.LVL_INFO);
+
 	// Store a copy of the table from the save game
-	this._load_data = { 
-		chapter = tbl.chapter,
-		step = tbl.step,
-		chapter_storage = tbl.chapter_storage,
-	};
+	this._load_data = {}
+   	foreach(key, val in tbl)
+	{
+		this._load_data.rawset(key, val);
+	}	
 }
 
 /*

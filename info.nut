@@ -2,7 +2,7 @@
  * License: GPL2
  */
 
-SELF_VERSION <- 6;
+SELF_VERSION <- 7;
 require("version_upgrade.nut");
 
 class TestGame extends GSInfo {

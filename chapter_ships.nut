@@ -28,6 +28,12 @@ class ChapterShips {
 		// station IDs for the oilrig stations
 		table.oilrig1_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig1));
 		table.oilrig2_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig2));
+
+		// canal start/end
+		table.canal_start_tile <- g_tile_labels.GetTile("CanalStart");
+		table.canal_end_tile <- g_tile_labels.GetTile("CanalEnd");
+		table.canal_lock1 <- g_tile_labels.GetTile("CanalLock1");
+		table.canal_lock2 <- g_tile_labels.GetTile("CanalLock2");
 	}));
 
 	// 2.1 - Ship dock construction (for refinery)
@@ -69,7 +75,7 @@ class ChapterShips {
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_1), NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("shipyard"), WAIT_ON_OPEN)); // while there is no text guidance in this chapter, provide highlights.
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("shipyard"), GSWindow.WID_D_BUILD, WAIT));
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_VEHICLE, TableKey("shipyard"), GSWindow.WID_BV_LIST, NO_WAIT));
+	//main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_VEHICLE, TableKey("shipyard"), GSWindow.WID_BV_LIST, NO_WAIT)); // no click is required
 	main_instance.AddStep(CodeStep( function(table) { // wait a short while
 		GSController.Sleep(8);
 	}));
@@ -116,18 +122,44 @@ class ChapterShips {
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_7), WAIT)); // inform user what happened
 
 	// 2.5 - canals
+	main_instance.AddStep(CodeStep( function(table) {
+		// Place signs where the canal should start/end
+		Helper.SetSign(table.canal_start_tile, GSText(GSText.STR_SHIPS_SIGN_CANAL_START));
+		Helper.SetSign(table.canal_end_tile, GSText(GSText.STR_SHIPS_SIGN_CANAL_END));
+	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_1), WAIT)); // intro to canals
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_2), NO_WAIT)); // select canal tool
 	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_BUILD_TOOLBAR, 2); }, // highlight button to open water toolbar if it is not already open
 		GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER, WAIT)));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_CANAL, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_3), WAIT)); // connect highlighted tiles
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_3), NO_WAIT)); // connect highlighted tiles
 	// todo: detect that the two tiles are connected with canal tiles
+	main_instance.AddStep(CodeStep( function(table) {
+		// wait on canal to be built
+		ChapterShips.WaitForCanal(table.canal_start_tile, table.canal_end_tile);
+
+		// remove canal signs
+		Helper.SetSign(table.canal_start_tile, "");
+		Helper.SetSign(table.canal_end_tile, "");
+	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_4), NO_WAIT)); // lock tool
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_LOCK, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_5), WAIT)); // place lock
-	// todo: wait for lock placement
+	main_instance.AddStep(CodeStep( function(table) {
+		// put signs at the lock tiles
+		Helper.SetSign(table.canal_lock1, GSText(GSText.STR_SHIPS_SIGN_LOCK1));
+		Helper.SetSign(table.canal_lock2, GSText(GSText.STR_SHIPS_SIGN_LOCK2));
+	}));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_5), NO_WAIT)); // place lock
+	main_instance.AddStep(CodeStep( function(table) {
+		// wait for locks
+		ChapterShips.WaitForLock(table.canal_lock1);
+		ChapterShips.WaitForLock(table.canal_lock2);
+
+		// remove lock signs
+		Helper.SetSign(table.canal_lock1, "");
+		Helper.SetSign(table.canal_lock2, "");
+	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_6), WAIT)); // summary of canals
 
 	// 2.6 - end of this chapter
@@ -351,16 +383,16 @@ class ChapterShips {
 	
 	// Init
 	local curr_tile = fromTile;
-	closed_list.AddItem(curr_tile);
+	closed_list.AddItem(curr_tile, 0);
 
 	while(true)
 	{
 		// Add the neighbours of current tile that have not been visited to open_list
-		local neighbors = Tile.GetNeighbours4MainDir(curr_tile);
-		neighbors.RemoveList(closed_list);
-		neighbours.Valuate(GSTile.IsWaterTile);
+		local neighbours = Tile.GetNeighbours4MainDir(curr_tile);
+		neighbours.RemoveList(closed_list);
+		neighbours.Valuate(GSMarine.IsCanalTile);
 		neighbours.KeepValue(1);
-		open_list.AddList(neighbors);
+		open_list.AddList(neighbours);
 
 		// If open_list is empty and we have not visited the toTile, there is no path.
 		if(open_list.IsEmpty())
@@ -369,9 +401,33 @@ class ChapterShips {
 		// Pick a new curr_tile from open_list
 		curr_tile = open_list.Begin();
 		open_list.RemoveItem(curr_tile);
+		closed_list.AddItem(curr_tile, 0); // add it to close_list so it is not visited again
 
 		// Is the new curr_tile the toTile?
 		if(curr_tile == toTile)
 			return true;
 	}
+}
+
+/*static*/ function ChapterShips::WaitForLock(tile)
+{
+	local start_time = GSDate.GetSystemTime();
+	local message = false;
+	local message_id = 2; // used as uniqueid for GSGoal.Question
+	while (!GSMarine.IsLockTile(tile))
+	{
+		if(!message && 
+				start_time + 30 < GSDate.GetSystemTime() && 
+				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
+		{
+			// The user might not know that we are waiting
+			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_LOCK), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
+		}
+
+		GSController.Sleep(1);
+	}
+
+	// Close the notification about waiting for dock construction if it has been shown
+	if(message)
+		GSGoal.CloseQuestion(message_id);
 }
