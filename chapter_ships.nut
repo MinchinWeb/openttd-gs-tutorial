@@ -168,25 +168,7 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForDockForIndustry(industry)
 {
-	local start_time = GSDate.GetSystemTime();
-	local message = false;
-	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (ChapterShips.GetDockForIndustry(industry) == -1) // do not use GSStation.IsValidStation here as that will probably need a GSCompanyMode, but GSGoal.Question can't be used when a company mode is active.
-	{
-		if(!message && 
-				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
-		{
-			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD, industry), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
-		}
-
-		GSController.Sleep(1);
-	}
-
-	// Close the notification about waiting for dock construction if it has been shown
-	if(message)
-		GSGoal.CloseQuestion(message_id);
+	ChapterShips.WaitFor(ChapterShips.GetDockForIndustry, [industry], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD, industry));
 }
 
 /*static*/ function ChapterShips::DockInTileArea(station, tile_list)
@@ -211,25 +193,12 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForShipyard()
 {
-	local start_time = GSDate.GetSystemTime();
-	local message = false;
-	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (ChapterShips.GetShipyard() == -1) 
-	{
-		if(!message && 
-				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
-		{
-			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_SHIP_YARD_BUILD), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
-		}
+	ChapterShips.WaitFor(ChapterShips.HaveShipyard, [], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_SHIP_YARD_BUILD));
+}
 
-		GSController.Sleep(1);
-	}
-
-	// Close the notification about waiting for dock construction if it has been shown
-	if(message)
-		GSGoal.CloseQuestion(message_id);
+/*static*/ function ChapterShips::HaveShipyard()
+{
+	return ChapterShips.GetShipyard() != -1;
 }
 
 /*static*/ function ChapterShips::GetShipyard()
@@ -245,26 +214,12 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForOilShip()
 {
-	local start_time = GSDate.GetSystemTime();
-	local message = false;
-	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (ChapterShips.GetOilShip() == -1) 
-	{
-		if(!message && 
-				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
-		{
-			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
-		}
+	ChapterShips.WaitFor(ChapterShips.HaveOilShip, [], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP));
+}
 
-		GSController.Sleep(1);
-	}
-
-	// Close the notification if it has been shown
-	if(message)
-		GSGoal.CloseQuestion(message_id);
-
+/*static*/ function ChapterShips::HaveOilShip()
+{
+	return ChapterShips.GetOilShip() != -1;
 }
 
 // Copied from SuperLib for AIs 
@@ -352,25 +307,7 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForCanal(fromTile, toTile)
 {
-	local start_time = GSDate.GetSystemTime();
-	local message = false;
-	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (!ChapterShips.HaveCanal(fromTile, toTile)) 
-	{
-		if(!message && 
-				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
-		{
-			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_CANAL), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
-		}
-
-		GSController.Sleep(1);
-	}
-
-	// Close the notification if it has been shown
-	if(message)
-		GSGoal.CloseQuestion(message_id);
+	ChapterShips.WaitFor(ChapterShips.HaveCanal, [fromTile, toTile], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_CANAL));
 }
 
 /*static*/ function ChapterShips::HaveCanal(fromTile, toTile)
@@ -411,20 +348,40 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForLock(tile)
 {
+	ChapterShips.WaitFor(GSMarine.IsLockTile, [tile], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_LOCK));
+}
+
+/*
+ * @param isDoneFunction a function that will tell if the waiting is done. If it
+ *    returns boolean true or a value != -1, the waiting is over.
+ * @param functionArgsArray a squirrel array containing the arguments to isDoneFunction.
+ *    there is maximum argument count which is set by Helper.CallFunction. 
+ * @param waitMessage a literal text or GSText instance that contains a message that will
+ *    be displayed in a message window when we have been waiting for the user in more than
+ *    30 seconds and the user has closed the main timeline message.
+ */
+/*static*/ function ChapterShips::WaitFor(isDoneFunction, functionArgsArray, waitMessage)
+{
 	local start_time = GSDate.GetSystemTime();
 	local message = false;
 	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (!GSMarine.IsLockTile(tile))
+
+	local done_val = Helper.CallFunction(isDoneFunction, functionArgsArray);
+	local done = typeof(done_val) == "bool"? done_val : done_val != -1;
+	while (!done)
 	{
 		if(!message && 
 				start_time + 30 < GSDate.GetSystemTime() && 
 				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
 		{
 			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_LOCK), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
+			message = GSGoal.Question(message_id, HUMAN_COMPANY, waitMessage, GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
 		}
 
 		GSController.Sleep(1);
+
+		done_val = Helper.CallFunction(isDoneFunction, functionArgsArray);
+		done = typeof(done_val) == "bool"? done_val : done_val != -1;
 	}
 
 	// Close the notification about waiting for dock construction if it has been shown
