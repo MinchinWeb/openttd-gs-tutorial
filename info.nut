@@ -10,7 +10,7 @@ class TestGame extends GSInfo {
 	function GetName()             { return "Beginner Tutorial"; }
 	function GetDescription()      { return "Don't use this script in your games, instead load the Beginner Tutorial scenario. The reason why you see this script is that you have the developer tools active."; }
 	function GetVersion()          { return SELF_VERSION; }
-	function GetDate()             { return "2001-01-22"; }
+	function GetDate()             { return "2001-02-18"; }
 	function CreateInstance()      { return "TestGame"; }
 	function GetShortName()        { return "TUT_"; }
 	function GetAPIVersion()       { return "1.2"; }
