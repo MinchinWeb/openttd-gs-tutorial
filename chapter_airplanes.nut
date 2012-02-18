@@ -149,25 +149,7 @@ class ChapterAirplanes {
 
 /*static*/ function ChapterAirplanes::WaitForAirportInTown(town)
 {
-	local start_time = GSDate.GetSystemTime();
-	local message = false;
-	local message_id = 2; // used as uniqueid for GSGoal.Question
-	while (ChapterAirplanes.GetAirportInTown(town) == -1) // do not use GSStation.IsValidStation here as that will probably need a GSCompanyMode, but GSGoal.Question can't be used when a company mode is active.
-	{
-		if(!message && 
-				start_time + 30 < GSDate.GetSystemTime() && 
-				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
-		{
-			// The user might not know that we are waiting
-			message = GSGoal.Question(message_id, HUMAN_COMPANY, GSText(GSText.STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD, town), GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
-		}
-
-		GSController.Sleep(1);
-	}
-
-	// Close the notification about waiting for airport construction if it has been shown
-	if(message)
-		GSGoal.CloseQuestion(message_id);
+	Common.WaitFor(ChapterAirplanes.GetAirportInTown, [town], GSText(GSText.STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD, town));
 }
 
 /*static*/ function ChapterAirplanes::GetAirportInTown(town)
