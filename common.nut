@@ -57,8 +57,12 @@ class Common
 				last_order_count_change + 60 * 2 < GSDate.GetSystemTime() && 
 				!GSWindow.IsOpen(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM)) // require the main timeline message to be closed in order to show the notification window
 		{
+			company_mode = null;
+
 			// The user might not know that we are waiting
 			message = GSGoal.Question(message_id, HUMAN_COMPANY, waiting_message, GSGoal.QT_INFORMATION, GSGoal.BUTTON_CLOSE);
+
+			company_mode = GSCompanyMode(HUMAN_COMPANY);
 		}
 
 		GSController.Sleep(1);
