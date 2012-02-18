@@ -124,7 +124,7 @@ class ChapterAirplanes {
 	main_instance.AddStep(ConditionalStep(function(table) { return GSGameSettings.GetValue("quick_goto") == 0 }, 
 		GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("aircraft"), GSWindow.WID_O_GOTO, WAIT)));
 
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_3_8_ORDERS), NO_WAIT, TableKey("airport_a")));
 	main_instance.AddStep(CodeStep( function(table) { // wait for order list to contain one order to airport a
 		ChapterAirplanes.WaitForOrderToAirport(table.aircraft, table.airport_a);
 	}));
@@ -135,10 +135,9 @@ class ChapterAirplanes {
 	// 1.4 - Sum up
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_1_SUM_UP), NO_WAIT));
 	main_instance.AddStep(
-		OrStep( // Wait for station window for either of the two airports to open OR that the user clicks continue
+		OrStep( // Wait for station window for either of the two airports to open 
 			WaitOnWindowStep(GSWindow.WC_STATION_VIEW, TableKey("airport_a"), WAIT_ON_OPEN),
-			WaitOnWindowStep(GSWindow.WC_STATION_VIEW, TableKey("airport_b"), WAIT_ON_OPEN),
-			WaitOnWindowStep(GSWindow.WC_GOAL_QUESTION, MSG_WIN_UNIQUE_NUM, WAIT_ON_CLOSE)
+			WaitOnWindowStep(GSWindow.WC_STATION_VIEW, TableKey("airport_b"), WAIT_ON_OPEN)
 		)
 	);
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_AIRPLANES_1_4_2_STATION_WINDOW), WAIT));
