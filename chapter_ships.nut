@@ -297,43 +297,8 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForCanal(fromTile, toTile)
 {
-	Common.WaitFor(ChapterShips.HaveCanal, [fromTile, toTile], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_CANAL));
-}
-
-/*static*/ function ChapterShips::HaveCanal(fromTile, toTile)
-{
-	if(fromTile == toTile) return true;
-
-	//local company_mode = GSCompanyMode(HUMAN_COMPANY); // not needed for canals
-	local open_list = GSList();
-	local closed_list = GSList();
-	
-	// Init
-	local curr_tile = fromTile;
-	closed_list.AddItem(curr_tile, 0);
-
-	while(true)
-	{
-		// Add the neighbours of current tile that have not been visited to open_list
-		local neighbours = Tile.GetNeighbours4MainDir(curr_tile);
-		neighbours.RemoveList(closed_list);
-		neighbours.Valuate(GSMarine.IsCanalTile);
-		neighbours.KeepValue(1);
-		open_list.AddList(neighbours);
-
-		// If open_list is empty and we have not visited the toTile, there is no path.
-		if(open_list.IsEmpty())
-			return false;
-
-		// Pick a new curr_tile from open_list
-		curr_tile = open_list.Begin();
-		open_list.RemoveItem(curr_tile);
-		closed_list.AddItem(curr_tile, 0); // add it to close_list so it is not visited again
-
-		// Is the new curr_tile the toTile?
-		if(curr_tile == toTile)
-			return true;
-	}
+	Log.Info(" connection? : " + Tile.CanWalk4ToTile(fromTile, toTile, GSMarine.IsCanalTile));
+	Common.WaitFor(Tile.CanWalk4ToTile, [fromTile, toTile, GSMarine.IsCanalTile], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_CANAL));
 }
 
 /*static*/ function ChapterShips::WaitForLock(tile)

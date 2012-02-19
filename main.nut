@@ -11,7 +11,7 @@ require("chapter_buses.nut");
 require("chapter_trains.nut");
 
 /* Import SuperLib for GameScript */
-import("util.superlib", "SuperLib", 19);
+import("util.superlib", "SuperLib", 21);
 Result <- SuperLib.Result;
 Log <- SuperLib.Log;
 Helper <- SuperLib.Helper;
