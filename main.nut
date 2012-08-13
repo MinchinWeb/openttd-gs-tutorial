@@ -32,7 +32,7 @@ CHAPTER_LIST <- [ ChapterIntro, ChapterNavigation, ChapterAirplanes, ChapterShip
 //CHAPTER_LIST <- [ "intro", "airplanes", "ships", "road vehicles", "trains" ];
 
 
-class TestGame extends GSController 
+class MainClass extends GSController 
 {
 	_current_chapter_id = null;
 	_chapter_steps = null;
@@ -53,7 +53,7 @@ class TestGame extends GSController
 /*
  * -------- Tutorial Engine --------------------------
  */
-function TestGame::Start()
+function MainClass::Start()
 {
 	// Any GameScript init code goes here
 	local error_string = this.Init();
@@ -95,7 +95,7 @@ function TestGame::Start()
 	}
 }
 
-function TestGame::Init()
+function MainClass::Init()
 {
 	local error = this.CheckGame();
 	if(error != null) return error;
@@ -137,7 +137,7 @@ function TestGame::Init()
 	return null;
 }
 
-function TestGame::CheckGame()
+function MainClass::CheckGame()
 {
 	// Check for multiplayer game
 	if(GSGame.IsMultiplayer())
@@ -163,19 +163,19 @@ function TestGame::CheckGame()
 	return null;
 }
 
-function TestGame::InitBeforeNewChapter(chapter_storage = {})
+function MainClass::InitBeforeNewChapter(chapter_storage = {})
 {
 	this._chapter_steps = [];
 	this._current_step = -1;
 	this._chapter_storage = chapter_storage; // Table which all chapter steps can access to store data
 }
-function TestGame::AddStep( new_step )
+function MainClass::AddStep( new_step )
 {
 	this._chapter_steps.append(new_step);
 	new_step.SetStorageTable(this._chapter_storage);
 }
 
-function TestGame::HandleEvents()
+function MainClass::HandleEvents()
 {
 	if(GSEventController.IsEventWaiting())
 	{
@@ -193,7 +193,7 @@ function TestGame::HandleEvents()
 	}
 }
 
-function TestGame::RunTutorial()
+function MainClass::RunTutorial()
 {
 	// Is chapter done?
 	if(this._current_step >= this._chapter_steps.len())
@@ -229,7 +229,7 @@ function TestGame::RunTutorial()
 	}
 }
 
-function TestGame::Save()
+function MainClass::Save()
 {
 	Log.Info("Saving data to savegame", Log.LVL_INFO);
 	return { 
@@ -241,7 +241,7 @@ function TestGame::Save()
 
 }
 
-function TestGame::Load(version, tbl)
+function MainClass::Load(version, tbl)
 {
 	Log.Info("Loading data from savegame of tutorial version: " + version, Log.LVL_INFO);
 	Log.Info("chapter: " + tbl.chapter, Log.LVL_INFO);
@@ -258,7 +258,7 @@ function TestGame::Load(version, tbl)
 /*
  * -------- Chapters ---------------------------------
  */
-function TestGame::LoadChapter(chapter, chapter_storage = {})
+function MainClass::LoadChapter(chapter, chapter_storage = {})
 {
 	// Unload old chapter
 	this.InitBeforeNewChapter(chapter_storage);
@@ -275,7 +275,7 @@ function TestGame::LoadChapter(chapter, chapter_storage = {})
 	return true;
 }
 
-function TestGame::GetChapterIndex(chapter_id)
+function MainClass::GetChapterIndex(chapter_id)
 {
 	for(local i = 0; i < CHAPTER_LIST.len(); i++)
 	{
@@ -288,7 +288,7 @@ function TestGame::GetChapterIndex(chapter_id)
 	return -1;
 }
 
-function TestGame::GetNextChapter(chapter_id)
+function MainClass::GetNextChapter(chapter_id)
 {
 	local chapter_index = null;
 
@@ -331,7 +331,7 @@ function TestGame::GetNextChapter(chapter_id)
 	else
 	{
 		// Use chapter + 1 as next chapter
-		chapter_index = TestGame.GetChapterIndex(chapter_id) + 1;
+		chapter_index = MainClass.GetChapterIndex(chapter_id) + 1;
 	}
 	
 	if(chapter_index < 0) return null;
@@ -341,7 +341,7 @@ function TestGame::GetNextChapter(chapter_id)
 }
 
 // Returns the clicked button. Redisplays the question at timeout until the user answer the question.
-function TestGame::ModalQuestion(text, buttons)
+function MainClass::ModalQuestion(text, buttons)
 {
 	local button = -1;
 	while(true) // <-- redisplay the question at timeout rather than assuming a specific answer
@@ -360,7 +360,7 @@ function TestGame::ModalQuestion(text, buttons)
 // This function eats all events while it is waiting for the question event!
 // Returns -1 on timeout
 // timeoutSeconds == -1 => no timeout
-function TestGame::WaitForButtonEvent(questionUniqueId, timeoutSeconds)
+function MainClass::WaitForButtonEvent(questionUniqueId, timeoutSeconds)
 {
 	local start_time = GSDate.GetSystemTime();
 	while(timeoutSeconds == -1 || start_time + timeoutSeconds > GSDate.GetSystemTime())
