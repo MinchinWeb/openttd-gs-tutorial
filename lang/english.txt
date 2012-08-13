@@ -3,6 +3,7 @@
 STR_NEXT_CHAPTER_OR_SELECT :You have reached the end of the current chapter. Do you want to select your next chapter?{}{}Yes = Show a dialog to pick a chapter{}No = Go to the next chapter in sequence (recommended)
 
 # WARNING: Don't change the order of these strings! The code rely on them being in the same order as the chapters
+# -- BEGIN --
 STR_CHAPTER_MENU_INTRO      :0. Introduction{}{}This chapter gives a short introduction to the tutorial.
 STR_CHAPTER_MENU_NAVIGATION :1. Navigation{}{}This chapter teaches you the basics of how to navigate in OpenTTD.
 STR_CHAPTER_MENU_AIRCRAFT   :2. Aircraft{}{}Topics covered: Airports, Aircraft, Coverage Area, Station List, Station Window, Vehicle Details Window
@@ -10,6 +11,10 @@ STR_CHAPTER_MENU_SHIPS      :3. Ships{}{}Topics covered: Canals, Complex Orders,
 STR_CHAPTER_MENU_TRUCKS     :4. Trucks{}{}[Description of chapter]
 STR_CHAPTER_MENU_BUSES      :5. Buses and Town Growth{}{}[Description of chapter]
 STR_CHAPTER_MENU_TRAINS     :6. Trains{}{}[Description of chapter]
+# -- END --
+
+STR_TRUCKS_NEED_SHIPS_AI     :In order to play the trucks chapter, the ships chapter must first be completed. Do you want that an AI should complete it for you?{}{}Yes = automatically complete the ships chapter{}No = show the chapter selection dialog
+STR_AI_COMPLETE_SHIPS_FAILED :We are sorry, but the attempt to complete the ships chapter using an AI failed.
 
 
 # ----- Chapters --------------------------------------------------------------

@@ -6,6 +6,11 @@ class ChapterShips {
 
 	static function ID();
 	static function LoadChapter(main_instance);
+
+	/* This function is called by the main instance if a later chapter requires that this
+	 * chapter needs to be completed and the user have not completed it yet.
+	 */
+	static function CompleteByAI();
 }
 
 /*static*/ function ChapterShips::ID()
@@ -13,28 +18,32 @@ class ChapterShips {
 	return "ships";
 }
 
+// The initialization of this chapter have been broken out to an Init-function such that it
+// can be shared by LoadChapter and CompleteByAI.
+/*static*/ function ChapterShips::Init(table)
+{
+	// Industry index 0
+	table.refinery <- 0;
+
+	// Industry index 1 and 2
+	table.oilrig1 <- 1;
+	table.oilrig2 <- 2;
+
+	// station IDs for the oilrig stations
+	table.oilrig1_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig1));
+	table.oilrig2_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig2));
+
+	// canal start/end
+	table.canal_start_tile <- g_tile_labels.GetTile("CanalStart");
+	table.canal_end_tile <- g_tile_labels.GetTile("CanalEnd");
+	table.canal_lock1 <- g_tile_labels.GetTile("CanalLock1");
+	table.canal_lock2 <- g_tile_labels.GetTile("CanalLock2");
+}
+
 /*static*/ function ChapterShips::LoadChapter(main_instance)
 {
 	// Initialization code
-	main_instance.AddStep(CodeStep( function(table) {
-
-		// Industry index 0
-		table.refinery <- 0;
-
-		// Industry index 1 and 2
-		table.oilrig1 <- 1;
-		table.oilrig2 <- 2;
-
-		// station IDs for the oilrig stations
-		table.oilrig1_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig1));
-		table.oilrig2_station <- GSStation.GetStationID(GSIndustry.GetDockLocation(table.oilrig2));
-
-		// canal start/end
-		table.canal_start_tile <- g_tile_labels.GetTile("CanalStart");
-		table.canal_end_tile <- g_tile_labels.GetTile("CanalEnd");
-		table.canal_lock1 <- g_tile_labels.GetTile("CanalLock1");
-		table.canal_lock2 <- g_tile_labels.GetTile("CanalLock2");
-	}));
+	main_instance.AddStep(CodeStep(ChapterShips.Init));
 
 	// 2.1 - Ship dock construction (for refinery)
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_1), WAIT));
@@ -304,4 +313,17 @@ class ChapterShips {
 /*static*/ function ChapterShips::WaitForLock(tile)
 {
 	Common.WaitFor(GSMarine.IsLockTile, [tile], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_LOCK));
+}
+
+
+/*static*/ function ChapterShips::CompleteByAI()
+{
+	local table = {};
+	ChapterShips.Init(table);
+
+	local cm = GSCompanyMode(HUMAN_COMPANY);
+
+	// TODO: Add code to complete chapter
+
+	return false; // todo: return true when it works
 }

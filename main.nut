@@ -40,6 +40,7 @@ class MainClass extends GSController
 	_first_step = false;
 
 	_chapter_storage = null;
+	_completed_chapters = null; // if key == [chapter ID] exist, then the chapter is completed
 
 	_load_data = null;
 
@@ -102,6 +103,7 @@ function MainClass::Init()
 
 	g_menu = Menu();
 	this._end_of_tutorial = false;
+	this._completed_chapters = {}
 
 	// Initialize the tile labels library
 	g_tile_labels = TileLabels("$L=");
@@ -116,6 +118,10 @@ function MainClass::Init()
 	local loaded_state = false;
 	if (this._load_data != null)
 	{
+		// Load completed chapters status
+		if (this._load_data.rawin("completed_chapters"))
+			this._completed_chapters = this._load_data.completed_chapters;
+
 		// Try to load the chapter that was active when the game was saved
 		local index = this.GetChapterIndex(this._load_data.chapter);
 		if (index != -1 && LoadChapter(CHAPTER_LIST[index], this._load_data.chapter_storage))
@@ -198,6 +204,10 @@ function MainClass::RunTutorial()
 	// Is chapter done?
 	if(this._current_step >= this._chapter_steps.len())
 	{
+		// Chapter was completed
+		this._completed_chapters.rawset(this._current_chapter_id, 1);
+		
+		// Get next chapter
 		local next = this.GetNextChapter(this._current_chapter_id);
 		if(next != null)
 		{
@@ -288,12 +298,14 @@ function MainClass::GetChapterIndex(chapter_id)
 	return -1;
 }
 
-function MainClass::GetNextChapter(chapter_id)
+function MainClass::GetNextChapter(chapter_id, force_manual_selection = false)
 {
 	local chapter_index = null;
 
-	local button = this.ModalQuestion(GSText(GSText.STR_NEXT_CHAPTER_OR_SELECT), GSGoal.BUTTON_YES + GSGoal.BUTTON_NO);
-	if(button == GSGoal.BUTTON_YES)
+	local button = null;
+	if(!force_manual_selection)
+		button = this.ModalQuestion(GSText(GSText.STR_NEXT_CHAPTER_OR_SELECT), GSGoal.BUTTON_YES + GSGoal.BUTTON_NO);
+	if(force_manual_selection || button == GSGoal.BUTTON_YES)
 	{
 		// Display chapter menu
 		local i = 0;
@@ -326,17 +338,54 @@ function MainClass::GetNextChapter(chapter_id)
 					break;
 			}
 		}
-
 	}
 	else
 	{
 		// Use chapter + 1 as next chapter
 		chapter_index = MainClass.GetChapterIndex(chapter_id) + 1;
 	}
-	
+
 	if(chapter_index < 0) return null;
 	if(chapter_index >= CHAPTER_LIST.len()) return null;
-	return CHAPTER_LIST[chapter_index];
+
+	// update chapter-id
+	local chapter_type_ptr = CHAPTER_LIST[chapter_index];
+	chapter_id = chapter_type_ptr.ID();
+
+	// The truck chapter needs the ship chapter to be completed
+	GSLog.Info("chapter_id: " + chapter_id + " trucks id: " + ChapterTrucks.ID());
+	if(chapter_id == ChapterTrucks.ID())
+	{
+		if(!this._completed_chapters.rawin(ChapterShips.ID()))
+		{
+			// truck chapter is 'next' chapter but the ships chapter have not been completed
+			local can_play_trucks = false;
+			
+			// ask if an AI should complete it
+
+			local buttons = GSGoal.BUTTON_YES + GSGoal.BUTTON_NO;
+			if(this.ModalQuestion(GSText(GSText.STR_TRUCKS_NEED_SHIPS_AI), buttons) == GSGoal.BUTTON_YES)
+			{
+				// Complete chapter ships so that the user can play the trucks tutorial
+				if(ChapterShips.CompleteByAI())
+				{
+					can_play_trucks = true;
+					this._completed_chapters.rawset(ChapterShips.ID(), 1);
+				}
+				else
+				{
+					this.ModalQuestion(GSText(GSText.STR_AI_COMPLETE_SHIPS_FAILED), GSGoal.BUTTON_OK);
+				}
+			}
+
+			if(!can_play_trucks)
+			{
+				return MainClass.GetNextChapter(chapter_id, true);
+			}
+		}
+	}
+	
+	return chapter_type_ptr;
 
 }
 
