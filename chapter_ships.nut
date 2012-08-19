@@ -46,32 +46,32 @@ class ChapterShips {
 	main_instance.AddStep(CodeStep(ChapterShips.Init));
 
 	// 2.1 - Ship dock construction (for refinery)
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_1), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_1), WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		GSViewport.ScrollTo(GSIndustry.GetLocation(table.refinery)); // scroll viewport to the oil refinery
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_2), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_2), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_3), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_3), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_STATION, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		// todo: make WaitForDockForIndustry allow docks that doesn't cover top tile of industry.
 		ChapterShips.WaitForDockForIndustry(table.refinery);
 		table.refinery_dock <- ChapterShips.GetDockForIndustry(table.refinery);
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_1_4), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_4), WAIT));
 
 	//main_instance.AddStep(CloseMessageWindowStep()); // close message if user didn't close it
 	main_instance.AddStep(CloseWindowStep(GSWindow.WC_BUILD_STATION, 2)); // close windows from dock construction
 	main_instance.AddStep(CloseWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2)); 
 
 	// 2.2 - Ship depot construction
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_2_1), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_2_1), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_DEPOT, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_2_2), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_2_2), NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterShips.WaitForShipyard();
 		table.shipyard <- ChapterShips.GetShipyard();
@@ -81,7 +81,7 @@ class ChapterShips {
 	main_instance.AddStep(CloseWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2)); 
 
 	// 2.3 - Buying a ship and giving it orders
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_1), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_3_1), NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("shipyard"), WAIT_ON_OPEN)); // while there is no text guidance in this chapter, provide highlights.
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("shipyard"), GSWindow.WID_D_BUILD, WAIT));
 	//main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_VEHICLE, TableKey("shipyard"), GSWindow.WID_BV_LIST, NO_WAIT)); // no click is required
@@ -91,16 +91,16 @@ class ChapterShips {
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_VEHICLE, TableKey("shipyard"), GSWindow.WID_BV_BUILD, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterShips.WaitForOilShip();
-		table.ship1 <- ChapterShips.GetOilShip();
+		table.ship1 <- Common.GetVehicle(GSVehicle.VT_WATER, ChapterShips.GetOilCargo());
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_2), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_3_2), WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		local station_loc = GSIndustry.GetDockLocation(table.oilrig1);
 		GSViewport.ScrollTo(GSIndustry.GetLocation(table.oilrig1)); // scroll viewport to the oilrig
 		GSController.Sleep(25); // sleep a short while
 		GSSign.BuildSign(station_loc, GSText(GSText.STR_SHIPS_SIGN_OILRIG_STATION)); // put a sign ontop of the station tile
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_3_3), NO_WAIT, TableKey("oilrig1_station"), TableKey("refinery_dock")));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_3_3), NO_WAIT, TableKey("oilrig1_station"), TableKey("refinery_dock")));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click on orders button
 	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_VEHICLE_ORDERS, table.ship1); },
 		GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_ORDERS, WAIT))); // highlight btn to open orders window only if it is not open
@@ -112,23 +112,23 @@ class ChapterShips {
 	}));
 
 	// 2.4 - The first order flag
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_1), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_1), NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click on start/stop button
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_START_STOP, WAIT)); 
 	main_instance.AddStep(CodeStep( function(table) {
 		ChapterShips.WaitForShipLeavingOilrigSecondTime(table);
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_2), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_2), NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), WAIT_ON_OPEN)); // ensure that the vehicle window is open before waiting for click
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_DETAILS, WAIT)); 
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_3), NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_3), NO_WAIT));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("ship1"), GSWindow.WID_VV_SHOW_ORDERS, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_4), NO_WAIT, TableKey("oilrig1_station"))); // click on oil rig order
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_4), NO_WAIT, TableKey("oilrig1_station"))); // click on oil rig order
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_ORDER_LIST, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_5), WAIT)); // inform about buttons at bottom
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_6), NO_WAIT)); // ask to click on full load any cargo
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_5), WAIT)); // inform about buttons at bottom
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_6), NO_WAIT)); // ask to click on full load any cargo
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_ORDERS, TableKey("ship1"), GSWindow.WID_O_FULL_LOAD, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_4_7), WAIT)); // inform user what happened
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_4_7), WAIT)); // inform user what happened
 
 	// 2.5 - canals
 	main_instance.AddStep(CodeStep( function(table) {
@@ -136,13 +136,13 @@ class ChapterShips {
 		Helper.SetSign(table.canal_start_tile, GSText(GSText.STR_SHIPS_SIGN_CANAL_START));
 		Helper.SetSign(table.canal_end_tile, GSText(GSText.STR_SHIPS_SIGN_CANAL_END));
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_1), WAIT)); // intro to canals
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_2), NO_WAIT)); // select canal tool
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_1), WAIT)); // intro to canals
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_2), NO_WAIT)); // select canal tool
 	main_instance.AddStep(ConditionalStep(function(table) { return !GSWindow.IsOpen(GSWindow.WC_BUILD_TOOLBAR, 2); }, // highlight button to open water toolbar if it is not already open
 		GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_WATER, WAIT)));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 2, WAIT_ON_OPEN));
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_CANAL, WAIT));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_3), NO_WAIT)); // connect highlighted tiles
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_3), NO_WAIT)); // connect highlighted tiles
 	// todo: detect that the two tiles are connected with canal tiles
 	main_instance.AddStep(CodeStep( function(table) {
 		// wait on canal to be built
@@ -152,14 +152,14 @@ class ChapterShips {
 		Helper.SetSign(table.canal_start_tile, "");
 		Helper.SetSign(table.canal_end_tile, "");
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_4), NO_WAIT)); // lock tool
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_4), NO_WAIT)); // lock tool
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 2, GSWindow.WID_DT_LOCK, WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		// put signs at the lock tiles
 		Helper.SetSign(table.canal_lock1, GSText(GSText.STR_SHIPS_SIGN_LOCK1));
 		Helper.SetSign(table.canal_lock2, GSText(GSText.STR_SHIPS_SIGN_LOCK2));
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_5), NO_WAIT)); // place lock
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_5), NO_WAIT)); // place lock
 	main_instance.AddStep(CodeStep( function(table) {
 		// wait for locks
 		ChapterShips.WaitForLock(table.canal_lock1);
@@ -169,10 +169,10 @@ class ChapterShips {
 		Helper.SetSign(table.canal_lock1, "");
 		Helper.SetSign(table.canal_lock2, "");
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_5_6), WAIT)); // summary of canals
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_5_6), WAIT)); // summary of canals
 
 	// 2.6 - end of this chapter
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_2_6_1), WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_6_1), WAIT));
 }
 
 /*static*/ function ChapterShips::WaitForDockForIndustry(industry)
@@ -218,29 +218,7 @@ class ChapterShips {
 
 /*static*/ function ChapterShips::WaitForOilShip()
 {
-	Common.WaitFor(ChapterShips.GetOilShip, [], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP));
-}
-
-// Copied from SuperLib for AIs 
-/*static*/ function ChapterShips::GetVehicleCargo(vehicle_id)
-{
-	// Go through all cargos and check the capacity for each
-	// cargo.
-	local max_cargo = -1;
-	local max_cap = -1;
-
-	local cargos = GSCargoList();
-	foreach(cargo, _ in cargos)
-	{
-		local cap = GSVehicle.GetCapacity(vehicle_id, cargo);
-		if(cap > max_cap)
-		{
-			max_cap = cap;
-			max_cargo = cargo;
-		}
-	}
-
-	return max_cargo;
+	Common.WaitFor(Common.GetVehicle, [GSVehicle.VT_WATER, ChapterShips.GetOilCargo()], GSText(GSText.STR_SHIPS_NOTICE_WAITING_FOR_OIL_SHIP));
 }
 
 /*static*/ function ChapterShips::GetOilCargo()
@@ -255,20 +233,6 @@ class ChapterShips {
 	}
 
 	return -1;
-}
-
-/*static*/ function ChapterShips::GetOilShip()
-{
-	local company_mode = GSCompanyMode(HUMAN_COMPANY);
-	local veh_list = GSVehicleList();
-	local oil_cargo = ChapterShips.GetOilCargo();
-	veh_list.Valuate(ChapterShips.GetVehicleCargo);
-	veh_list.KeepValue(oil_cargo);
-
-	if(veh_list.IsEmpty())
-		return -1;
-
-	return veh_list.Begin();
 }
 
 /*static*/ function ChapterShips::WaitForShipLeavingOilrigSecondTime(table)
@@ -325,5 +289,6 @@ class ChapterShips {
 
 	// TODO: Add code to complete chapter
 
+	return true; // allow testing of ships chapter before AI have been implemented
 	return false; // todo: return true when it works
 }

@@ -8,82 +8,84 @@ STR_CHAPTER_MENU_INTRO      :0. Introduction{}{}This chapter gives a short intro
 STR_CHAPTER_MENU_NAVIGATION :1. Navigation{}{}This chapter teaches you the basics of how to navigate in OpenTTD.
 STR_CHAPTER_MENU_AIRCRAFT   :2. Aircraft{}{}Topics covered: Airports, Aircraft, Coverage Area, Station List, Station Window, Vehicle Details Window
 STR_CHAPTER_MENU_SHIPS      :3. Ships{}{}Topics covered: Canals, Complex Orders, Docks, Ships
-STR_CHAPTER_MENU_TRUCKS     :4. Trucks{}{}[Description of chapter]
+STR_CHAPTER_MENU_TRUCKS     :4. Trucks{}{}Topics coverd: Industry Chains, Trucks, Road Construction, Cloning of Vehicles
 STR_CHAPTER_MENU_BUSES      :5. Buses and Town Growth{}{}[Description of chapter]
 STR_CHAPTER_MENU_TRAINS     :6. Trains{}{}[Description of chapter]
 # -- END --
 
-STR_TRUCKS_NEED_SHIPS_AI     :In order to play the trucks chapter, the ships chapter must first be completed. Do you want that an AI should complete it for you?{}{}Yes = automatically complete the ships chapter{}No = show the chapter selection dialog
+STR_TRUCKS_NEED_SHIPS_AI     :In order to play the trucks chapter, the ships chapter must first be completed to have any cargo to transport. Do you want that an AI should complete it for you?{}{}Yes = automatically complete the ships chapter [Not implemented, but you can play trucks]{}No = show the chapter selection dialog
 STR_AI_COMPLETE_SHIPS_FAILED :We are sorry, but the attempt to complete the ships chapter using an AI failed.
 
 
 # ----- Chapters --------------------------------------------------------------
 
 STR_INTRO_1         :Introduction{}{}Hello, and welcome to this ingame OpenTTD tutorial!
-STR_INTRO_2         :Chapters:{}{}The tutorial contains the following chapters. They are designed to be played through in order, but after each chapter you will also be asked if you want to skip to a specific chapter.{}{}0. Introduction (This Chapter){}1. Navigation (Incomplete){}2. Aircraft{}3. Ships{}4. Trucks (Incomplete){}5. Buses (Incomplete){}6. Trains (Incomplete)
+STR_INTRO_2         :Chapters:{}{}The tutorial contains the following chapters. They are designed to be played through in order, but after each chapter you will also be asked if you want to skip to a specific chapter.{}{}0. Introduction (This Chapter){}1. Navigation (Incomplete){}2. Aircraft{}3. Ships{}4. Trucks{}5. Buses (Incomplete){}6. Trains (Incomplete)
 STR_INTRO_3         :How the Tutorial Works{}{}In blue message windows, like this one, you will be presented with instructions to follow. In some cases, you will need to click on the "Continue" button to progress; in other cases, the tutorial is capable of checking if you have done the task that you have been asked to do. In the latter case, the button will say "Close" instead of "Continue" and the tutorial will progress automatically when you have accomplished the task.{}{}During the tutorial, you might see white news messages appearing at the bottom of the screen, or a different blue window which asks you if you would like to try a new vehicle. These do not belong to the tutorial, but cannot be disabled - if they appear, just ignore them. News messages can be closed by hitting the space bar on your keyboard.
 
 
-STR_AIRPLANES_1_1_1_INTRO      :Aircraft - Building an Airport{}{}In this chapter, you'll be shown how to transport passengers between two towns using aircraft. You'll start by building an airport in {TOWN}. When you click on continue, the main viewport will move to {TOWN}.
-STR_AIRPLANES_1_1_2_PLACEMENT  :You're going to build your first airport near this town. Click on the highlighted buttons, starting on the main toolbar.
-STR_AIRPLANES_1_1_3_ACCEPTANCE :To get the greatest number of passengers at your airport, you want to have as much of the town as possible within its coverage area. The small airport has a coverage area radius of four tiles, which can be displayed using the GUI. Click on the highlighted button.
-STR_AIRPLANES_1_1_4_ACCEPTANCE :At the bottom of the airport selection window, there are two lines of text. One starts with "Accepts", while the other starts with "Supplies". After this, those cargo types which are currently available in the coverage area will be displayed, both for collection ("Supplies") and delivery ("Accepts"). It's important to place your airport where it will both "Accept" and "Supply" passengers.
-STR_AIRPLANES_1_1_5_PLACE_AP   :Move your cursor so that the white squares are on a flat area with no buildings or roads. Any trees will be removed automatically. Make sure that the blue squares, which show the coverage area of the airport, cover as much of the town as possible. Click on the ground to build the airport.
+STR_AIRPLANES_2_1_1_INTRO      :Aircraft - Building an Airport{}{}In this chapter, you'll be shown how to transport passengers between two towns using aircraft. You'll start by building an airport in {TOWN}. When you click on continue, the main viewport will move to {TOWN}.
+STR_AIRPLANES_2_1_2_PLACEMENT  :You're going to build your first airport near this town. Click on the highlighted buttons, starting on the main toolbar.
+STR_AIRPLANES_2_1_3_ACCEPTANCE :To get the greatest number of passengers at your airport, you want to have as much of the town as possible within its coverage area. The small airport has a coverage area radius of four tiles, which can be displayed using the GUI. Click on the highlighted button.
+STR_AIRPLANES_2_1_4_ACCEPTANCE :At the bottom of the airport selection window, there are two lines of text. One starts with "Accepts", while the other starts with "Supplies". After this, those cargo types which are currently available in the coverage area will be displayed, both for collection ("Supplies") and delivery ("Accepts"). It's important to place your airport where it will both "Accept" and "Supply" passengers.
+STR_AIRPLANES_2_1_5_PLACE_AP   :Move your cursor so that the white squares are on a flat area with no buildings or roads. Any trees will be removed automatically. Make sure that the blue squares, which show the coverage area of the airport, cover as much of the town as possible. Click on the ground to build the airport.
 
-STR_AIRPLANES_1_2_1_WHERE      :Building a Second Airport{}{}In order to transport passengers they need somewhere to go. For this to be possible, you'll need to build a second airport. This airport should be built reasonably far away from the first, as passengers generally pay your company more the further they travel. The airport should also be built near a town with a similar population size to the first one, as this means that there will be an equal amount of passengers going in each direction. This time, you should build your airport near {TOWN}. When you click on continue, the main viewport will move to {TOWN}.
-STR_AIRPLANES_1_2_2_BUILD      :To build your second airport in {TOWN}, follow the same steps as when you built the first airport in {TOWN}, as shown by the highlighted buttons. 
+STR_AIRPLANES_2_2_1_WHERE      :Building a Second Airport{}{}In order to transport passengers they need somewhere to go. For this to be possible, you'll need to build a second airport. This airport should be built reasonably far away from the first, as passengers generally pay your company more the further they travel. The airport should also be built near a town with a similar population size to the first one, as this means that there will be an equal amount of passengers going in each direction. This time, you should build your airport near {TOWN}. When you click on continue, the main viewport will move to {TOWN}.
+STR_AIRPLANES_2_2_2_BUILD      :To build your second airport in {TOWN}, follow the same steps as when you built the first airport in {TOWN}, as shown by the highlighted buttons. 
 
-STR_AIRPLANES_1_3_1_HANGAR     :Buying an Aircraft{}{}Now you're ready to buy your first aircraft. Click on the hangar building in the airport.
-STR_AIRPLANES_1_3_2_BUY        :In OpenTTD, you buy the aircraft first, then assign orders to it. Click on the highlighted button to select an aircraft to buy.
-STR_AIRPLANES_1_3_3_SELECT_AIRCRAFT :In this window, the aircraft available to buy are displayed in the top half, while specifications for the selected aircraft are displayed in the bottom half. Select an aircraft by clicking on it, then click on the highlighted button to buy it. You may want to select the Coleman Count, as this has the highest capacity.
-STR_AIRPLANES_1_3_4_ORDERS     :Next, you'll need to assign orders to the aircraft so that it knows where to go. Click on the highlighted button to open the orders window for the aircraft.
-STR_AIRPLANES_1_3_5_ORDERS     :Click anywhere on the airport in {TOWN}, excluding the hangar. This gives an order to the aircraft to go to this airport, and load any passengers and mail which are waiting.
-STR_AIRPLANES_1_3_6_STATION_LIST :To get back to your first airport, you can use the station list window which shows a list of all of your stations. Click on the highlighted button on the main toolbar.
-STR_AIRPLANES_1_3_7_STATION_LIST :Click on {STATION} in the list.
-STR_AIRPLANES_1_3_8_ORDERS     :Now, in the main viewport, click anywhere on {STATION}, excluding the hangar. 
-STR_AIRPLANES_1_3_9_START_AIRCRAFT :Now your aircraft has been given its orders. Close the orders window using the cross.{}{}The final step is to start your aircraft. Click once on the highlighted horizontal button in the aircraft's window to start it.
+STR_AIRPLANES_2_3_1_HANGAR     :Buying an Aircraft{}{}Now you're ready to buy your first aircraft. Click on the hangar building in the airport.
+STR_AIRPLANES_2_3_2_BUY        :In OpenTTD, you buy the aircraft first, then assign orders to it. Click on the highlighted button to select an aircraft to buy.
+STR_AIRPLANES_2_3_3_SELECT_AIRCRAFT :In this window, the aircraft available to buy are displayed in the top half, while specifications for the selected aircraft are displayed in the bottom half. Select an aircraft by clicking on it, then click on the highlighted button to buy it. You may want to select the Coleman Count, as this has the highest capacity.
+STR_AIRPLANES_2_3_4_ORDERS     :Next, you'll need to assign orders to the aircraft so that it knows where to go. Click on the highlighted button to open the orders window for the aircraft.
+STR_AIRPLANES_2_3_5_ORDERS     :Click anywhere on the airport in {TOWN}, excluding the hangar. This gives an order to the aircraft to go to this airport, and load any passengers and mail which are waiting.
+STR_AIRPLANES_2_3_6_STATION_LIST :To get back to your first airport, you can use the station list window which shows a list of all of your stations. Click on the highlighted button on the main toolbar.
+STR_AIRPLANES_2_3_7_STATION_LIST :Click on {STATION} in the list.
+STR_AIRPLANES_2_3_8_ORDERS     :Now, in the main viewport, click anywhere on {STATION}, excluding the hangar. 
+STR_AIRPLANES_2_3_9_CLOSE_ORDER_LIST :Now your aircraft has been given its orders. Close the orders window using the cross.
+STR_AIRPLANES_2_3_10_START_AIRCRAFT :The final step is to start your aircraft. Click once on the highlighted horizontal button in the aircraft's window to start it.
 
-STR_AIRPLANES_1_4_1_SUM_UP     :Summary{}{}You have now completed your first transport route in OpenTTD. Before moving onto the next chapter, you'll be shown how to look at some more detailed information about your route.{}{}To see the number of passengers and the amount of mail waiting at an airport, click anywhere on the airport, excluding the hangar.
-STR_AIRPLANES_1_4_2_STATION_WINDOW :This is the station window. In this window, the cargo waiting to be collected from the airport is displayed above the line. Knowing how many people are waiting at your airports is an important factor in deciding when you should buy another aircraft.{}{}Below the line, the different cargo types that the airport accepts are displayed. These are the cargo types which can be delivered to this airport from another one. If you click on the "Ratings" button, this will change to display the rating of your transport company at this airport.{}{}Note that no passengers will be waiting at your airport, and that your company will have no rating at the airport, until your aircraft arrives for the first time. If this is the case, you could either wait for your aircraft to arrive, or try navigating back to the first airport to see the rating and waiting passengers there.
-STR_AIRPLANES_1_4_3_AIRCRAFT_PROFIT :Another useful piece of information to know is whether or not your aircraft is making a profit, and how many passengers are being carried by the aircraft. Click on the highlighted button in the aircraft window to see the aircraft's details.
-STR_AIRPLANES_1_4_4_AIRCRAFT_PROFIT :In this window you can see several pieces of information about your aircraft: yearly profit, how much cargo is currently loaded, capacity, etc. You may notice that your aircraft is carrying mail as well as passengers. This is because most aircraft also have a small mail capacity in addition to their passenger capacity.{}{}If you would like to rename your aircraft or change its service interval, you can do this using controls in this window.
-STR_AIRPLANES_1_4_5_DONE       :You have now completed the aircraft chapter of the tutorial.{}{}Take a look at the aircraft in operation. If you would like to, you could try adding another aircraft to the route. When you feel ready to continue with this tutorial, either click on "Continue" or close this window and all other windows by pressing the DELETE button on your keyboard.
+STR_AIRPLANES_2_4_1_SUM_UP     :Summary{}{}You have now completed your first transport route in OpenTTD. Before moving onto the next chapter, you'll be shown how to look at some more detailed information about your route.{}{}To see the number of passengers and the amount of mail waiting at an airport, click anywhere on the airport, excluding the hangar.
+STR_AIRPLANES_2_4_2_STATION_WINDOW :This is the station window. In this window, the cargo waiting to be collected from the airport is displayed above the line. Knowing how many people are waiting at your airports is an important factor in deciding when you should buy another aircraft.{}{}Below the line, the different cargo types that the airport accepts are displayed. These are the cargo types which can be delivered to this airport from another one. If you click on the "Ratings" button, this will change to display the rating of your transport company at this airport.{}{}Note that no passengers will be waiting at your airport, and that your company will have no rating at the airport, until your aircraft arrives for the first time. If this is the case, you could either wait for your aircraft to arrive, or try navigating back to the first airport to see the rating and waiting passengers there.
+STR_AIRPLANES_2_4_3_AIRCRAFT_PROFIT :Another useful piece of information to know is whether or not your aircraft is making a profit, and how many passengers are being carried by the aircraft. Click on the highlighted button in the aircraft window to see the aircraft's details.
+STR_AIRPLANES_2_4_4_AIRCRAFT_PROFIT :In this window you can see several pieces of information about your aircraft: yearly profit, how much cargo is currently loaded, capacity, etc. You may notice that your aircraft is carrying mail as well as passengers. This is because most aircraft also have a small mail capacity in addition to their passenger capacity.{}{}If you would like to rename your aircraft or change its service interval, you can do this using controls in this window.
+STR_AIRPLANES_2_4_5_DONE       :You have now completed the aircraft chapter of the tutorial.{}{}Take a look at the aircraft in operation. If you would like to, you could try adding another aircraft to the route. When you feel ready to continue with this tutorial, either click on "Continue" or close this window and all other windows by pressing the DELETE button on your keyboard.
 
 # Other strings that are not in the regular timeline of messages
 STR_AIRPLANES_CLICK_GO_TO      :Click on the highlighted "Go To" button.
 STR_AIRPLANES_NOTICE_WAITING_FOR_AP_BUILD :The tutorial is waiting for you to build an airport in {TOWN}.
 STR_AIRPLANES_NOTICE_HANGAR_ORDER         :You have clicked on the hangar, not on the airport.{}{}1. Select the order concerning the hangar in the order window by clicking on it.{}2.Click on the "Delete" button in the order window.{}3. Click on the "Go To" button.{}4. Try to add an order to {STATION} again by clicking somewhere on the airport other than the hangar.
+STR_AIRPLANES_NOTICE_START_VEHICLE :The tutorial is waiting for you to start your aircraft
 STR_AIRPLANES_HANGAR_SIGN :Hangar
 
 
-STR_SHIPS_2_1_1    :Building a Dock{}{}In this chapter, you'll be shown how to transport oil from an oil rig to an oil refinery using a ship. First, you'll need to build a dock next to the oil refinery. When you click on continue, the main viewport will move to the oil refinery.
-STR_SHIPS_2_1_2    :First, you need to build a dock for the oil refinery. Click on the highlighted button on the main toolbar to open the waterway construction window.
-STR_SHIPS_2_1_3    :Click on the highlighted button. Position the dock near the oil refinery, and in such a way that the catchment area covers enough of the oil refinery for the dock placement window to display "Oil" in the accepted cargos. To build the dock, click on a tile that slopes down to the water. OpenTTD will highlight the nearest water tile if a dock can be built.
-STR_SHIPS_2_1_4    :Your dock has now been built. If you click on the dock, the station window will open up. You may notice that it is very similar to the station window for the airport, with the same buttons. Try moving away from the dock until it is no longer visible in the main viewport. If you click on the "Location" button in the station window, the main viewport will centre on the dock again.
+STR_SHIPS_3_1_1    :Building a Dock{}{}In this chapter, you'll be shown how to transport oil from an oil rig to an oil refinery using a ship. First, you'll need to build a dock next to the oil refinery. When you click on continue, the main viewport will move to the oil refinery.
+STR_SHIPS_3_1_2    :First, you need to build a dock for the oil refinery. Click on the highlighted button on the main toolbar to open the waterway construction window.
+STR_SHIPS_3_1_3    :Click on the highlighted button. Position the dock near the oil refinery, and in such a way that the catchment area covers enough of the oil refinery for the dock placement window to display "Oil" in the accepted cargos. To build the dock, click on a tile that slopes down to the water. OpenTTD will highlight the nearest water tile if a dock can be built.
+STR_SHIPS_3_1_4    :Your dock has now been built. If you click on the dock, the station window will open up. You may notice that it is very similar to the station window for the airport, with the same buttons. Try moving away from the dock until it is no longer visible in the main viewport. If you click on the "Location" button in the station window, the main viewport will centre on the dock again.
 
-STR_SHIPS_2_2_1    :Building a Ship Depot{}{}Buying ships is very similar to buying aircraft. However, while aircraft are bought from a hangar on the airport, you need to build a separate ship depot to buy your ships from. Click on the highlighted buttons.
-STR_SHIPS_2_2_2    :Position the ship depot on the water near to the dock. However, make sure that you do not block the dock with the shipyard. Click to build the ship depot.
+STR_SHIPS_3_2_1    :Building a Ship Depot{}{}Buying ships is very similar to buying aircraft. However, while aircraft are bought from a hangar on the airport, you need to build a separate ship depot to buy your ships from. Click on the highlighted buttons.
+STR_SHIPS_3_2_2    :Position the ship depot on the water near to the dock. However, make sure that you do not block the dock with the shipyard. Click to build the ship depot.
 
-STR_SHIPS_2_3_1    :Buying a Ship{}{}Click on the ship depot to open the depot window. Click on the highlighted buttons to buy a ship capable of transporting oil.
-STR_SHIPS_2_3_2    :Close the depot window, but leave the ship window open.{}{}Now you are going to give the ship its orders. When you click on continue, the viewport will move to the oil rig.
-STR_SHIPS_2_3_3    :You may have realised that you haven't built a dock by the oil rig. However, you won't have to do this as oil rigs, uniquely in OpenTTD, have their own in-built station.{}{}Click on the highlighted buttons to give orders to your ship to go first to the oil rig ({STATION}), then go to the refinery dock ({STATION}).{}{}Note that you will have to click on the tile marked as "Dock Tile" on the oil rig to give the ship the order to go to the oil rig.
+STR_SHIPS_3_3_1    :Buying a Ship{}{}Click on the ship depot to open the depot window. Click on the highlighted buttons to buy a ship capable of transporting oil.
+STR_SHIPS_3_3_2    :Close the depot window, but leave the ship window open.{}{}Now you are going to give the ship its orders. When you click on continue, the viewport will move to the oil rig.
+STR_SHIPS_3_3_3    :You may have realised that you haven't built a dock by the oil rig. However, you won't have to do this as oil rigs, uniquely in OpenTTD, have their own in-built station.{}{}Click on the highlighted buttons to give orders to your ship to go first to the oil rig ({STATION}), then go to the refinery dock ({STATION}).{}{}Note that you will have to click on the tile marked as "Dock Tile" on the oil rig to give the ship the order to go to the oil rig.
 
-STR_SHIPS_2_4_1    :More Complex Orders{}{}Press the highlighted button to make the ship start moving. Hold the TAB-key on your keyboard to enable fast forward of the game. Keep holding TAB until the ship has left the oil rig for the second time.
-STR_SHIPS_2_4_2    :Now you're going to look at how much oil your ship is carrying. Open the ship's details window by clicking on the highlighted button.
-STR_SHIPS_2_4_3    :You should see that although your ship is carrying some oil, it is not at full capacity. This means it is not working at a maximum profit. You can change this by adjusting your ship's orders. Click on the highlighted button to open the ship's order window.
-STR_SHIPS_2_4_4    :Now click on the order for the oil rig ({STATION}).
-STR_SHIPS_2_4_5    :At the bottom of the order window, you should notice two rows of buttons. The buttons on the bottom row are used to add and delete orders, while those on the top row are used to change existing orders. You are going to order your ship to keep loading oil until it is at full capacity. This is done using a button on the top row.
-STR_SHIPS_2_4_6    :Click on "Full Load Any Cargo".
-STR_SHIPS_2_4_7    :You should notice that the order for the oil rig has changed. When your ship next reaches the oil rig, it will load itself with oil until it is at full capacity. This will take a lot more time however.
+STR_SHIPS_3_4_1    :More Complex Orders{}{}Press the highlighted button to make the ship start moving. Hold the TAB-key on your keyboard to enable fast forward of the game. Keep holding TAB until the ship has left the oil rig for the second time.
+STR_SHIPS_3_4_2    :Now you're going to look at how much oil your ship is carrying. Open the ship's details window by clicking on the highlighted button.
+STR_SHIPS_3_4_3    :You should see that although your ship is carrying some oil, it is not at full capacity. This means it is not working at a maximum profit. You can change this by adjusting your ship's orders. Close the details window and then click on the highlighted button in the vehicle window to open the ship's order window.
+STR_SHIPS_3_4_4    :Now click on the order for the oil rig ({STATION}).
+STR_SHIPS_3_4_5    :At the bottom of the order window, you should notice two rows of buttons. The buttons on the bottom row are used to add and delete orders, while those on the top row are used to change existing orders. You are going to order your ship to keep loading oil until it is at full capacity. This is done using a button on the top row.
+STR_SHIPS_3_4_6    :Click on "Full Load Any Cargo".
+STR_SHIPS_3_4_7    :You should notice that the order for the oil rig has changed. When your ship next reaches the oil rig, it will load itself with oil until it is at full capacity. This will take a lot more time however.
 
-STR_SHIPS_2_5_1    :Canals{}{}Your first ship should now be running at the best possible profit for its route. There is a second oil rig in a lake to the north of the refinery, which could be used to increase your profits. There is a slight problem, however, as the lake is not connected to the sea, and so any ships will be unable to travel between the second oil rig and the oil refinery.{}{}There are two methods by which you could create a ship route to the second oil rig. The first is to simply lower the land to create a path which joins the lake to the sea. The second is to build a canal for your ships to travel on. In this section of the tutorial, you are going to build a canal - landscaping will be covered in a later section.
-STR_SHIPS_2_5_2    :Click on the highlighted buttons to select the "Build Canals" tool.
-STR_SHIPS_2_5_3    :Now, change the view in your main viewport by holding your right mouse button. Keep holding and move upwards until you see the signs that suggest a path for your canal.{}{}Use your left mouse button to build the canal tiles at the suggested location. It is important that you start and end at the suggested points, or the tutorial will not find your connection and will not know you have completed your task.
-STR_SHIPS_2_5_4    :Click on the highlighted button to select the "Build Lock" tool.
-STR_SHIPS_2_5_5    :Locks allow ships to move to a waterway which is higher or lower than its current position. They can only be placed on sloped tiles. You should notice that when you hover over a sloped tile with "Build Lock" tool selected, that not only will it highlight the tile you are hovering over, but also two of the neighbouring tiles (one land tile and one sea or canal tile). This situation is used to show where you can build a lock. Build a lock at either end of your canal.
-STR_SHIPS_2_5_6    :You can now build another ship to transport oil from the second oil rig to the oil refinery. It may be a good idea to order this ship to full load oil as well, as this will ensure your company gets the maximum profits.{}{}No buttons will be highlighted as reminders for this ship. Follow the same sequence as you did for your first ship, starting by clicking on the shipyard. Buy a suitable ship, then give it its orders. Select the oil rig order, then click on "Full Load Any Cargo". Finally, start your ship.
+STR_SHIPS_3_5_1    :Canals{}{}Your first ship should now be running at the best possible profit for its route. There is a second oil rig in a lake to the north of the refinery, which could be used to increase your profits. There is a slight problem, however, as the lake is not connected to the sea, and so any ships will be unable to travel between the second oil rig and the oil refinery.{}{}There are two methods by which you could create a ship route to the second oil rig. The first is to simply lower the land to create a path which joins the lake to the sea. The second is to build a canal for your ships to travel on. In this section of the tutorial, you are going to build a canal - landscaping will be covered in a later section.
+STR_SHIPS_3_5_2    :Click on the highlighted buttons to select the "Build Canals" tool.
+STR_SHIPS_3_5_3    :Now, change the view in your main viewport by holding your right mouse button. Keep holding and move upwards until you see the signs that suggest a path for your canal.{}{}Use your left mouse button to build the canal tiles at the suggested location. It is important that you start and end at the suggested points, or the tutorial will not find your connection and will not know you have completed your task.
+STR_SHIPS_3_5_4    :Click on the highlighted button to select the "Build Lock" tool.
+STR_SHIPS_3_5_5    :Locks allow ships to move to a waterway which is higher or lower than its current position. They can only be placed on sloped tiles. You should notice that when you hover over a sloped tile with "Build Lock" tool selected, that not only will it highlight the tile you are hovering over, but also two of the neighbouring tiles (one land tile and one sea or canal tile). This situation is used to show where you can build a lock. Build a lock at both ends of your canal.
+STR_SHIPS_3_5_6    :You can now build another ship to transport oil from the second oil rig to the oil refinery. It may be a good idea to order this ship to full load oil as well, as this will ensure your company gets the maximum profits.{}{}No buttons will be highlighted as reminders for this ship. Follow the same sequence as you did for your first ship, starting by clicking on the shipyard. Buy a suitable ship, then give it its orders. Select the oil rig order, then click on "Full Load Any Cargo". Finally, start your ship.
 
-STR_SHIPS_2_6_1    :You have now completed the ships chapter of the tutorial.{}{} There is another oil rig to the southwest of the refinery. If you would like to, you could try building another ship to connect this oil rig to the refinery. When you feel ready to continue with this tutorial, either click on "Continue" or close this window and all other windows by pressing the DELETE button on your keyboard.
+STR_SHIPS_3_6_1    :You have now completed the ships chapter of the tutorial.{}{} There is another oil rig to the southwest of the refinery. If you would like to, you could try building another ship to connect this oil rig to the refinery. When you feel ready to continue with this tutorial, either click on "Continue" or close this window and all other windows by pressing the DELETE button on your keyboard.
 
 # Waiting notice messages (shown only after that the tutorial have been waiting some time for the user)
 STR_SHIPS_NOTICE_WAITING_FOR_DOCK_BUILD :The tutorial is waiting for you to build a dock near {INDUSTRY}.
@@ -100,6 +102,53 @@ STR_SHIPS_SIGN_CANAL_END :Canal End
 # A lock in this context is a lock for ships to go from sea up to the canal
 STR_SHIPS_SIGN_LOCK1 :Lock
 STR_SHIPS_SIGN_LOCK2 :Lock
+
+
+STR_TRUCKS_4_1_1_INTRO                :Trucks{}{}Next, we're going to explain a little about industry chains. Some industries, such as oil rigs, will produce no matter what. Others, such as Oil Refineries, must first be serviced to produce anything.
+STR_TRUCKS_4_1_2_CHAINS_OPEN          :To learn more about chains, let's open up the "Industry Chain" window for an oil rig. First click on an Oil Rig anywhere except at the back where the station is located.
+STR_TRUCKS_4_1_3_CHAINS_OPEN_2        :Now click on the "Industry Chain" button.
+STR_TRUCKS_4_1_4_CHAINS_INFO          :From this we can see that Oil can be transported from an Oil Rig to an Oil Refinery. Now click on the Oil Refinery box.
+STR_TRUCKS_4_1_5_CHAINS_INFO_2        :From this we can see that Oil Refineries produce Goods which can be transported to towns. That is the goal for this chapter; to transport goods from an Oil Refinery to a town.{}{}Close the industry chain window.
+STR_TRUCKS_4_1_6_FROM_REFINERY        :We are going to go from this Oil Refinery...
+STR_TRUCKS_4_1_7_TO_THIS_TOWN         :...to this town.{}{}Zoom out a bit and you will see the refinery down to the right.
+
+STR_TRUCKS_4_2_1_BUILD_STATIONS_INFO  :Truck Stations{}{}To transport goods we will need to build two stations - one to pick up goods near the refinery and one to drop them off in town. Let's build the one in town first. Select the road toolbar.
+STR_TRUCKS_4_2_2_BUILD_TRUCK_STATION  :Let's build a Lorry (or truck) station.
+STR_TRUCKS_4_2_3_BUILD_ON_TOP         :One thing about truck stops (or lorry stations) is that they can be built on top of existing roads. (if allowed by the advanced settings, which is the case in this tutorial, but some multiplayer servers may have it disabled){}{}Build a truck stop in {TOWN} on one of the existing roads. Make sure that the truck stop accepts goods (otherwise the tutorial will not continue).
+
+STR_TRUCKS_4_3_1_OIL_REFINERY_STATION :Next we need to build another station to pick up the goods from the Oil Refinery. Make sure the Oil Refinery is within the catchment area of your new station. 
+
+STR_TRUCKS_4_4_1_ROAD_INFO            :Road Construction{}{}Next, we need to build a road to connect the two truck stations. One of the nice things about roads is that we can use anyone else's roads too. So we only have to connect to the existing town roads.{}{}Use the road tools...
+STR_TRUCKS_4_4_2_AUTO_ROAD            :Use the auto-road tool to drag road in either X or Y direction.
+STR_TRUCKS_4_4_3_CONNECT_ROAD         :Road is placed by pressing down the mouse on a tile and then drag to the end and release the mouse button there. Build road to connect the truck stop in town with the truck stop at the oil refinery.
+
+STR_TRUCKS_4_5_1_ROAD_DEPOT           :Like for the ships, we need to build a depot to build trucks at.{}{}Build a truck depot near the truck stop at the refinery. If you place it facing a road, it will be automatically connected to the road. Otherwise you need to use the road tools to connect it to the road so that new trucks can drive to the refinery station.{}{}The tutorial guide will continue when you have built a depot within 10 tiles from the refinery and connected it so that the refinery station can be reached from it.
+
+STR_TRUCKS_4_6_1_VEHICLES_INFO        :Vehicles{}{}Now we have everything in place to start our goods service.{}{}If you have the road building tool active, abort it by hitting the Escape key, then click on the depot to open the depot window.
+STR_TRUCKS_4_6_2_BUILD_VEHICLE        :Let's build a vehicle.
+STR_TRUCKS_4_6_3_BUILD_TRUCK          :Build a truck that can carry goods. {ENGINE} is a such truck.
+STR_TRUCKS_4_6_4_ORDERS               :Now give the truck orders, just like you did for the ship. Make sure that the truck is set to "full load" at {STATION}. 
+STR_TRUCKS_4_6_5_START_TRUCK          :Now, when the orders are in place, start the truck.
+
+STR_TRUCKS_4_7_1_CLONING_INFO         :Cloning Vehicles{}{}Congratulation! You have your first truck running.{}{}One of the problems with road vehicles is they tend to have low capacity, and so if an industry has high production, you may need many trucks. There is an easy way to make extra vehicles for the route through "cloning".{}{}Click on the road depot.
+STR_TRUCKS_4_7_2_CLONE_BTN            :Click on the "Clone Vehicle" button.
+STR_TRUCKS_4_7_3_CLICK_VEHICLE        :Now click on the existing truck. You can use the arrow keys to move the viewport around if you need to find it.
+STR_TRUCKS_4_7_4_START_CLONE          :Now start your cloned truck!
+
+STR_TRUCKS_4_8_1_CONCLUSION           :Congratulations, you have now completed the trucks chapter! Now you know how to build truck stations, connect them, build trucks, and clone vehicles.
+
+# Waiting notice messages (shown only after that the tutorial have been waiting some time for the user)
+STR_TRUCKS_NOTICE_WAITING_FOR_TOWN_BUILD      :The tutorial is waiting for you to build a truck stop in {TOWN}.
+STR_TRUCKS_NOTICE_WAITING_FOR_REFINERY_BUILD  :The tutorial is waiting for you to build a truck stop at the refinery {INDUSTRY}.
+STR_TRUCKS_NOTICE_WAITING_FOR_CONNECT_ROAD    :The tutorial is waiting for you to connect {STATION} with {STATION} using road.
+STR_TRUCKS_NOTICE_WAITING_FOR_DEPOT           :The tutorial is waiting for you to build a depot within 10 tiles from {STATION} and connect it to the same road as the station.
+STR_TRUCKS_NOTICE_WAITING_FOR_BUILD_VEHICLE   :The tutorial is waiting for you to build a goods truck
+STR_TRUCKS_NOTICE_WAITING_FOR_CLONE_VEHICLE   :The tutorial is waiting for you to clone your goods truck
+STR_TRUCKS_NOTICE_WAITING_FOR_ORDERS          :The tutorial is waiting for you to add orders to {VEHICLE} that tell it to go to {STATION} and {STATION}. The first station should have the Full Load Any order set.
+STR_TRUCKS_NOTICE_WAITING_FOR_VEH_START       :The tutorial is waiting for you to start your truck ({VEHICLE}).
+
+# Signs
+STR_TRUCKS_SIGN_DEPOT      :Depot
 
 
 # ----- Other messages --------------------------------------------------------

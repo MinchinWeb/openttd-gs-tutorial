@@ -1,15 +1,20 @@
 
+/* cargo constants for default industries */
+CARGO_GOODS <- 5;
+
 class Common
 {
 }
+
 
 /*
  * parameters:
  *   vehicle = vehicle id
  *   station_array = a squirrel array containing station ids.
  *   waiting_message = a literal string or a GSText instance
+ *   require_full_load_at_first = if true, the function will additionally require that the first station have the order flag to full load there.
  */
-/*static*/ function Common::WaitForOrderToStations(vehicle, station_array, waiting_message)
+/*static*/ function Common::WaitForOrderToStations(vehicle, station_array, waiting_message, require_full_load_at_first = false)
 {
 	local company_mode = GSCompanyMode(HUMAN_COMPANY);
 	local message = false;
@@ -26,6 +31,7 @@ class Common
 
 			// Does the company have all stations?
 			local have_all_stations = true;
+			local require_full_load = require_full_load_at_first;
 			foreach(station_id in station_array)
 			{
 				local has_station = false;
@@ -34,6 +40,17 @@ class Common
 					if(GSOrder.IsGotoStationOrder(vehicle, i) &&
 							GSStation.GetStationID(GSOrder.GetOrderDestination(vehicle, i)) == station_id)
 					{
+						// Must this station have the full load (any) order set?
+						if(require_full_load)
+						{
+							local flags = GSOrder.GetOrderFlags(vehicle, i);
+							local have_full_load_order = (flags & GSOrder.OF_FULL_LOAD_ANY) != 0 ||
+								(flags & GSOrder.OF_FULL_LOAD) != 0;
+
+							if(!have_full_load_order)
+								continue;
+						}
+
 						has_station = true;
 						break;
 					}
@@ -45,6 +62,10 @@ class Common
 					have_all_stations = false;
 					break;
 				}
+
+				// Full load is only (maybe) required at
+				// first station.
+				require_full_load = false;
 			}
 
 			// All stations?
@@ -109,4 +130,88 @@ class Common
 	// Close the notification about waiting for dock construction if it has been shown
 	if(message)
 		GSGoal.CloseQuestion(message_id);
+}
+
+/*static*/ function Common::GetStationInTown(town, station_type, accept_cargo = -1, produce_cargo = -1)
+{
+	local company_mode = GSCompanyMode(HUMAN_COMPANY);
+	local st_list = GSStationList(station_type);
+
+	st_list.Valuate(GSStation.GetNearestTown);
+	st_list.KeepValue(town);
+
+	if(accept_cargo != -1)
+	{
+		st_list.Valuate(Station.IsCargoAccepted, accept_cargo);
+		st_list.KeepValue(1);
+	}
+	if(produce_cargo != -1)
+	{
+		st_list.Valuate(Station.IsCargoSupplied, produce_cargo);
+		st_list.KeepValue(1);
+	}
+
+	if(!st_list.IsEmpty())
+	{
+		return st_list.Begin();
+	}
+
+	return -1;
+}
+
+// Warning: Supply at least a accept_cargo or produce_cargo for the function to work!
+/*static*/ function Common::GetStationForIndustry(industry, station_type, accept_cargo = -1, produce_cargo = -1)
+{
+	local company_mode = GSCompanyMode(HUMAN_COMPANY);
+	local st_list = GSStationList(station_type);
+
+	if(accept_cargo != -1)
+	{
+		st_list.Valuate(Station.IsCargoAcceptedByIndustry, accept_cargo, industry);
+		st_list.KeepValue(1);
+	}
+	if(produce_cargo != -1)
+	{
+		st_list.Valuate(Station.IsCargoSuppliedByIndustry, produce_cargo, industry);
+		st_list.KeepValue(1);
+	}
+
+	if(!st_list.IsEmpty())
+	{
+		return st_list.Begin();
+	}
+
+	return -1;
+}
+
+/*
+ * vehicle_type = GSVehicle.VehicleType (VT_ROAD etc.)
+ * cargo = cargo type
+ * black_list = a squirrel array with vehicles to ignore (optional parameter)
+ */
+/*static*/ function Common::GetVehicle(vehicle_type, cargo, black_list = [])
+{
+	local company_mode = GSCompanyMode(HUMAN_COMPANY);
+	local veh_list = GSVehicleList();
+	veh_list.Valuate(GSVehicle.GetVehicleType);
+	veh_list.KeepValue(vehicle_type);
+	veh_list.Valuate(Vehicle.GetVehicleCargoType);
+	veh_list.KeepValue(cargo);
+
+	black_list = Helper.SquirrelListToAIList(black_list);
+	veh_list.RemoveList(black_list);
+
+	if(veh_list.IsEmpty())
+		return -1;
+
+	return veh_list.Begin();
+}
+
+/*static*/ function Common::VehicleStarted_WaitCondition(vehicle_id)
+{
+	if (GSVehicle.GetState(vehicle_id) != GSVehicle.VS_STOPPED &&
+			!GSVehicle.IsStoppedInDepot(vehicle_id))
+		return 1;
+	else
+		return -1; // a wait condition function should return -1 as long as the condition have not been satisfied.
 }

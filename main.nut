@@ -11,7 +11,7 @@ require("chapter_buses.nut");
 require("chapter_trains.nut");
 
 /* Import SuperLib for GameScript */
-import("util.superlib", "SuperLib", 21);
+import("util.superlib", "SuperLib", 25);
 Result <- SuperLib.Result;
 Log <- SuperLib.Log;
 Helper <- SuperLib.Helper;
@@ -20,6 +20,9 @@ Tile <- SuperLib.Tile;
 Direction <- SuperLib.Direction;
 Town <- SuperLib.Town;
 Industry <- SuperLib.Industry;
+Station <- SuperLib.Station;
+Road <- SuperLib.Road;
+Vehicle <- SuperLib.Vehicle;
 
 /* Import TileLabels */
 import("scenario.tilelabels", "TileLabels", 1);
