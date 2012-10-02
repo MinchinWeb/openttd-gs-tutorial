@@ -2,7 +2,7 @@
  * License: GPL2
  */
 
-SELF_VERSION <- 8;
+SELF_VERSION <- 9;
 require("version_upgrade.nut");
 
 class ScriptInfo extends GSInfo {

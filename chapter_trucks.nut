@@ -72,9 +72,14 @@ class ChapterTrucks {
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_3_1_OIL_REFINERY_STATION), NO_WAIT)); 
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_MAIN_TOOLBAR, 0, GSWindow.WID_TN_ROADS, NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_BUILD_TOOLBAR, 1, WAIT_ON_OPEN));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_2_2_BUILD_TRUCK_STATION), NO_WAIT)); 
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_3_2_BUILD_TRUCK_STATION), NO_WAIT)); 
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_BUILD_TOOLBAR, 1, GSWindow.WID_ROT_TRUCK_STATION, NO_WAIT));
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_TRUCK_STATION, 1, WAIT_ON_OPEN));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_TRUCK_STATION, 1, GSWindow.WID_BROS_STATION_NE, NO_WAIT)); // highlight loading bays
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_TRUCK_STATION, 1, GSWindow.WID_BROS_STATION_SE, NO_WAIT));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_TRUCK_STATION, 1, GSWindow.WID_BROS_STATION_SW, NO_WAIT));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_TRUCK_STATION, 1, GSWindow.WID_BROS_STATION_NW, NO_WAIT));
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_3_3_BUILD_TRUCK_STATION2), NO_WAIT)); 
 	main_instance.AddStep(CodeStep( function(table) {
 		//<wait for the user to build a truck station next to the Oil Refinery that will allow the pick up of goods>
 		ChapterTrucks.WaitForTruckStopAtRefinery(table.refinery);
@@ -141,14 +146,14 @@ class ChapterTrucks {
 		Common.WaitFor(Common.GetVehicle, [GSVehicle.VT_ROAD, CARGO_GOODS], GSText(GSText.STR_TRUCKS_NOTICE_WAITING_FOR_BUILD_VEHICLE));
 		table.truck <- Common.GetVehicle(GSVehicle.VT_ROAD, CARGO_GOODS);
 	}));
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_6_4_ORDERS), NO_WAIT)); 
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_6_4_ORDERS), NO_WAIT, TableKey("refinery_station_id"))); 
 	main_instance.AddStep(CodeStep( function(table) {
 		local require_full_load_at_first = true;
 		Common.WaitForOrderToStations(table.truck, [table.refinery_station_id, table.town_station_id], GSText(GSText.STR_TRUCKS_NOTICE_WAITING_FOR_ORDERS, table.truck, table.refinery_station_id, table.town_station_id), require_full_load_at_first);
 	}));
 
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_6_5_START_TRUCK), NO_WAIT)); 
-	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("depot"), GSWindow.WID_VV_START_STOP, NO_WAIT));
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("truck"), GSWindow.WID_VV_START_STOP, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		Common.WaitFor(Common.VehicleStarted_WaitCondition, [table.truck], GSText(GSText.STR_TRUCKS_NOTICE_WAITING_FOR_VEH_START, table.truck));
 	}));
@@ -157,7 +162,7 @@ class ChapterTrucks {
 	
 
 	// 4.7 - Cloning
-	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_7_1_CLONING_INFO), NO_WAIT)); 
+	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_7_1_CLONING_INFO), NO_WAIT, TableKey("dest_town"))); 
 	main_instance.AddStep(WaitOnWindowStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("depot"), WAIT_ON_OPEN)); 
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_7_2_CLONE_BTN), NO_WAIT)); 
 	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_DEPOT, TableKey("depot"), GSWindow.WID_D_CLONE, WAIT));
@@ -169,6 +174,7 @@ class ChapterTrucks {
 		table.cloned_truck <- Common.GetVehicle(GSVehicle.VT_ROAD, CARGO_GOODS, black_list);
 	}));
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_TRUCKS_4_7_4_START_CLONE), NO_WAIT)); // ask to start
+	main_instance.AddStep(GUIHighlightStep(GSWindow.WC_VEHICLE_VIEW, TableKey("cloned_truck"), GSWindow.WID_VV_START_STOP, NO_WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
 		// wait on start
 		Common.WaitFor(Common.VehicleStarted_WaitCondition, [table.cloned_truck], GSText(GSText.STR_TRUCKS_NOTICE_WAITING_FOR_VEH_START, table.cloned_truck));
