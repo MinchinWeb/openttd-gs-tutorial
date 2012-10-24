@@ -27,6 +27,9 @@ Vehicle <- SuperLib.Vehicle;
 /* Import TileLabels */
 import("scenario.tilelabels", "TileLabels", 1);
 
+/* Import MinchinWeb's MetaLibrary */
+import("util.MinchinWeb", "MetaLib", 5);
+
 /* Globals */
 g_menu <- null;
 g_tile_labels <- null;
@@ -84,6 +87,9 @@ function MainClass::Start()
 	//local company_mode = GSCompanyMode(HUMAN_COMPANY);
 
 	Log.Info("Tutorial starts now", Log.LVL_INFO);
+	
+	Log.Info("WM - Test of Ship Building by GS", Log.LVL_INFO);
+	ChapterShips.CompleteByAI();
 
 	while (!this._end_of_tutorial) {
 		this.HandleEvents();

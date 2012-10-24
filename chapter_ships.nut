@@ -44,7 +44,7 @@ class ChapterShips {
 {
 	// Initialization code
 	main_instance.AddStep(CodeStep(ChapterShips.Init));
-
+	
 	// 2.1 - Ship dock construction (for refinery)
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_1), WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
@@ -288,6 +288,22 @@ class ChapterShips {
 	local cm = GSCompanyMode(HUMAN_COMPANY);
 
 	// TODO: Add code to complete chapter
+	
+	//	Build Locks
+	GSMarine.BuildLock(table.canal_lock1);
+	GSMarine.BuildLock(table.canal_lock2);	
+	
+	//	Build Canals
+	local LW = MetaLib.LineWalker();
+	LW.Start(table.canal_start_tile);
+	LW.End(table.canal_end_tile);
+	
+	do {
+		local mytile = LW.Walk();
+		GSMarine.BuildCanal(mytile);
+	} while (!LW.IsEnd())
+	
+	//	Link by Ships
 
 	return true; // allow testing of ships chapter before AI have been implemented
 	return false; // todo: return true when it works
