@@ -123,12 +123,12 @@ function _MinchinWeb_Extras_::SignLocation(text)
 function _MinchinWeb_Extras_::MidPoint(TileA, TileB)
 {
 //	Returns the tile that is halfway between the given tiles
-	local X = (AIMap.GetTileX(TileA) + AIMap.GetTileX(TileB)) / 2 + 0.5;
-	local Y = (AIMap.GetTileY(TileA) + AIMap.GetTileY(TileB)) / 2 + 0.5;
+	local X = (GSMap.GetTileX(TileA) + GSMap.GetTileX(TileB)) / 2 + 0.5;
+	local Y = (GSMap.GetTileY(TileA) + GSMap.GetTileY(TileB)) / 2 + 0.5;
 		//	the 0.5 is to make rounding work
 	X = X.tointeger();
 	Y = Y.tointeger();
-	return AIMap.GetTileIndex(X, Y);
+	return GSMap.GetTileIndex(X, Y);
 }
 
 function _MinchinWeb_Extras_::Perpendicular(SlopeIn)
@@ -145,8 +145,8 @@ function _MinchinWeb_Extras_::Perpendicular(SlopeIn)
 function _MinchinWeb_Extras_::Slope(TileA, TileB)
 {
 //	Returns the slope between two tiles
-	local dx = AIMap.GetTileX(TileB) - AIMap.GetTileX(TileA);
-	local dy = AIMap.GetTileY(TileB) - AIMap.GetTileY(TileA);
+	local dx = GSMap.GetTileX(TileB) - GSMap.GetTileX(TileA);
+	local dy = GSMap.GetTileY(TileB) - GSMap.GetTileY(TileA);
 //	local Inftest = _MinchinWeb_Extras_._infinity;
 //	AILog.Info(_MinchinWeb_Extras_._infinity);
 	
@@ -281,11 +281,11 @@ function _MinchinWeb_Extras_::NextCardinalTile(StartTile, TowardsTile)
 //	Given a StartTile and a TowardsTile, will given the tile immediately next
 //		(Manhattan Distance == 1) to StartTile that is closests to TowardsTile
 	local Tiles = AITileList();
-	local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
-						AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
+	local offsets = [GSMap.GetTileIndex(0, 1), GSMap.GetTileIndex(0, -1),
+						GSMap.GetTileIndex(1, 0), GSMap.GetTileIndex(-1, 0)];
 				 
 	foreach (offset in offsets) {
-		Tiles.AddItem(StartTile + offset, AIMap.DistanceSquare(StartTile + offset, TowardsTile));
+		Tiles.AddItem(StartTile + offset, GSMap.DistanceSquare(StartTile + offset, TowardsTile));
 	}
 	
 	Tiles.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
@@ -318,15 +318,15 @@ function _MinchinWeb_Industry_::GetIndustryID(Tile) {
 //	This function starts at the tile, and then searchs a square out (up to
 //		Constants.StationSize) until it finds a tile with a valid TileID.
 
-	local StartX = AIMap.GetTileX(Tile);
-	local StartY = AIMap.GetTileY(Tile);
-	local EndX = AIMap.GetTileX(Tile) + _MinchinWeb_C_.IndustrySize();
-	local EndY = AIMap.GetTileY(Tile) + _MinchinWeb_C_.IndustrySize();
+	local StartX = GSMap.GetTileX(Tile);
+	local StartY = GSMap.GetTileY(Tile);
+	local EndX = GSMap.GetTileX(Tile) + _MinchinWeb_C_.IndustrySize();
+	local EndY = GSMap.GetTileY(Tile) + _MinchinWeb_C_.IndustrySize();
 	
 	for (local i = StartX; i < EndX; i++) {
 		for (local j = StartY; j < EndY; j++) {
-			if (AIIndustry.GetIndustryID(AIMap.GetTileIndex(i,j)) != _MinchinWeb_C_.InvalidIndustry()) {
-				return AIIndustry.GetIndustryID(AIMap.GetTileIndex(i,j));
+			if (AIIndustry.GetIndustryID(GSMap.GetTileIndex(i,j)) != _MinchinWeb_C_.InvalidIndustry()) {
+				return AIIndustry.GetIndustryID(GSMap.GetTileIndex(i,j));
 			}
 		}
 	}
@@ -365,8 +365,8 @@ function _MinchinWeb_Station_::IsNextToDock(TileID)
 {
 //	Checks whether a given tile is next to a dock. Returns true if this is the case
 	
-	local offsets = [0, AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
-						AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
+	local offsets = [0, GSMap.GetTileIndex(0, 1), GSMap.GetTileIndex(0, -1),
+						GSMap.GetTileIndex(1, 0), GSMap.GetTileIndex(-1, 0)];
 				 
 	foreach (offset in offsets) {
 		if (AIMarine.IsDockTile(TileID + offset)) {

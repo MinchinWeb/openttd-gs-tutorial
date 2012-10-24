@@ -58,12 +58,12 @@ function _MinchinWeb_LW_::Start(Tile)
 {
 //	Sets the starting tile for LineWalker
 	this._start = Tile;
-	this._startx = AIMap.GetTileX(Tile);
-	this._starty = AIMap.GetTileY(Tile);
+	this._startx = GSMap.GetTileX(Tile);
+	this._starty = GSMap.GetTileY(Tile);
 	this._x = this._startx;
 	this._y = this._starty;	
 	this._past_end = false;
-	this._current_tile = AIMap.GetTileIndex(this._x, this._y);
+	this._current_tile = GSMap.GetTileIndex(this._x, this._y);
 	this._x = this._x.tofloat();
 	this._y = this._y.tofloat();
 	
@@ -100,8 +100,8 @@ function _MinchinWeb_LW_::End(Tile)
 //	Sets the ending tile for LineWalker
 //	If the slope is also directly set, the start and end tiles define a bounding box
 	this._end = Tile;
-	this._endx = AIMap.GetTileX(Tile);
-	this._endy = AIMap.GetTileY(Tile);
+	this._endx = GSMap.GetTileX(Tile);
+	this._endy = GSMap.GetTileY(Tile);
 	
 	if (this._start != null) {
 		if (this._slope == null) {
@@ -137,10 +137,10 @@ function _MinchinWeb_LW_::Slope(Slope, ThirdQuadrant = false)
 //	Assumes that the slope is in the first or second quadrant unless ThirdQuadrant == true
 
 	if (_MinchinWeb_Extras_.AbsFloat(Slope) > _MinchinWeb_C_.Infinity()) {
-		AILog.Warning("Slope is capped at " + _MinchinWeb_C_.Infinity() + ", you provided " + Slope + ".");
+		GSLog.Warning("Slope is capped at " + _MinchinWeb_C_.Infinity() + ", you provided " + Slope + ".");
 		this._slope = _MinchinWeb_C_.Infinity();
 	} else if (_MinchinWeb_Extras_.AbsFloat(Slope) < (1.0 / _MinchinWeb_C_.Infinity())) {
-		AILog.Warning("Slope is capped at 1/" + _MinchinWeb_C_.Infinity() + ", you provided " + Slope + ".");
+		GSLog.Warning("Slope is capped at 1/" + _MinchinWeb_C_.Infinity() + ", you provided " + Slope + ".");
 		this._slope = (1.0 / _MinchinWeb_C_.Infinity());
 	} else {
 		this._slope = Slope;
@@ -148,10 +148,10 @@ function _MinchinWeb_LW_::Slope(Slope, ThirdQuadrant = false)
 	
 	if (ThirdQuadrant == false) {
 		this._dirx = 1;
-		this._endx = AIMap.GetMapSizeX();
+		this._endx = GSMap.GetMapSizeX();
 		
 		if (this._slope > 0.0) {
-			this._endy = AIMap.GetMapSizeY();
+			this._endy = GSMap.GetMapSizeY();
 		} else {
 			this._endy = 0;
 		}	
@@ -164,11 +164,11 @@ function _MinchinWeb_LW_::Slope(Slope, ThirdQuadrant = false)
 		this._endx = 0;
 
 		if (this._slope > 0.0) {
-	//		this._endy = AIMap.GetMapSizeY();
+	//		this._endy = GSMap.GetMapSizeY();
 			this._endy = 0;
 		} else {
 	//		this._endy = 0;
-			this._endy = AIMap.GetMapSizeY();
+			this._endy = GSMap.GetMapSizeY();
 		}
 	}
 	
@@ -198,7 +198,7 @@ function _MinchinWeb_LW_::Restart()
 	this._x = this._startx.tofloat();
 	this._y = this._starty.tofloat();
 	this._past_end = false;
-	this._current_tile = AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
+	this._current_tile = GSMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
 }
 
 //	=== LineWalker Walk ===
@@ -212,9 +212,9 @@ function _MinchinWeb_LW_::Walk()
 		return this._current_tile;
 	}
 	
-	if ((AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger())) == 1 ) && _MinchinWeb_Extras_.WithinFloat(this._startx.tofloat(), this._endx.tofloat(), this._x.tointeger()) &&_MinchinWeb_Extras_.WithinFloat(this._starty.tofloat(), this._endy.tofloat(), this._y.tointeger())) {
-		this._current_tile = AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
-//		_MinchinWeb_Log_.Note("Linewalker output " + AIMap.GetTileX(this._current_tile) + "," + AIMap.GetTileY(this._current_tile) + " from " + this._x + "," + this._y, 7);
+	if ((GSMap.DistanceManhattan(this._current_tile, GSMap.GetTileIndex(this._x.tointeger(), this._y.tointeger())) == 1 ) && _MinchinWeb_Extras_.WithinFloat(this._startx.tofloat(), this._endx.tofloat(), this._x.tointeger()) &&_MinchinWeb_Extras_.WithinFloat(this._starty.tofloat(), this._endy.tofloat(), this._y.tointeger())) {
+		this._current_tile = GSMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
+//		_MinchinWeb_Log_.Note("Linewalker output " + GSMap.GetTileX(this._current_tile) + "," + GSMap.GetTileY(this._current_tile) + " from " + this._x + "," + this._y, 7);
 		return this._current_tile;
 	}
 	
@@ -231,10 +231,10 @@ function _MinchinWeb_LW_::Walk()
 	NewY = this._y + this._slope * multiplier * this._dirx;
 //	_MinchinWeb_Log_.Note("Linewalker new : " + NewX + "," + NewY, 7);
 	
-	if (AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(NewX.tointeger(), NewY.tointeger())) == 1 ) {
-		this._current_tile = AIMap.GetTileIndex(NewX.tointeger(), NewY.tointeger());
-	} else if (AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(NewX.tointeger(), this._y.tointeger())) == 1 ) {
-		this._current_tile = AIMap.GetTileIndex(NewX.tointeger(), this._y.tointeger());
+	if (GSMap.DistanceManhattan(this._current_tile, GSMap.GetTileIndex(NewX.tointeger(), NewY.tointeger())) == 1 ) {
+		this._current_tile = GSMap.GetTileIndex(NewX.tointeger(), NewY.tointeger());
+	} else if (GSMap.DistanceManhattan(this._current_tile, GSMap.GetTileIndex(NewX.tointeger(), this._y.tointeger())) == 1 ) {
+		this._current_tile = GSMap.GetTileIndex(NewX.tointeger(), this._y.tointeger());
 	}
 	
 	this._x = NewX;
@@ -248,7 +248,7 @@ function _MinchinWeb_LW_::Walk()
 		this._past_end = true;
 		return this._current_tile;
 	} else {
-//		_MinchinWeb_Log_.Note("Linewalker output " + AIMap.GetTileX(this._current_tile) + "," + AIMap.GetTileY(this._current_tile), 6);
+//		_MinchinWeb_Log_.Note("Linewalker output " + GSMap.GetTileX(this._current_tile) + "," + GSMap.GetTileY(this._current_tile), 6);
 		return this._current_tile;
 	}
 }

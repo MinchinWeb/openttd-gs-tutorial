@@ -4,11 +4,11 @@
  *		please visit http://openttd-noai-wmdot.googlecode.com/
  */
 
-class MinchinWeb extends AILibrary {
+class MinchinWeb extends GSLibrary {
 	function GetAuthor()      { return "W. Minchin"; }
 	function GetName()        { return "MinchinWeb"; }
 	function GetShortName()   { return "LMmW"; }	//	William's MetaLibrary
-	function GetDescription() { return "Minchinweb's MetaLibrary for AI development. See the README for included functions. (v.5, r.245)"; }
+	function GetDescription() { return "Minchinweb's MetaLibrary for GS & AI development. See the README for included functions. (v.5, r.245)"; }
 	function GetVersion()     { return 5; }
 	function GetDate()        { return "2012-06-27"; }
 	function CreateInstance() { return "MinchinWeb"; }
