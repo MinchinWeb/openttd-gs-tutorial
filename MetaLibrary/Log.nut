@@ -82,34 +82,34 @@ function _MinchinWeb_Log_::Note(Message, Level=3) {
 			Message = "     " + Message;
 			Level--;
 		}
-		AILog.Info(Message);
+		GSLog.Info(Message);
 	}
  }
  
  function _MinchinWeb_Log_::Warning(Message) {
-	AILog.Warning(Message);
+	GSLog.Warning(Message);
  }
  
  function _MinchinWeb_Log_::Error(Message) {
-	AILog.Error(Message);
+	GSLog.Error(Message);
  }
  
 function _MinchinWeb_Log_::Sign(Tile, Message, Level = 5)
 {
 	if (Level <= _MinchinWeb_Log_.UpdateDebugLevel() ) {
-		AISign.BuildSign(Tile, Message);
+		GSSign.BuildSign(Tile, Message);
 	}
 }
  
 function _MinchinWeb_Log_::PrintDebugLevel() {
-	AILog.Info("OpLog is running at level " + this._DebugLevel + ".");
+	GSLog.Info("OpLog is running at level " + this._DebugLevel + ".");
  }
  
 function _MinchinWeb_Log_::UpdateDebugLevel() {
 //	Looks for an AI setting for Debug Level, and set the debug level to that
 	local DebugLevel = 3;
-	if (AIController.GetSetting("Debug_Level") != -1) {
-		DebugLevel = AIController.GetSetting("Debug_Level");
+	if (GSController.GetSetting("Debug_Level") != -1) {
+		DebugLevel = GSController.GetSetting("Debug_Level");
 	}
 	return DebugLevel;
 }

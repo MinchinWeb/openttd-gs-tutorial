@@ -302,7 +302,7 @@ function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false
 		local i = 0;
 		local Temp = "";
 		while (i < InArrayOfTiles.len() ) {
-			Temp = Temp + "  " + AIMap.GetTileX(InArrayOfTiles[i]) + "," + AIMap.GetTileY(InArrayOfTiles[i]);
+			Temp = Temp + "  " + GSMap.GetTileX(InArrayOfTiles[i]) + "," + GSMap.GetTileY(InArrayOfTiles[i]);
 			i++;
 		}
 		if (ArrayLength == true) {

@@ -148,7 +148,7 @@ function _MinchinWeb_Atlas_::RunModel()
 	for (local i = 0; i < this._sources.len(); i++) {
 		_MinchinWeb_Log_.Note("          i = " + i, 7);
 		for (local j = 0; j < this._attractions.len(); j++) {
-			_MinchinWeb_Log_.Note("               j = " + j + "     " + (_MinchinWeb_Array_.ContainedIn1D([this._sources[i][0], this._attractions[j][0]], this._ignorepairs) == false) + "; " + _MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) + " < " +	this._maxdistance + " = " + ((_MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) < this._maxdistance)	|| (this._maxdistance < 0)) + " ;; " + _MinchinWeb_Array_.ToStringTiles1D([this._sources[i][0]]) + " - " + this._sources[i][1] + "  " + _MinchinWeb_Array_.ToStringTiles1D([this._attractions[j][0]]) + " - " + this._attractions[j][1] + " -- " + this._model + " :: " + AIMap.DistanceManhattan(this._sources[i][0], this._attractions[j][0]) + " / (" + this._sources[i][1] + " + " + this._attractions[j][1] + ") = " + (AIMap.DistanceManhattan(this._sources[i][0], this._attractions[j][0]) / (this._sources[i][1].tofloat() + this._attractions[j][1].tofloat())) + " : " + _MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], this._sources[i][1], this._attractions[j][0], this._attractions[j][1], this._model), 7);
+			_MinchinWeb_Log_.Note("               j = " + j + "     " + (_MinchinWeb_Array_.ContainedIn1D([this._sources[i][0], this._attractions[j][0]], this._ignorepairs) == false) + "; " + _MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) + " < " +	this._maxdistance + " = " + ((_MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) < this._maxdistance)	|| (this._maxdistance < 0)) + " ;; " + _MinchinWeb_Array_.ToStringTiles1D([this._sources[i][0]]) + " - " + this._sources[i][1] + "  " + _MinchinWeb_Array_.ToStringTiles1D([this._attractions[j][0]]) + " - " + this._attractions[j][1] + " -- " + this._model + " :: " + GSMap.DistanceManhattan(this._sources[i][0], this._attractions[j][0]) + " / (" + this._sources[i][1] + " + " + this._attractions[j][1] + ") = " + (GSMap.DistanceManhattan(this._sources[i][0], this._attractions[j][0]) / (this._sources[i][1].tofloat() + this._attractions[j][1].tofloat())) + " : " + _MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], this._sources[i][1], this._attractions[j][0], this._attractions[j][1], this._model), 7);
 			if ((_MinchinWeb_Array_.ContainedIn1D([this._sources[i][0], this._attractions[j][0]], this._ignorepairs) == false)
 					&& ((_MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) < this._maxdistance)
 					|| (this._maxdistance < 0))) {
@@ -248,22 +248,22 @@ function _MinchinWeb_Atlas_::ApplyTrafficModel(StartTile, StartPriority, EndTile
 
 	switch (Model) {
 		case ModelType.ONE_D :
-			return AIMap.DistanceMax(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
+			return GSMap.DistanceMax(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
 			break;
 		case ModelType.DISTANCE_MANHATTAN :
-			return AIMap.DistanceManhattan(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
+			return GSMap.DistanceManhattan(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
 			break;
 		case ModelType.DISTANCE_SHIP :
 			return _MinchinWeb_Marine_.DistanceShip(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
 			break;
 		case ModelType.DISTANCE_AIR :
-			return AIMap.DistanceSquare(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
+			return GSMap.DistanceSquare(StartTile, EndTile) / (StartPriority.tofloat() + EndPriority.tofloat());
 			break;
 		case ModelType.DISTANCE_NONE :
 			return (1.0 / (StartPriority.tofloat() + EndPriority.tofloat()));
 			break;
 		case ModelType.ONE_OVER_T_SQUARED :
-			return ((AIMap.DistanceManhattan(StartTile, EndTile) * AIMap.DistanceManhattan(StartTile, EndTile)) / (StartPriority.tofloat() + EndPriority.tofloat()));
+			return ((GSMap.DistanceManhattan(StartTile, EndTile) * GSMap.DistanceManhattan(StartTile, EndTile)) / (StartPriority.tofloat() + EndPriority.tofloat()));
 			break;
 		default:
 			return "ERROR: Bad ModelType. Was supplied: " + Model;

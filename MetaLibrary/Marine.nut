@@ -65,7 +65,7 @@ function _MinchinWeb_Marine_::DistanceShip(TileA, TileB)
 {
 //	Assuming open ocean, ship in OpenTTD will travel 45° angle where possible,
 //		and then finish up the trip by going along a cardinal direction
-	return ((AIMap.DistanceManhattan(TileA, TileB) - AIMap.DistanceMax(TileA, TileB)) * 0.4 + AIMap.DistanceMax(TileA, TileB)).tointeger();
+	return ((GSMap.DistanceManhattan(TileA, TileB) - GSMap.DistanceMax(TileA, TileB)) * 0.4 + GSMap.DistanceMax(TileA, TileB)).tointeger();
 }
 
 function _MinchinWeb_Marine_::GetPossibleDockTiles(IndustryID)
@@ -79,14 +79,14 @@ function _MinchinWeb_Marine_::GetPossibleDockTiles(IndustryID)
 //	Assumes that the industry location retruned is the NE corner of the
 //		industry, and that industries fit within a 4x4 block
 	local Tiles = [];
-	if (AIIndustry.IsValidIndustry(IndustryID) == true) {
+	if (GSIndustry.IsValidIndustry(IndustryID) == true) {
 		//	Check if the industry already has a dock
-		if (AIIndustry.HasDock(IndustryID) == true) {
-			return [AIIndustry.GetDockLocation(IndustryID)];
+		if (GSIndustry.HasDock(IndustryID) == true) {
+			return [GSIndustry.GetDockLocation(IndustryID)];
 		} else {
 			local ex = AITestMode();
 			local Walker = _MinchinWeb_SW_();	//	Spiral Walker
-			Walker.Start(AIIndustry.GetLocation(IndustryID));
+			Walker.Start(GSIndustry.GetLocation(IndustryID));
 			
 			while (Walker.GetStage() <= ((_MinchinWeb_C_.IndustrySize() + AIStation.GetCoverageRadius(AIStation.STATION_DOCK)) * 4)) {
 				if (AIMarine.BuildDock(Walker.Walk(), AIStation.STATION_NEW) == true) {
@@ -97,7 +97,7 @@ function _MinchinWeb_Marine_::GetPossibleDockTiles(IndustryID)
 		_MinchinWeb_Log_.Note("MinchinWeb.Marine.GetPossibleDockTiles()  " + _MinchinWeb_Array_.ToStringTiles1D(Tiles, true), 6);
 		return Tiles;
 	} else {
-		AILog.Warning("MinchinWeb.Marine.GetPossibleDockTiles() was supplied with an invalid IndustryID. Was supplied " + IndustryID + ".");
+		GSLog.Warning("MinchinWeb.Marine.GetPossibleDockTiles() was supplied with an invalid IndustryID. Was supplied " + IndustryID + ".");
 		return Tiles;
 	}
 }
@@ -115,13 +115,13 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile)
 //		next to a water tile)
 
 	local ReturnTiles = [];
-	local offset = AIMap.GetTileIndex(0, 0);;
+	local offset = GSMap.GetTileIndex(0, 0);;
 	local DockEnd = null;
-	local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
-					 AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
+	local offsets = [GSMap.GetTileIndex(0, 1), GSMap.GetTileIndex(0, -1),
+					 GSMap.GetTileIndex(1, 0), GSMap.GetTileIndex(-1, 0)];
 	local next_tile;
 	
-	if (AIMap.IsValidTile(Tile)) {		
+	if (GSMap.IsValidTile(Tile)) {		
 		if (AITile.IsWaterTile(Tile)) {
 			// water tile
 			DockEnd = Tile;
@@ -132,19 +132,19 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile)
 			//		for slopes
 				case 0:
 					// flat
-					offset = AIMap.GetTileIndex(0, 0);
+					offset = GSMap.GetTileIndex(0, 0);
 					break;
 				case 3:
-					offset = AIMap.GetTileIndex(-1, 0);
+					offset = GSMap.GetTileIndex(-1, 0);
 					break;	
 				case 6:
-					offset = AIMap.GetTileIndex(0, -1);
+					offset = GSMap.GetTileIndex(0, -1);
 					break;
 				case 9:
-					offset = AIMap.GetTileIndex(0, 1);
+					offset = GSMap.GetTileIndex(0, 1);
 					break;
 				case 12:
-					offset = AIMap.GetTileIndex(1, 0);
+					offset = GSMap.GetTileIndex(1, 0);
 					break;
 			}
 			
@@ -161,7 +161,7 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile)
 			}
 		}
 	} else {
-		AILog.Warning("MinchinWeb.Marine.GetDockFrontTiles() was supplied with an invalid TileIndex. Was supplied " + Tile + ".");
+		GSLog.Warning("MinchinWeb.Marine.GetDockFrontTiles() was supplied with an invalid TileIndex. Was supplied " + Tile + ".");
 	}
 	
 	return ReturnTiles;
@@ -184,7 +184,7 @@ function _MinchinWeb_Marine_::BuildBuoy(Tile)
 	
 	while (Walker.GetStage() <= (_MinchinWeb_C_.BuoyOffset() * 4)) {
 		if (AIMarine.IsBuoyTile(Walker.Walk())) {
-			Existing.AddItem(Walker.GetTile(), AIMap.DistanceManhattan(Tile, Walker.GetTile()));
+			Existing.AddItem(Walker.GetTile(), GSMap.DistanceManhattan(Tile, Walker.GetTile()));
 			_MinchinWeb_Log_.Note("BuildBuoy() : Insert Existing at" + _MinchinWeb_Array_.ToStringTiles1D([Walker.GetTile()]), 7);
 		}
 	}
@@ -233,19 +233,19 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true)
 //	'NotNextToDock,' when set, will keep the dock from being built next to an
 //		exisiting dock
 
-	local StartX = AIMap.GetTileX(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
-	local StartY = AIMap.GetTileY(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
-	local EndX = AIMap.GetTileX(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
-	local EndY = AIMap.GetTileY(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
+	local StartX = GSMap.GetTileX(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
+	local StartY = GSMap.GetTileY(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
+	local EndX = GSMap.GetTileX(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
+	local EndY = GSMap.GetTileY(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
 	
 	local Existing = AITileList();
 	local UseExistingAt = null;
 	
 	for (local i = StartX; i < EndX; i++) {
 		for (local j = StartY; j < EndY; j++) {
-			if (AIMarine.IsWaterDepotTile(AIMap.GetTileIndex(i,j))) {
-				Existing.AddItem(AIMap.GetTileIndex(i,j), AIMap.DistanceManhattan(DockTile, AIMap.GetTileIndex(i,j)));
-				_MinchinWeb_Log_.Note("BuildDepot() : Insert Existing at" + _MinchinWeb_Array_.ToStringTiles1D([AIMap.GetTileIndex(i,j)]), 6);
+			if (AIMarine.IsWaterDepotTile(GSMap.GetTileIndex(i,j))) {
+				Existing.AddItem(GSMap.GetTileIndex(i,j), GSMap.DistanceManhattan(DockTile, GSMap.GetTileIndex(i,j)));
+				_MinchinWeb_Log_.Note("BuildDepot() : Insert Existing at" + _MinchinWeb_Array_.ToStringTiles1D([GSMap.GetTileIndex(i,j)]), 6);
 			}
 		}
 	}
@@ -283,9 +283,9 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true)
 			Existing.Clear();
 			for (local i = StartX; i < EndX; i++) {
 				for (local j = StartY; j < EndY; j++) {
-					if (AITile.IsWaterTile(AIMap.GetTileIndex(i,j)) && (_MinchinWeb_Station_.IsNextToDock(AIMap.GetTileIndex(i,j)) == false) ) {
-						Existing.AddItem(AIMap.GetTileIndex(i,j), AIBase.Rand());
-						_MinchinWeb_Log_.Note("BuildDepot() : Insert WaterTile at" + _MinchinWeb_Array_.ToStringTiles1D([AIMap.GetTileIndex(i,j)]), 7);
+					if (AITile.IsWaterTile(GSMap.GetTileIndex(i,j)) && (_MinchinWeb_Station_.IsNextToDock(GSMap.GetTileIndex(i,j)) == false) ) {
+						Existing.AddItem(GSMap.GetTileIndex(i,j), AIBase.Rand());
+						_MinchinWeb_Log_.Note("BuildDepot() : Insert WaterTile at" + _MinchinWeb_Array_.ToStringTiles1D([GSMap.GetTileIndex(i,j)]), 7);
 					}
 				}
 			}

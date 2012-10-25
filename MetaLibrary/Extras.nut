@@ -45,7 +45,7 @@
  *	//	Comparision functions will return the first value if the two are equal
  *
  *		MinchinWeb.Industry.GetIndustryID(Tile)
- *								- AIIndustty.GetIndustryID( AIIndustry.GetLocation( IndustryID ) )
+ *								- AIIndustty.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )
  *									sometimes fails because GetLocation() returns the northmost
  *									tile of the industry which may be a dock, heliport, or not
  *									part of the industry at all.
@@ -84,12 +84,12 @@ class _MinchinWeb_C_ {
 	
 	function MaxStationSpread() {
 	//	returns the OpenTTD setting for maximum station spread
-		if(AIGameSettings.IsValid("station_spread")) {
-			return AIGameSettings.GetValue("station_spread");
+		if(GSGameSettings.IsValid("station_spread")) {
+			return GSGameSettings.GetValue("station_spread");
 		} else {
 			try {
-			AILog.Error("'station_spread' is no longer valid! (MinchinWeb.Constants.MaxStationSpread(), v." + this.GetVersion() + " r." + this.GetRevision() + ")");
-			AILog.Error("Please report this problem to http://www.tt-forums.net/viewtopic.php?f=65&t=57903");
+			GSLog.Error("'station_spread' is no longer valid! (MinchinWeb.Constants.MaxStationSpread(), v." + this.GetVersion() + " r." + this.GetRevision() + ")");
+			GSLog.Error("Please report this problem to http://www.tt-forums.net/viewtopic.php?f=65&t=57903");
 			} catch (idx) {
 			}
 			return 16;
@@ -148,7 +148,7 @@ function _MinchinWeb_Extras_::Slope(TileA, TileB)
 	local dx = GSMap.GetTileX(TileB) - GSMap.GetTileX(TileA);
 	local dy = GSMap.GetTileY(TileB) - GSMap.GetTileY(TileA);
 //	local Inftest = _MinchinWeb_Extras_._infinity;
-//	AILog.Info(_MinchinWeb_Extras_._infinity);
+//	GSLog.Info(_MinchinWeb_Extras_._infinity);
 	
 	//	Zero check
 	if (dx == 0) {
@@ -312,7 +312,7 @@ class _MinchinWeb_Industry_ {
 }
 
 function _MinchinWeb_Industry_::GetIndustryID(Tile) {
-//	AIIndustty.GetIndustryID( AIIndustry.GetLocation( IndustryID ) )  sometiles
+//	AIIndustty.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )  sometiles
 //		fails because GetLocation() returns the northmost tile of the industry
 //		which may be a dock, heliport, or not part of the industry at all.
 //	This function starts at the tile, and then searchs a square out (up to
@@ -325,8 +325,8 @@ function _MinchinWeb_Industry_::GetIndustryID(Tile) {
 	
 	for (local i = StartX; i < EndX; i++) {
 		for (local j = StartY; j < EndY; j++) {
-			if (AIIndustry.GetIndustryID(GSMap.GetTileIndex(i,j)) != _MinchinWeb_C_.InvalidIndustry()) {
-				return AIIndustry.GetIndustryID(GSMap.GetTileIndex(i,j));
+			if (GSIndustry.GetIndustryID(GSMap.GetTileIndex(i,j)) != _MinchinWeb_C_.InvalidIndustry()) {
+				return GSIndustry.GetIndustryID(GSMap.GetTileIndex(i,j));
 			}
 		}
 	}
@@ -348,7 +348,7 @@ function _MinchinWeb_Station_::IsCargoAccepted(StationID, CargoID)
 //	Returns true or false, depending on if the cargo is accepted
 
 	if (!AIStation.IsValidStation(StationID) || !AICargo.IsValidCargo(CargoID)) {
-		AILog.Warning("MinchinWeb.Station.IsCargoAccepted() was provided with invalid input. Was provided " + StationID + " and " + CargoID + ".");
+		GSLog.Warning("MinchinWeb.Station.IsCargoAccepted() was provided with invalid input. Was provided " + StationID + " and " + CargoID + ".");
 		return null;
 	} else {
 		local AllCargos = AICargoList_StationAccepting(StationID);
