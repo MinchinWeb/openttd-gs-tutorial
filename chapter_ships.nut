@@ -304,7 +304,9 @@ class ChapterShips {
 	} while (!LW.IsEnd())
 	
 	//	Link by Ships
+	local ShipRouteBuilder = OpHibernia();
+	ShipRouteBuilder.Run(table);
 
 	return true; // allow testing of ships chapter before AI have been implemented
-	return false; // todo: return true when it works
+//	return false; // todo: return true when it works
 }
