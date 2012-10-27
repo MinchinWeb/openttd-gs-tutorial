@@ -51,8 +51,8 @@ function _MinchinWeb_SW_::Start(Tile)
 {
 //	Sets the starting tile for SpiralWalker
 	this._start = Tile;
-	this._startx = AIMap.GetTileX(Tile);
-	this._starty = AIMap.GetTileY(Tile);
+	this._startx = GSMap.GetTileX(Tile);
+	this._starty = GSMap.GetTileY(Tile);
 	this._x = this._startx;
 	this._y = this._starty;
 	this._current_tile = this._start;
@@ -135,8 +135,8 @@ function _MinchinWeb_SW_::Walk()
 		}
 	}
 	_MinchinWeb_Log_.Note("     SpiralWalker.Walk: " + this._dx + " " + this._dy + " : " + this._Steps + " " + this._Stage + " " + this._StageSteps + " " + this._StageMax + " :: " + this._x + ", " + this._y, 7);
-	this._current_tile = AIMap.GetTileIndex(this._x, this._y);
-//	AISign.BuildSign(this._current_tile, "" + this._Steps);
+	this._current_tile = GSMap.GetTileIndex(this._x, this._y);
+//	GSSign.BuildSign(this._current_tile, "" + this._Steps);
 	return this._current_tile;
 }
 
