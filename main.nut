@@ -25,6 +25,7 @@ Industry <- SuperLib.Industry;
 Station <- SuperLib.Station;
 Road <- SuperLib.Road;
 Vehicle <- SuperLib.Vehicle;
+SLMoney <- SuperLib.Money;
 
 /* Import TileLabels */
 import("scenario.tilelabels", "TileLabels", 1);

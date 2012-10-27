@@ -107,11 +107,14 @@ class OpHibernia {
 	}	//	end of  foreach (Location in MyIndustries)
 
 	///	Get a list of Oil Refinaries and add to the attraction list; Priority is the goods production level
-	this._Atlas.AddAttraction(table.refinery, 1);
+	local Location = table.refinery;
+	this._Atlas.AddAttraction(GSIndustry.GetLocation(Location), 1);
+	mwLog.Note("Atlas.AddAttraction([" + GSMap.GetTileX(GSIndustry.GetLocation(Location)) + ", " + GSMap.GetTileY(GSIndustry.GetLocation(Location)) + "])   (" + GSIndustry.GetName(Location) + ")", 5);
 	
 	///	Apply Traffic Model, and select best pair
 	local tick2 = GSController.GetTick();
 	this._Atlas.SetModel(this._AtlasModel);
+	mwLog.Note("Model Type set to " + this._Atlas.PrintModelType(this._Atlas.GetModel()) + ".", 5);
 	this._Atlas.RunModel();
 	mwLog.Note("Atlas.RunModel() took " + (GSController.GetTick() - tick2) + " ticks.", 2);
 	//	TO-DO:	Apply maximum distance, based on ship travel speeds
@@ -210,8 +213,8 @@ class OpHibernia {
 				local KeepTrying2 = true;
 				local start;
 				local end;
-				local Starts2 = Helper.SquirrelListToGSList(Starts);
-				local Ends2 = Helper.SquirrelListToGSList(Ends);
+				local Starts2 = Helper.SquirrelListToAIList(Starts);
+				local Ends2 = Helper.SquirrelListToAIList(Ends);
 				Starts2.Valuate(Marine.DistanceShip, BuildPair[1]);
 				Ends2.Valuate(Marine.DistanceShip, BuildPair[0]);
 				Starts2.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
