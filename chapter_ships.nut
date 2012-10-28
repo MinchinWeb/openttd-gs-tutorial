@@ -44,7 +44,7 @@ class ChapterShips {
 {
 	// Initialization code
 	main_instance.AddStep(CodeStep(ChapterShips.Init));
-	
+
 	// 2.1 - Ship dock construction (for refinery)
 	main_instance.AddStep(MessageWindowStep(GSText(GSText.STR_SHIPS_3_1_1), WAIT));
 	main_instance.AddStep(CodeStep( function(table) {
@@ -285,28 +285,40 @@ class ChapterShips {
 	local table = {};
 	ChapterShips.Init(table);
 
-	local cm = GSCompanyMode(HUMAN_COMPANY);
+	// Create the signs for exporting some TileLabels to the Ship AI:
+	local ind_sign_text = "$I:" + table.refinery + "|" + table.oilrig1 + "|" + table.oilrig2;
+	local tile_sign_text = "$C:" + table.canal_start_tile + "|" +
+			table.canal_end_tile + "|" +
+			table.canal_lock1 + "|" +
+			table.canal_lock2;
 
-	// TODO: Add code to complete chapter
+	local cm = GSCompanyMode(1);
+	local sign_tile = GSMap.GetTileIndex(1, 1);
+	GSSign.BuildSign(sign_tile, ind_sign_text);
+	GSSign.BuildSign(sign_tile, tile_sign_text);
 	
-	//	Build Locks
-	GSMarine.BuildLock(table.canal_lock1);
-	GSMarine.BuildLock(table.canal_lock2);	
-	
-	//	Build Canals
-	local LW = MetaLib.LineWalker();
-	LW.Start(table.canal_start_tile);
-	LW.End(table.canal_end_tile);
-	
-	do {
-		local mytile = LW.Walk();
-		GSMarine.BuildCanal(mytile);
-	} while (!LW.IsEnd())
-	
-	//	Link by Ships
-	local ShipRouteBuilder = OpHibernia();
-	ShipRouteBuilder.Run(table);
+	// Create the $Start sign that ask AI to start
+	GSSign.BuildSign(sign_tile, "$Start");
 
-	return true; // allow testing of ships chapter before AI have been implemented
-//	return false; // todo: return true when it works
+	// Wait for $Done or $Failed to appear
+	local sign = -1;
+	local failed = false;
+	while(true)
+	{
+		GSController.Sleep(1);
+
+		// Look for $Done or $Failed
+		sign = Helper.GetSign("$Done");
+		if (sign != -1) break;
+
+		sign = Helper.GetSign("$Failed");
+		if (sign != -1) {
+			failed = true;
+			break;
+		}
+	}
+
+	GSSign.RemoveSign(sign);
+
+	return !failed;
 }

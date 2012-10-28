@@ -6,8 +6,6 @@ require("chapter_intro.nut");
 require("chapter_navigation.nut");
 require("chapter_airplanes.nut");
 require("chapter_ships.nut");
-require("Tutorial.OpHibernia.nut");
-require("OpMoney.nut");
 require("chapter_trucks.nut");
 require("chapter_buses.nut");
 require("chapter_trains.nut");
@@ -28,22 +26,6 @@ Vehicle <- SuperLib.Vehicle;
 
 /* Import TileLabels */
 import("scenario.tilelabels", "TileLabels", 1);
-
-/* Import MinchinWeb's MetaLibrary */
-import("util.MinchinWeb", "MetaLib", 5);
-	OpLog <- MetaLib.Log;
-	mwLog <- MetaLib.Log;
-	Array <- MetaLib.Array;
-	Marine <- MetaLib.Marine;
-	enum ModelType		// for Atlas
-		{
-		ONE_D, // 0
-		DISTANCE_MANHATTAN, // 1
-		DISTANCE_SHIP, // 2
-		DISTANCE_AIR, // 3
-		DISTANCE_NONE, // 4
-		ONE_OVER_T_SQUARED, // 5
-		}
 
 /* Globals */
 g_menu <- null;
@@ -102,9 +84,6 @@ function MainClass::Start()
 	//local company_mode = GSCompanyMode(HUMAN_COMPANY);
 
 	Log.Info("Tutorial starts now", Log.LVL_INFO);
-	
-	Log.Info("WM - Test of Ship Building by GS", Log.LVL_INFO);
-	ChapterShips.CompleteByAI();
 
 	while (!this._end_of_tutorial) {
 		this.HandleEvents();
