@@ -305,9 +305,11 @@ class OpHibernia {
 						//	Keep only ships under max capacity
 						//		"In case it can transport multiple cargoes, it returns the first/main."
 						local MaxCargo = (GSIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) * this._CapacityDays)/30;
-						Engines.Valuate(GSEngine.GetCapacity);
-						Engines.RemoveAboveValue(MaxCargo);
-						mwLog.Note("Only " + Engines.Count() + " have capacity below " + MaxCargo + ". (" + GSIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) + " * " + this._CapacityDays + " / 30)", 5);
+//	TUTORIAL - If we cap capacity, none of the oil rigs produce enough for us to
+//		select any ship (they're all too big!!)
+//						Engines.Valuate(GSEngine.GetCapacity);
+//						Engines.RemoveAboveValue(MaxCargo);
+//						mwLog.Note("Only " + Engines.Count() + " have capacity below " + MaxCargo + ". (" + GSIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) + " * " + this._CapacityDays + " / 30)", 5);
 						
 						//	Pick the best rated one
 						Marine.RateShips(1, 40, 0);

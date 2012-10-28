@@ -289,19 +289,23 @@ class ChapterShips {
 
 	// TODO: Add code to complete chapter
 	
-	//	Build Locks
-	GSMarine.BuildLock(table.canal_lock1);
-	GSMarine.BuildLock(table.canal_lock2);	
-	
-	//	Build Canals
-	local LW = MetaLib.LineWalker();
-	LW.Start(table.canal_start_tile);
-	LW.End(table.canal_end_tile);
-	
-	do {
-		local mytile = LW.Walk();
-		GSMarine.BuildCanal(mytile);
-	} while (!LW.IsEnd())
+	for (local deltaX = 0; deltaX >= -2; deltaX--) {
+		mwLog.Note("deltaX = " + deltaX, 4);
+		
+		//	Build Locks
+		GSMarine.BuildLock(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_lock1) + deltaX, GSMap.GetTileY(table.canal_lock1)));
+		GSMarine.BuildLock(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_lock2) + deltaX, GSMap.GetTileY(table.canal_lock2)));	
+		
+		//	Build Canals
+		local LW = MetaLib.LineWalker();
+		LW.Start(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_start_tile) + deltaX, GSMap.GetTileY(table.canal_start_tile)));
+		LW.End(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_end_tile) + deltaX, GSMap.GetTileY(table.canal_end_tile)));
+
+		do {
+			local mytile = LW.Walk();
+			GSMarine.BuildCanal(mytile);
+		} while (!LW.IsEnd())
+	}
 	
 	//	Link by Ships
 	local ShipRouteBuilder = OpHibernia();

@@ -22,6 +22,8 @@ class ScriptInfo extends GSInfo {
 	function GetSettings() {
 		AddSetting({name = "log_level", description = "Debug: Log level (higher = print more)", easy_value = 3, medium_value = 3, hard_value = 3, custom_value = 3, flags = CONFIG_INGAME, min_value = 1, max_value = 3});
 		AddSetting({name = "debug_signs", description = "Debug: Build signs", easy_value = 1, medium_value = 1, hard_value = 1, custom_value = 1, flags = CONFIG_BOOLEAN | CONFIG_INGAME});
+		AddSetting({name = "Debug_Level", description = "Debug Level ", min_value = 0, max_value = 7, easy_value = 5, medium_value = 5, hard_value = 5, custom_value = 5, flags = CONFIG_INGAME});
+		
 	}
 }
 
