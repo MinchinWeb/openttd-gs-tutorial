@@ -26,7 +26,7 @@ class OpHibernia {
 	function GetVersion()       { return 4; }
 	function GetRevision()		{ return 242; }
 	function GetDate()          { return "2012-10-25"; }
-	function GetName()          { return "Operation Hibernia (GS)"; }
+	function GetName()          { return "Operation Hibernia (Tutorial)"; }
 	
 	
 	_NextRun = null;
@@ -48,7 +48,7 @@ class OpHibernia {
 	{
 		this._NextRun = 0;
 		this._SleepLength = 90;
-		this._TransportedCutOff = 50;	// Turn this into an GS setting??
+		this._TransportedCutOff = 50;	// Turn this into an AI setting??
 		this._CapacityDays = 60;
 		
 		this._Atlas = MetaLib.Atlas();
@@ -63,57 +63,51 @@ class OpHibernia {
 	}
 }
  
- function OpHibernia::Run(table) {
+ function OpHibernia::Run(OilRig, OilRefinery) {
 
-	local tick = GSController.GetTick();
-	mwLog.Note("OpHibernia (GS) running at tick " + tick + ".",1);
+	local tick = AIController.GetTick();
+	mwLog.Note("OpHibernia (Tutorial) running at tick " + tick + ".",1);
 	
-//	local table = {};
-//	ChapterShip.Init(table);
-	
-//	local cm = GSCompanyMode(HUMAN_COMPANY);	
-	
-/*	if (GSGameSettings.IsDisabledVehicleType(GSVehicle.VT_WATER) == true) {
+	if (AIGameSettings.IsDisabledVehicleType(AIVehicle.VT_WATER) == true) {
 		mwLog.Note("** OpHibernia has been disabled. **",0);
 		return false;
 	}
-*/
-	local CargoNo = ChapterShips.GetOilCargo();
+
+	local CargoNo = OIL_;
 
 	//	TO-DO: Add a check here to see if we can actually transport the cargo in question!
 	//				SuperLib.Engine.DoesEngineExistForCargo(cargo_id, vehicle_type = -1, no_trams = true, no_articulated = true, only_small_aircrafts = false)
 	
 	//	Get a list of Oil Rigs, and add those without our ships to the sources list;
 	//	Keep only those that are underserviced (less than 25%, typically)
-//	local MyIndustries = GSIndustryList();
-	local MyIndustries = GSList();
+//	local MyIndustries = AIIndustryList();
+	local MyIndustries = AIList();
 	
 	//	Add predefined oil rigs
-	MyIndustries.AddItem(table.oilrig1, 0);
-	MyIndustries.AddItem(table.oilrig2, 0);
+	MyIndustries.AddItem(OilRig);
 	
-	MyIndustries.Valuate(GSIndustry.GetLastMonthTransportedPercentage, CargoNo);
+	MyIndustries.Valuate(AIIndustry.GetLastMonthTransportedPercentage, CargoNo);
 	MyIndustries.KeepBelowValue(this._TransportedCutOff);
-	MyIndustries.Valuate(GSIndustry.GetLastMonthProduction, CargoNo);
+	MyIndustries.Valuate(AIIndustry.GetLastMonthProduction, CargoNo);
 	MyIndustries.KeepAboveValue(1);
-	mwLog.Note("On Cargo: " + GSCargo.GetCargoLabel(CargoNo) + ", " + MyIndustries.Count() + " input Industry kept.", 2);
+	mwLog.Note("On Cargo: " + AICargo.GetCargoLabel(CargoNo) + ", " + MyIndustries.Count() + " input Industry kept.", 2);
 	
 	MyIndustries.Valuate(Helper.ItemValuator);
 	this._Atlas.Reset();
 	foreach (Location in MyIndustries) {
 		///		Priority is the production level
-		this._Atlas.AddSource(GSIndustry.GetLocation(Location), ( GSIndustry.GetLastMonthProduction(Location, CargoNo) * ( 100 - GSIndustry.GetLastMonthTransportedPercentage(Location, CargoNo) ) ) / 100);
-		mwLog.Note("Atlas.AddSource([" + GSMap.GetTileX(GSIndustry.GetLocation(Location)) + ", " + GSMap.GetTileY(GSIndustry.GetLocation(Location)) + "], " + (GSIndustry.GetLastMonthProduction(Location, CargoNo) * (( 100 - GSIndustry.GetLastMonthTransportedPercentage(Location, CargoNo) ) ) / 100) + ")   (" + GSIndustry.GetName(Location) + ")", 5);
+		this._Atlas.AddSource(AIIndustry.GetLocation(Location), ( AIIndustry.GetLastMonthProduction(Location, CargoNo) * ( 100 - AIIndustry.GetLastMonthTransportedPercentage(Location, CargoNo) ) ) / 100);
+		mwLog.Note("Atlas.AddSource([" + AIMap.GetTileX(AIIndustry.GetLocation(Location)) + ", " + AIMap.GetTileY(AIIndustry.GetLocation(Location)) + "], " + (AIIndustry.GetLastMonthProduction(Location, CargoNo) * (( 100 - AIIndustry.GetLastMonthTransportedPercentage(Location, CargoNo) ) ) / 100) + ")   (" + AIIndustry.GetName(Location) + ")", 5);
 	}	//	end of  foreach (Location in MyIndustries)
 
 	///	Get a list of Oil Refinaries and add to the attraction list; Priority is the goods production level
-	this._Atlas.AddAttraction(table.refinery, 1);
+	this._Atlas.AddAttraction(OilRefinery, 1);
 	
 	///	Apply Traffic Model, and select best pair
-	local tick2 = GSController.GetTick();
+	local tick2 = AIController.GetTick();
 	this._Atlas.SetModel(this._AtlasModel);
 	this._Atlas.RunModel();
-	mwLog.Note("Atlas.RunModel() took " + (GSController.GetTick() - tick2) + " ticks.", 2);
+	mwLog.Note("Atlas.RunModel() took " + (AIController.GetTick() - tick2) + " ticks.", 2);
 	//	TO-DO:	Apply maximum distance, based on ship travel speeds
 	
 	local KeepTrying = true;
@@ -128,17 +122,17 @@ class OpHibernia {
 			//	At this point, we know that the first industry has a dock; now we have to figure out what to do about the second industry
 			local DockLocation = _MinchinWeb_C_.InvalidTile();
 			
-			if (GSIndustry.HasDock(MetaLib.Industry.GetIndustryID(BuildPair[1])) == true) {
+			if (AIIndustry.HasDock(MetaLib.Industry.GetIndustryID(BuildPair[1])) == true) {
 			//	1. Test if the Industry has a built in dock
-				DockLocation = GSIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[1]));	
+				DockLocation = AIIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[1]));	
 			} else {
 			//	2. Test if we have a dock built that would work
 				mwLog.Note("Max Station Spread is : " + MetaLib.Constants.MaxStationSpread(), 5);
-				local MyStations = GSStationList(GSStation.STATION_DOCK);
+				local MyStations = AIStationList(AIStation.STATION_DOCK);
 				mwLog.Note("Start with " + MyStations.Count() + " stations.", 5);
 				//	Test stations based on distance to industry
-				MyStations.Valuate(GSStation.GetDistanceManhattanToTile, BuildPair[1]);
-				MyStations.KeepBelowValue((MetaLib.Constants.MaxStationSpread() + MetaLib.Constants.IndustrySize() + GSStation.GetCoverageRadius(GSStation.STATION_DOCK)) * 2);
+				MyStations.Valuate(AIStation.GetDistanceManhattanToTile, BuildPair[1]);
+				MyStations.KeepBelowValue((MetaLib.Constants.MaxStationSpread() + MetaLib.Constants.IndustrySize() + AIStation.GetCoverageRadius(AIStation.STATION_DOCK)) * 2);
 				mwLog.Note("Kept " + MyStations.Count() + " stations (close enough).", 5);
 				//	Test stations to see if they accept cargo in question
 				MyStations.Valuate(MetaLib.Station.IsCargoAccepted, CargoNo);
@@ -147,9 +141,9 @@ class OpHibernia {
 						
 				if (MyStations.Count() > 0) {
 					//	If more than one station, use the closest to other industry
-					MyStations.Valuate(GSStation.GetDistanceManhattanToTile, BuildPair[0]);
-					MyStations.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
-					local templist = GSTileList_StationType(MyStations.Begin(), GSStation.STATION_DOCK);
+					MyStations.Valuate(AIStation.GetDistanceManhattanToTile, BuildPair[0]);
+					MyStations.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
+					local templist = AITileList_StationType(MyStations.Begin(), AIStation.STATION_DOCK);
 					DockLocation = templist.Begin();
 				} else {
 				//	3. Build a dock
@@ -165,29 +159,29 @@ class OpHibernia {
 						mwLog.Note("     No dock possible near" + Array.ToStringTiles1D([BuildPair[1]]) + ".", 3);
 						//	Let the routine come up with another pair from the Atlas
 					} else {
-						Money.FundsRequest((GSMarine.GetBuildCost(GSMarine.BT_DOCK) + GSTile.GetBuildCost(GSTile.BT_CLEAR_GRASS)) * 1.1);
+						Money.FundsRequest((AIMarine.GetBuildCost(AIMarine.BT_DOCK) + AITile.GetBuildCost(AITile.BT_CLEAR_GRASS)) * 1.1);
 						
-						local PossibilitiesGSList = GSTileList();
+						local PossibilitiesAIList = AITileList();
 						for (local i = 0; i < PossibilitesList.len(); i++) {
-							PossibilitiesGSList.AddItem(PossibilitesList[i], GSMap.DistanceManhattan(PossibilitesList[i], BuildPair[0]));
+							PossibilitiesAIList.AddItem(PossibilitesList[i], AIMap.DistanceManhattan(PossibilitesList[i], BuildPair[0]));
 						}
-						PossibilitiesGSList.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
+						PossibilitiesAIList.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
 						
 						local KeepTrying3 = true;
-						DockLocation = PossibilitiesGSList.Begin();
+						DockLocation = PossibilitiesAIList.Begin();
 						while (KeepTrying3) {
 							mwLog.Note("Trying DockLocation =" + Array.ToStringTiles1D([DockLocation]), 5);
-//									DockLocation = PossibilitiesGSList.Next();
-							if ((GSTile.GetCargoAcceptance(DockLocation, CargoNo, 1, 1, GSStation.GetCoverageRadius(GSStation.STATION_DOCK)) >= 8) && (GSMarine.BuildDock(DockLocation, GSStation.STATION_NEW))) {
+//									DockLocation = PossibilitiesAIList.Next();
+							if ((AITile.GetCargoAcceptance(DockLocation, CargoNo, 1, 1, AIStation.GetCoverageRadius(AIStation.STATION_DOCK)) >= 8) && (AIMarine.BuildDock(DockLocation, AIStation.STATION_NEW))) {
 								// it worked! We have a dock! Nothing more...
 								mwLog.Note("Built Dock at" + Array.ToStringTiles1D([DockLocation]), 3);
 								KeepTrying3 = false;
 							} else {
-								if (PossibilitiesGSList.IsEnd()) {
+								if (PossibilitiesAIList.IsEnd()) {
 									DockLocation = MetaLib.Constants.InvalidTile()
 									KeepTrying3 = false;
 								} else {
-									DockLocation = PossibilitiesGSList.Next();
+									DockLocation = PossibilitiesAIList.Next();
 								}
 							}
 						}	
@@ -210,16 +204,16 @@ class OpHibernia {
 				local KeepTrying2 = true;
 				local start;
 				local end;
-				local Starts2 = Helper.SquirrelListToGSList(Starts);
-				local Ends2 = Helper.SquirrelListToGSList(Ends);
+				local Starts2 = Helper.SquirrelListToAIList(Starts);
+				local Ends2 = Helper.SquirrelListToAIList(Ends);
 				Starts2.Valuate(Marine.DistanceShip, BuildPair[1]);
 				Ends2.Valuate(Marine.DistanceShip, BuildPair[0]);
-				Starts2.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
-				Ends2.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
+				Starts2.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
+				Ends2.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
 				local OldStarts2 = Starts2;
 				start = Starts2.Begin();
 				end = Ends2.Begin();
-				tick2 = GSController.GetTick();
+				tick2 = AIController.GetTick();
 				local WBCTries = 0;
 				local WBCResults;
 					
@@ -230,12 +224,12 @@ class OpHibernia {
 					WBCResults = WBC.FindPath(-1);
 					WBCTries ++;
 					if (WBCResults != null) {
-						mwLog.Note("Waterbody Check returns positive. Took " + WBCTries + " tries and " + (GSController.GetTick() - tick2) + " ticks.",3);
+						mwLog.Note("Waterbody Check returns positive. Took " + WBCTries + " tries and " + (AIController.GetTick() - tick2) + " ticks.",3);
 						KeepTrying2 = false;
 					} else if (Starts2.IsEnd()) {
 					//	this tree will test all pairs of starts and ends
 						if (Ends2.IsEnd()) {
-							mwLog.Note("Waterbody Check returns negative. Took " + WBCTries + " tries and " + (GSController.GetTick() - tick2) + " ticks.",3);
+							mwLog.Note("Waterbody Check returns negative. Took " + WBCTries + " tries and " + (AIController.GetTick() - tick2) + " ticks.",3);
 							KeepTrying2 = false;
 						} else {
 							Starts2 = OldStarts2;
@@ -249,7 +243,7 @@ class OpHibernia {
 
 				if (WBCResults != null) {
 					///	Run Ship Pathfinder, and build buoys
-					tick2 = GSController.GetTick();
+					tick2 = AIController.GetTick();
 					local Pathfinder = MetaLib.ShipPathfinder();
 					Pathfinder.InitializePath([start], [end]);
 					//	Ship Pathfinder must be given a single start tile and a
@@ -259,7 +253,7 @@ class OpHibernia {
 					local SPFResults = Pathfinder.FindPath(-1);
 					
 					if (SPFResults != null) {
-						mwLog.Note("Ship Pathfinder returns positive. Took " + (GSController.GetTick() - tick2) + " ticks.",3);
+						mwLog.Note("Ship Pathfinder returns positive. Took " + (AIController.GetTick() - tick2) + " ticks.",3);
 						
 						//	Build Buoys
 						local NumberOfBuoys = Pathfinder.CountPathBuoys();
@@ -267,7 +261,7 @@ class OpHibernia {
 						
 						//	request funds for Buoys
 						//	request funds for Depots
-						Money.FundsRequest((GSMarine.GetBuildCost(GSMarine.BT_BUOY) * NumberOfBuoys) + (GSMarine.GetBuildCost(GSMarine.BT_DEPOT) * 2));
+						Money.FundsRequest((AIMarine.GetBuildCost(AIMarine.BT_BUOY) * NumberOfBuoys) + (AIMarine.GetBuildCost(AIMarine.BT_DEPOT) * 2));
 						Pathfinder.BuildPathBuoys();
 						SPFResults = Pathfinder.GetPath();
 						
@@ -284,66 +278,66 @@ class OpHibernia {
 						
 						//	Pick an engine (ship)
 						//	TO-DO: More sophisicated engine selection; weight all the factors at once
-						local Engines = GSEngineList(GSVehicle.VT_WATER);
+						local Engines = AIEngineList(AIVehicle.VT_WATER);
 						mwLog.Note("Start with " + Engines.Count() + " engines.", 5);
 						
 						//	Keep only buildable engines
-						Engines.Valuate(GSEngine.IsBuildable);
+						Engines.Valuate(AIEngine.IsBuildable);
 						Engines.KeepValue(true.tointeger());
 						mwLog.Note("Only " + Engines.Count() + " are buildable.", 5);
 						
-						//	TO-DO:	Keep only engines we can afford  -  GSEngine.GetPrice(EngineID)
+						//	TO-DO:	Keep only engines we can afford  -  AIEngine.GetPrice(EngineID)
 						
 						//	Keep only ships for this cargo
-						Engines.Valuate(GSEngine.CanRefitCargo, CargoNo);
+						Engines.Valuate(AIEngine.CanRefitCargo, CargoNo);
 						Engines.KeepValue(true.tointeger());
-						mwLog.Note("Only " + Engines.Count() + " can carry " + GSCargo.GetCargoLabel(CargoNo) + ".", 5);
+						mwLog.Note("Only " + Engines.Count() + " can carry " + AICargo.GetCargoLabel(CargoNo) + ".", 5);
 						
 						//	Keep only ships under max capacity
 						//		"In case it can transport multiple cargoes, it returns the first/main."
-						local MaxCargo = (GSIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) * this._CapacityDays)/30;
-						Engines.Valuate(GSEngine.GetCapacity);
+						local MaxCargo = (AIIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) * this._CapacityDays)/30;
+						Engines.Valuate(AIEngine.GetCapacity);
 						Engines.RemoveAboveValue(MaxCargo);
-						mwLog.Note("Only " + Engines.Count() + " have capacity below " + MaxCargo + ". (" + GSIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) + " * " + this._CapacityDays + " / 30)", 5);
+						mwLog.Note("Only " + Engines.Count() + " have capacity below " + MaxCargo + ". (" + AIIndustry.GetLastMonthProduction(MetaLib.Industry.GetIndustryID(BuildPair[0]), CargoNo) + " * " + this._CapacityDays + " / 30)", 5);
 						
 						//	Pick the best rated one
 						Marine.RateShips(1, 40, 0);
 						Engines.Valuate(Marine.RateShips, 40, CargoNo);
-						Engines.Sort(GSList.SORT_BY_VALUE, GSList.SORT_DESCENDING);
+						Engines.Sort(AIList.SORT_BY_VALUE, AIList.SORT_DESCENDING);
 								
 						if (Engines.Count() > 0) {
 							local PickedEngine = Engines.Begin();
-							mwLog.Note("Picked engine: " + PickedEngine + " : " + GSEngine.GetName(PickedEngine), 3);
+							mwLog.Note("Picked engine: " + PickedEngine + " : " + AIEngine.GetName(PickedEngine), 3);
 
 							//	request funds for Ship
 							//	TO-DO: Provide for retrofit costs
-							Money.FundsRequest(GSEngine.GetPrice(PickedEngine) * 1.1);
+							Money.FundsRequest(AIEngine.GetPrice(PickedEngine) * 1.1);
 							//	Build Ship and give it orders
-							local MyVehicle = GSVehicle.BuildVehicle(Depot1, PickedEngine);
-							if (GSVehicle.IsValidVehicle(MyVehicle)) {
-								GSVehicle.RefitVehicle(MyVehicle, CargoNo);
+							local MyVehicle = AIVehicle.BuildVehicle(Depot1, PickedEngine);
+							if (AIVehicle.IsValidVehicle(MyVehicle)) {
+								AIVehicle.RefitVehicle(MyVehicle, CargoNo);
 								mwLog.Note("Added Vehicle № " + MyVehicle + ".", 4);
 										
 								///	Give Orders!
 								//	start station; full load here
-								GSOrder.AppendOrder(MyVehicle, GSIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[0])), GSOrder.OF_FULL_LOAD);
-								mwLog.Note("Order (Start): " + MyVehicle + " : " + Array.ToStringTiles1D([GSIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[0]))]) + ".", 5);
+								AIOrder.AppendOrder(MyVehicle, AIIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[0])), AIOrder.OF_FULL_LOAD);
+								mwLog.Note("Order (Start): " + MyVehicle + " : " + Array.ToStringTiles1D([AIIndustry.GetDockLocation(MetaLib.Industry.GetIndustryID(BuildPair[0]))]) + ".", 5);
 								//	buoys
 								for (local i = 0; i < SPFResults.len(); i++) {
-									GSOrder.AppendOrder(MyVehicle, SPFResults[i], GSOrder.OF_NONE);
+									AIOrder.AppendOrder(MyVehicle, SPFResults[i], AIOrder.OF_NONE);
 									mwLog.Note("Order: " + MyVehicle + " : " + Array.ToStringTiles1D([SPFResults[i]]) + ".", 5);
 								}
 								//	end station
-								GSOrder.AppendOrder(MyVehicle, DockLocation, GSOrder.OF_NONE);
+								AIOrder.AppendOrder(MyVehicle, DockLocation, AIOrder.OF_NONE);
 								mwLog.Note("Order (End): " + MyVehicle + " : " + Array.ToStringTiles1D([DockLocation]) + ".", 5);
 								//	buoys, but backwards
 								for (local i = SPFResults.len() - 1; i >= 0; i--) {
-									GSOrder.AppendOrder(MyVehicle, SPFResults[i], GSOrder.OF_NONE);
+									AIOrder.AppendOrder(MyVehicle, SPFResults[i], AIOrder.OF_NONE);
 									mwLog.Note("Order: " + MyVehicle + " : " + Array.ToStringTiles1D([SPFResults[i]]) + ".", 5);
 								}
 								
 								// send it on it's merry way!!!
-								GSVehicle.StartStopVehicle(MyVehicle);
+								AIVehicle.StartStopVehicle(MyVehicle);
 								
 								///	Build one ship on path, and turn over to Ship Route Manager
 								// Manager_Ships.AddRoute(MyVehicle, CargoNo);		
@@ -354,12 +348,12 @@ class OpHibernia {
 						}
 						
 					} else {
-						mwLog.Note("Ship Pathfinder returns negative. Took " + (GSController.GetTick() - tick2) + " ticks.",3);
+						mwLog.Note("Ship Pathfinder returns negative. Took " + (AIController.GetTick() - tick2) + " ticks.",3);
 					}
 							
 					KeepTrying = false;
 				} else {
-					mwLog.Note("Waterbody Check returns negative. Took " + (GSController.GetTick() - tick2) + " ticks.",3);
+					mwLog.Note("Waterbody Check returns negative. Took " + (AIController.GetTick() - tick2) + " ticks.",3);
 					// try another path
 					KeepTrying = true;
 				}
@@ -367,7 +361,7 @@ class OpHibernia {
 		}
 	}
 
-	mwLog.Note("OpHibernia finished. Took " + (GSController.GetTick() - tick) + " ticks.", 2);
+	mwLog.Note("OpHibernia finished. Took " + (AIController.GetTick() - tick) + " ticks.", 2);
 	
 	return true;
 }

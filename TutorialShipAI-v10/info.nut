@@ -1,6 +1,6 @@
 /*
  * This file is part of TutorialShipAI, which is an AI for OpenTTD
- * Copyright (C) 2012  Leif Linse
+ * Copyright (C) 2012  Leif Linse & William Minchin
  *
  * TutorialShipAI is free software; you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by

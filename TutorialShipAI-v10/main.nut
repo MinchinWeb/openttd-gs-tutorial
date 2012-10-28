@@ -1,6 +1,6 @@
 /*
  * This file is part of TutorialShipAI, which is an AI for OpenTTD
- * Copyright (C) 2012  Leif Linse
+ * Copyright (C) 2012  Leif Linse & William Minchin
  *
  * TutorialShipAI is free software; you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import("util.superlib", "SuperLib", 26);
 Helper <- SuperLib.Helper;
 //ScoreList <- SuperLib.ScoreList;
 //Money <- SuperLib.Money;
+SLMoney <- SuperLib.Money;
 //
 //Tile <- SuperLib.Tile;
 //Direction <- SuperLib.Direction;
@@ -44,6 +45,16 @@ Helper <- SuperLib.Helper;
 //Road <- SuperLib.Road;
 //RoadBuilder <- SuperLib.RoadBuilder;
 
+/* Import MinchinWeb's MetaLibrary */
+import("util.MinchinWeb", "MetaLib", 5);
+	OpLog <- MetaLib.Log;
+	mwLog <- MetaLib.Log;
+	Array <- MetaLib.Array;
+	Marine <- MetaLib.Marine;
+	
+require("OpMoney.nut");
+require("Tutorial.OpHibernia.nut");
+
 class MainClass extends AIController 
 {
 	constructor() {
@@ -54,13 +65,35 @@ class MainClass extends AIController
 function MainClass::Start()
 {
 	this.Sleep(1);
-
+	mwLog.Note("Tutorial Ship building is running. Waiting for start prompt...", 1);
 
 	// Wait on start trigger from GS
 	local table = this.WaitForStart();
 
 	// Build ship connection
-	// ..
+	
+	for (local deltaX = 0; deltaX >= -2; deltaX--) {
+		mwLog.Note("deltaX = " + deltaX, 4);
+
+		//	Build Locks
+		GSMarine.BuildLock(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_lock1) + deltaX, GSMap.GetTileY(table.canal_lock1)));
+		GSMarine.BuildLock(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_lock2) + deltaX, GSMap.GetTileY(table.canal_lock2)));	
+
+		//	Build Canals
+		local LW = MetaLib.LineWalker();
+		LW.Start(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_start_tile) + deltaX, GSMap.GetTileY(table.canal_start_tile)));
+		LW.End(GSMap.GetTileIndex(GSMap.GetTileX(table.canal_end_tile) + deltaX, GSMap.GetTileY(table.canal_end_tile)));
+
+		do {
+			local mytile = LW.Walk();
+			GSMarine.BuildCanal(mytile);
+		} while (!LW.IsEnd())
+	}
+	
+	//	Build Ships
+	local ShipRouteBuilder = OpHibernia();
+	ShipRouteBuilder.Run(table.oilrig1, table.refinery);
+	ShipRouteBuilder.Run(table.oilrig2, table.refinery);	
 
 	// Tell GS that we are done
 	this.TellGSThatWeAreDone();
