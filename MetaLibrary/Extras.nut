@@ -45,7 +45,7 @@
  *	//	Comparision functions will return the first value if the two are equal
  *
  *		MinchinWeb.Industry.GetIndustryID(Tile)
- *								- AIIndustty.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )
+ *								- GSIndustry.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )
  *									sometimes fails because GetLocation() returns the northmost
  *									tile of the industry which may be a dock, heliport, or not
  *									part of the industry at all.
@@ -110,11 +110,11 @@ class _MinchinWeb_Extras_ {
 function _MinchinWeb_Extras_::SignLocation(text)
 {
 //	Returns the tile of the first instance where the sign matches the given text
-    local sign_list = AISignList();
+    local sign_list = GSSignList();
     for (local i = sign_list.Begin(); !sign_list.IsEnd(); i = sign_list.Next()) {
-        if(AISign.GetName(i) == text)
+        if(GSSign.GetName(i) == text)
         {
-            return AISign.GetLocation(i);
+            return GSSign.GetLocation(i);
         }
     }
     return null;
@@ -280,7 +280,7 @@ function _MinchinWeb_Extras_::NextCardinalTile(StartTile, TowardsTile)
 {
 //	Given a StartTile and a TowardsTile, will given the tile immediately next
 //		(Manhattan Distance == 1) to StartTile that is closests to TowardsTile
-	local Tiles = AITileList();
+	local Tiles = GSTileList();
 	local offsets = [GSMap.GetTileIndex(0, 1), GSMap.GetTileIndex(0, -1),
 						GSMap.GetTileIndex(1, 0), GSMap.GetTileIndex(-1, 0)];
 				 
@@ -288,7 +288,7 @@ function _MinchinWeb_Extras_::NextCardinalTile(StartTile, TowardsTile)
 		Tiles.AddItem(StartTile + offset, GSMap.DistanceSquare(StartTile + offset, TowardsTile));
 	}
 	
-	Tiles.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
+	Tiles.Sort(GSList.SORT_BY_VALUE, GSList.SORT_ASCENDING);
 	
 	return Tiles.Begin();
 }
@@ -300,7 +300,7 @@ function _MinchinWeb_Extras_::GetOpenTTDRevision()
 //	See AILib.Common for more details on what is contained in the full returned
 //		version number
 
-	local Version = AIController.GetVersion();
+	local Version = GSController.GetVersion();
 	local Revision = Version & 0x0007FFFF;
 	return Revision;
 }
@@ -312,7 +312,7 @@ class _MinchinWeb_Industry_ {
 }
 
 function _MinchinWeb_Industry_::GetIndustryID(Tile) {
-//	AIIndustty.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )  sometiles
+//	GSIndustty.GetIndustryID( GSIndustry.GetLocation( IndustryID ) )  sometiles
 //		fails because GetLocation() returns the northmost tile of the industry
 //		which may be a dock, heliport, or not part of the industry at all.
 //	This function starts at the tile, and then searchs a square out (up to
@@ -347,11 +347,11 @@ function _MinchinWeb_Station_::IsCargoAccepted(StationID, CargoID)
 //	Returns null if the StationID or CargoID are invalid
 //	Returns true or false, depending on if the cargo is accepted
 
-	if (!AIStation.IsValidStation(StationID) || !AICargo.IsValidCargo(CargoID)) {
+	if (!GSStation.IsValidStation(StationID) || !GSCargo.IsValidCargo(CargoID)) {
 		GSLog.Warning("MinchinWeb.Station.IsCargoAccepted() was provided with invalid input. Was provided " + StationID + " and " + CargoID + ".");
 		return null;
 	} else {
-		local AllCargos = AICargoList_StationAccepting(StationID);
+		local AllCargos = GSCargoList_StationAccepting(StationID);
 		_MinchinWeb_Log_.Note("MinchinWeb.Station.IsCargoAccepted() was provided with " + StationID + " and " + CargoID + ". AllCargos: " + AllCargos.Count(), 6);
 		if (AllCargos.HasItem(CargoID)) {
 			return true;
@@ -369,7 +369,7 @@ function _MinchinWeb_Station_::IsNextToDock(TileID)
 						GSMap.GetTileIndex(1, 0), GSMap.GetTileIndex(-1, 0)];
 				 
 	foreach (offset in offsets) {
-		if (AIMarine.IsDockTile(TileID + offset)) {
+		if (GSMarine.IsDockTile(TileID + offset)) {
 			return true;
 		}
 	}
@@ -384,8 +384,8 @@ function _MinchinWeb_Station_::DistanceFromStation(VehicleID, StationID)
 
 //	To-DO:  Add check that supplied VehicleID and StationID are valid
 
-	local VehicleTile = AIVehicle.GetLocation(VehicleID);
-	local StationTile = AIBaseStation.GetLocation(StationID);
+	local VehicleTile = GSVehicle.GetLocation(VehicleID);
+	local StationTile = GSBaseStation.GetLocation(StationID);
 	
-	return AITile.GetDistanceManhattanToTile(VehicleTile, StationTile);
+	return GSTile.GetDistanceManhattanToTile(VehicleTile, StationTile);
 }
